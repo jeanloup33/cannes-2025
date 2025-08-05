@@ -1,6 +1,6 @@
 backend:
-name: git-gateway
-branch: main
+  name: git-gateway
+  branch: main
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
@@ -10,8 +10,7 @@ logo_url: "/favicon.ico"
 locale: "fr"
 
 collections:
-
-    name: "news"
+  - name: "news"
     label: "News"
     label_singular: "News"
     folder: "content/news"
@@ -21,12 +20,32 @@ collections:
     preview_path: "news/{{slug}}/"
     summary: "{{title}} — {{date}}"
     editor:
-    preview: true
+      preview: true
     fields:
-        { label: "Titre", name: "title", widget: "string" }
-        { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ" }
-        { label: "Vignette", name: "image", widget: "image", required: false, choose_url: true }
-        { label: "Catégorie", name: "category", widget: "select", options: ["Annonce", "Pratique", "Artistes", "Aftermovie"], required: false }
-        { label: "Extrait (meta description)", name: "description", widget: "text", required: false, hint: "140–160 caractères pour le SEO" }
-        { label: "Contenu", name: "body", widget: "markdown" }
+      - label: "Titre"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DDTHH:mm:ssZ"
+      - label: "Vignette"
+        name: "image"
+        widget: "image"
+        required: false
+        choose_url: true
+      - label: "Catégorie"
+        name: "category"
+        widget: "select"
+        options: ["Annonce", "Pratique", "Artistes", "Aftermovie"]
+        required: false
+      - label: "Extrait (meta description)"
+        name: "description"
+        widget: "text"
+        required: false
+        hint: "140–160 caractères pour le SEO"
+      - label: "Contenu"
+        name: "body"
+        widget: "markdown"
+
 
