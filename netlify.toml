@@ -1,3 +1,5 @@
 [build]
-publish = "." # ton site est à la racine
+publish = "." # ton site est Ã  la racine
 command = "npm ci || npm i && npm run build"
+[build.environment]
+  NODE_VERSION = "20.14.0"
