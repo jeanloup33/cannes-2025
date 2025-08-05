@@ -39,4 +39,4 @@ body
 
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, JSON.stringify(items, null, 2));
-console.log(Generated ${outFile} with ${items.length} entries);
+console.log(`Generated ${outFile} with ${items.length} entries`);
