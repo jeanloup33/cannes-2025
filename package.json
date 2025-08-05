@@ -6,4 +6,7 @@
 "build:news": "node scripts/build-news.mjs",
 "build": "npm run build:news"
 }
+"engines": {
+  "node": "20.x"
+}
 }
