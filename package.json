@@ -1,12 +1,15 @@
 {
-  "name": "cannes-2025",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build:news": "node scripts/build-news.mjs",
-    "build": "npm run build:news"
-  },
-  "engines": {
-    "node": "20.x"
-  }
+"name": "cannes-2025",
+"private": true,
+"type": "module",
+"scripts": {
+"build:news": "node scripts/build-news.js",
+"build": "npm run build:news"
+},
+"engines": {
+"node": "20.14.x"
+},
+"dependencies": {
+"marked": "^12.0.2"
+}
 }
