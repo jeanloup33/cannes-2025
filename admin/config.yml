@@ -47,5 +47,3 @@ collections:
       - label: "Contenu"
         name: "body"
         widget: "markdown"
-
-
