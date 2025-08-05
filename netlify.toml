@@ -1,0 +1,3 @@
+[build]
+publish = "." # ton site est à la racine
+command = "npm ci || npm i && npm run build"
