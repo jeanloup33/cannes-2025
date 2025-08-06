@@ -1,46 +1,84 @@
-<style> .news-card, .news-article { max-width: 760px; margin: 1rem auto; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; } .news-card img, .news-article img { max-width: 100%; height: auto; display: block; margin: .5rem 0; } .date { color: #666; font-size: .9rem; } </style>
-<div id="newsView"></div> <script> async function viewNews() { const params = new URLSearchParams(location.search); const slug = params.get('slug');
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Actualités</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .news-card, .news-article {
+      max-width: 760px;
+      margin: 1rem auto;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .news-card img, .news-article img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: .5rem 0;
+    }
+    .date {
+      color: #666;
+      font-size: .9rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="newsView">Chargement…</div>
+  <script>
+    const NEWS_JSON_URL = './assets/news.json';
 
-try {
-const res = await fetch('assets/news.json', { cache: 'no-store' });
-if (!res.ok) throw new Error(HTTP ${res.status});
-const items = await res.json();
+    function formatDate(s) {
+      if (!s) return '';
+      const d = new Date(s);
+      return isNaN(d) ? s : d.toLocaleString();
+    }
 
-const el = document.getElementById('newsView');
+    async function render() {
+      const el = document.getElementById('newsView');
+      const params = new URLSearchParams(location.search);
+      const slug = params.get('slug');
+      try {
+        const res = await fetch(NEWS_JSON_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const items = await res.json(); // [{slug,title,date,image,description,category,body,body_html}, ...]
 
-if (!slug) {
-  // Liste
-  el.innerHTML = items.map(n => `
-    <article class="news-card">
-      <h3><a href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a></h3>
-      <div class="date">${n.date ? new Date(n.date).toLocaleDateString() : ''}</div>
-      ${n.image ? `<img src="${n.image}" alt="">` : ''}
-      ${n.description ? `<p>${n.description}</p>` : ''}
-    </article>
-  `).join('');
-} else {
-  // Détail
-  const n = items.find(x => x.slug === slug);
-  if (!n) {
-    el.textContent = 'Article introuvable';
-    return;
-  }
-  el.innerHTML = `
-    <article class="news-article">
-      <h1>${n.title}</h1>
-      <div class="date">${n.date ? new Date(n.date).toLocaleString() : ''}</div>
-      ${n.image ? `<img src="${n.image}" alt="">` : ''}
-      <div class="body">${(n.body || '').replace(/\n/g, '<br>')}</div>
-    </article>
-    <p><a href="news.html">← Retour</a></p>
-  `;
-}
+        if (!slug) {
+          // Vue liste
+          el.innerHTML = items.map(n => `
+            <article class="news-card">
+              <h3><a href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a></h3>
+              <div class="date">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
+              ${n.image ? `<img src="${n.image}" alt="">` : ''}
+              ${n.description ? `<p>${n.description}</p>` : ''}
+            </article>
+          `).join('') || '<p>Aucune actualité.</p>';
+          return;
+        }
 
-} catch (err) {
-console.error('Cannot load news.json', err);
-document.getElementById('newsView').textContent = 'Impossible de charger les news.';
-}
-}
+        // Vue détail
+        const n = items.find(x => x.slug === slug);
+        if (!n) {
+          el.innerHTML = '<p>Article introuvable.</p>';
+          return;
+        }
+        el.innerHTML = `
+          <article class="news-article">
+            <h1>${n.title}</h1>
+            <div class="date">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
+            ${n.image ? `<img src="${n.image}" alt="">` : ''}
+            <div>${n.body_html || ''}</div>
+            <p><a href="news.html">← Toutes les actus</a></p>
+          </article>
+        `;
+      } catch (err) {
+        console.error(err);
+        el.innerHTML = '<p>Impossible de charger les actualités.</p>';
+      }
+    }
 
-document.addEventListener('DOMContentLoaded', viewNews);
-</script>
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
+</body>
+</html>
