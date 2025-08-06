@@ -1,84 +1,208 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
-  <meta charset="utf-8">
-  <title>Actualités</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Actualités — Soirée Festival de Cannes</title>
+  <meta name="description" content="Actualités: annonces, infos pratiques, dernières nouvelles de la soirée Festival de Cannes." />
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          colors: {
+            night: '#0b0b0d',
+            noir: '#111114',
+            gold: '#e8c77d',
+            goldSoft: '#f0dfb0',
+            ruby: '#b80f2f',
+            champagne: '#f5efe1',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            glow: '0 0 0 2px rgba(232,199,125,0.35), 0 20px 60px rgba(0,0,0,0.5)',
+          },
+          backgroundImage: {
+            glam: 'radial-gradient(1000px 600px at 80% -10%, rgba(232,199,125,0.14), transparent 60%), linear-gradient(180deg, #0b0b0d 0%, #111114 70%, #0b0b0d 100%)',
+          },
+        },
+      },
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
   <style>
-    .news-card, .news-article {
-      max-width: 760px;
-      margin: 1rem auto;
-      padding: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+    .gold-text {
+      background: linear-gradient(135deg, #f7ebc2, #e8c77d, #b99243);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    .news-card img, .news-article img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: .5rem 0;
+
+    .logo-glow {
+      filter: drop-shadow(0 6px 18px rgba(232, 199, 125, .28)) drop-shadow(0 0 10px rgba(232, 199, 125, .18));
     }
-    .date {
-      color: #666;
-      font-size: .9rem;
+
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .07;
+      mix-blend-mode: soft-light;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" opacity="0.5" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect filter="url(%23n)" width="100%" height="100%"/></svg>');
     }
   </style>
-</head>
-<body>
-  <div id="newsView">Chargement…</div>
-  <script>
-    const NEWS_JSON_URL = './assets/news.json';
 
-    function formatDate(s) {
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Actualités — Soirée Festival de Cannes">
+  <meta property="og:description" content="Annonces, infos pratiques, dernières nouvelles.">
+  <meta property="og:url" content="https://cannes-festival.netlify.app/news.html">
+  <link rel="canonical" href="https://cannes-festival.netlify.app/news.html">
+</head>
+
+<body class="bg-glam text-white font-sans noise">
+
+  <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white">
+    <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
+      <a href="index.html#hero" class="flex items-center gap-4 group">
+        <img src="./assets/logo.webp" alt="Logo de la soirée" class="h-12 md:h-14 w-auto object-contain logo-glow" width="96" height="96" />
+        <span class="hidden sm:inline text-lg md:text-xl font-extrabold tracking-wide gold-text">NIGHT PARTY</span>
+      </a>
+      <a href="index.html#tickets" class="ml-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-[16px] px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition">
+        Billetterie
+      </a>
+    </nav>
+  </header>
+
+  <section class="py-10 md:py-14">
+    <div class="container mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-4xl gold-text">Actualités</h1>
+      <p class="text-white/70 mt-2">Annonces et informations de dernière minute.</p>
+    </div>
+  </section>
+
+  <main class="pb-20">
+    <div class="container mx-auto px-6">
+      <div id="newsView" class="grid gap-4">Chargement…</div>
+    </div>
+  </main>
+
+  <footer class="border-t border-white/10 py-8 bg-noir">
+    <div class="container mx-auto px-6 text-white/70 text-sm">
+      <a class="underline hover:no-underline" href="index.html">← Retour à l’accueil</a>
+    </div>
+  </footer>
+
+  <script>
+    const NEWS_JSON_URL = `./assets/news.json?v=${Date.now()}`;
+    const dateFmt = new Intl.DateTimeFormat('fr-FR', {
+      dateStyle: 'short'
+    });
+    const dateTimeFmt = new Intl.DateTimeFormat('fr-FR', {
+      dateStyle: 'short',
+      timeStyle: 'medium'
+    });
+
+    function formatDate(s, withTime = true) {
       if (!s) return '';
       const d = new Date(s);
-      return isNaN(d) ? s : d.toLocaleString();
+      if (isNaN(d)) return s;
+      return withTime ? dateTimeFmt.format(d) : dateFmt.format(d);
     }
+
+    function ensureMeta(name, attr, value) {
+      let el = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', value);
+    }
+
+    function setDetailSEO(n) {
+      document.title = `${n.title} — Soirée Festival de Cannes`;
+      ensureMeta('description', 'name', n.description || n.title || 'Actualité');
+      ensureMeta('og:type', 'property', 'article');
+      ensureMeta('og:title', 'property', n.title);
+      ensureMeta('og:description', 'property', n.description || n.title || 'Actualité');
+      const canonical = new URL(location.href);
+      ensureMeta('og:url', 'property', canonical.toString());
+      if (n.image) {
+        ensureMeta('og:image', 'property', new URL(n.image, location.origin).toString());
+      }
+    }
+
+    const escAttr = (s) => String(s ?? '').replace(/"/g, '&quot;');
 
     async function render() {
       const el = document.getElementById('newsView');
       const params = new URLSearchParams(location.search);
       const slug = params.get('slug');
-      try {
-        const res = await fetch(NEWS_JSON_URL, { cache: 'no-store' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const items = await res.json(); // [{slug,title,date,image,description,category,body,body_html}, ...]
 
+      try {
+        const res = await fetch(NEWS_JSON_URL, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const items = await res.json();
+
+        // --- Vue LISTE ---
         if (!slug) {
-          // Vue liste
           el.innerHTML = items.map(n => `
-            <article class="news-card">
-              <h3><a href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a></h3>
-              <div class="date">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
-              ${n.image ? `<img src="${n.image}" alt="">` : ''}
-              ${n.description ? `<p>${n.description}</p>` : ''}
+            <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+              <h3 class="text-xl md:text-2xl font-extrabold">
+                <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90" href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a>
+              </h3>
+              <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
+              ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-3 rounded-xl border border-white/10">` : ''}
+              ${n.description ? `<p class="mt-3 text-white/80">${n.description}</p>` : ''}
             </article>
-          `).join('') || '<p>Aucune actualité.</p>';
+          `).join('') || '<p class="text-white/70">Aucune actualité.</p>';
           return;
         }
 
-        // Vue détail
+        // --- Vue DÉTAIL ---
         const n = items.find(x => x.slug === slug);
         if (!n) {
-          el.innerHTML = '<p>Article introuvable.</p>';
+          el.innerHTML = '<p class="text-white/70">Article introuvable.</p>';
           return;
         }
+
+        setDetailSEO(n);
         el.innerHTML = `
-          <article class="news-article">
-            <h1>${n.title}</h1>
-            <div class="date">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
-            ${n.image ? `<img src="${n.image}" alt="">` : ''}
-            <div>${n.body_html || ''}</div>
-            <p><a href="news.html">← Toutes les actus</a></p>
+          <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+            <h1 class="font-display text-3xl md:text-4xl gold-text">${n.title}</h1>
+            <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
+            ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-5 rounded-xl border border-white/10">` : ''}
+            <div class="prose prose-invert max-w-none mt-5">${n.body_html || ''}</div>
+            <p class="mt-6"><a href="news.html" class="underline decoration-gold/60 underline-offset-4">← Toutes les actus</a></p>
           </article>
         `;
       } catch (err) {
         console.error(err);
-        el.innerHTML = '<p>Impossible de charger les actualités.</p>';
+        el.innerHTML = '<p class="text-white/70">Impossible de charger les actualités.</p>';
       }
     }
 
     document.addEventListener('DOMContentLoaded', render);
   </script>
+
 </body>
 </html>
