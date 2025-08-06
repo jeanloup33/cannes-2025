@@ -7,8 +7,8 @@
   <meta name="description" content="Marchez sur le tapis rouge ! Soirée à thème Festival de Cannes — Glamour, DJ, tapis rouge, photobooth, dress code chic. 13/09/2025 à Bruges." />
   <meta name="theme-color" content="#0b0b0d" />
 
-  <link rel="icon" href="./icons/icon-192.png" />
-  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icons/icon-192.png?v=20250808" />
+  <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -118,7 +118,7 @@
 </head>
 <body class="bg-glam text-white font-sans noise">
   <!-- Header / Nav -->
-<header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <!-- Logo + titre --> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
+<header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <!-- Logo + titre --> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
 
 <!-- Burger -->
 <button id="nav-toggle"
@@ -180,7 +180,7 @@
   <!-- Hero -->
   <section id="hero" class="relative">
   <div class="absolute inset-0 -z-10">
-    <img src="./assets/hero.webp" alt="" class="w-full h-[92vh] object-cover" />
+    <img src="./assets/hero.webp?v=20250808" alt="" class="w-full h-[92vh] object-cover" />
     <!-- Overlay noir -->
     <div class="absolute inset-0 bg-black/40"></div>
   </div>
@@ -493,7 +493,7 @@ Je confirme
     </div>
   </footer>
 
-  <script src="./app.js" defer></script>
+  <script src="./app.js?v=20250808" defer></script>
 <script> (() => {
 const STORAGE_KEY = 'pwa-comments';
 

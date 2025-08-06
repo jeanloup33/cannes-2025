@@ -1,0 +1,31 @@
+# ===================================================================
+# Règles de cache HTTP pour le site (Netlify, Cloudflare Pages, etc.)
+# ===================================================================
+
+# -------------------------------------------------------------------
+# 1. Fichiers dynamiques : Ne JAMAIS mettre en cache.
+# Le navigateur doit toujours récupérer la version la plus récente.
+# -------------------------------------------------------------------
+/assets/news.json
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+# -------------------------------------------------------------------
+# 2. Pages HTML : Toujours vérifier la fraîcheur auprès du serveur.
+# Le navigateur peut garder une copie, mais doit demander si elle
+# est à jour avant de l'afficher (revalidation).
+# -------------------------------------------------------------------
+/
+/index.html
+/news.html
+  Cache-Control: no-cache, must-revalidate
+
+# -------------------------------------------------------------------
+# 3. Assets statiques versionnés (CSS, JS) : Mettre en cache pour 1 an.
+# Le nom de ces fichiers est supposé changer s'ils sont modifiés.
+# 'immutable' indique au navigateur de ne jamais revérifier.
+# -------------------------------------------------------------------
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
