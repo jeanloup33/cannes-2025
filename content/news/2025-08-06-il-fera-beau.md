@@ -1,7 +1,7 @@
 ---
 title: Il fera beau
 date: 2025-08-06T15:58:00+02:00
-image: /uploads/gemini_generated_image_v1tbf2v1tbf2v1tb.webp
+image: /uploads/gallery61.webp
 category: Annonce
 description: Metéo optimiste
 ---
