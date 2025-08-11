@@ -1,3 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualités - Festival de Cannes Night</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'gold': '#d4af37',
+            'goldSoft': '#f4e4a6',
+            'champagne': '#f7e7bf',
+            'noir': '#0b0b0d'
+          },
+          fontFamily: {
+            'display': ['Playfair Display', 'serif']
+          }
+        }
+      }
+    }
+  </script>  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-noir text-white min-h-screen">
+
 <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white">
   <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
     <a href="index.html#hero" class="flex items-center gap-4 group">
@@ -17,3 +44,47 @@
     </div>
   </nav>
 </header>
+
+<main class="container mx-auto px-6 py-10">
+  <h1 class="font-display text-4xl md:text-5xl gold-text mb-8">Actualités</h1>
+  
+  <div id="newsContainer" class="grid gap-6">
+    <p class="text-white/70">Chargement des actualités...</p>
+  </div>
+</main>
+
+<script>
+  // Chargement et affichage des actualités
+  (async () => {
+    const container = document.getElementById('newsContainer');
+    if (!container) return;
+    
+    try {
+      const res = await fetch('./assets/news.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      
+      if (!items.length) {
+        container.innerHTML = '<p class="text-white/70">Aucune actualité pour le moment.</p>';
+        return;
+      }
+      
+      container.innerHTML = items.map(news => `
+        <article class="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <h2 class="text-2xl font-extrabold gold-text mb-3">${news.title}</h2>
+          <div class="text-white/60 text-sm mb-4">
+            ${news.date ? new Date(news.date).toLocaleDateString('fr-FR') : ''}
+            ${news.category ? ' • ' + news.category : ''}
+          </div>
+          ${news.description ? `<p class="text-white/80 mb-4">${news.description}</p>` : ''}
+          ${news.body_html ? `<div class="prose prose-invert max-w-none">${news.body_html}</div>` : ''}
+        </article>
+      `).join('');
+    } catch {
+      container.innerHTML = '<p class="text-white/70">Actualités indisponibles.</p>';
+    }
+  })();
+</script>
+
+</body>
+</html>
