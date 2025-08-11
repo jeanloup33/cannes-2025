@@ -1,90 +1,208 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Actualités - Festival de Cannes Night</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Actualités — Soirée Festival de Cannes</title>
+  <meta name="description" content="Actualités: annonces, infos pratiques, dernières nouvelles de la soirée Festival de Cannes." />
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'media',
       theme: {
         extend: {
           colors: {
-            'gold': '#d4af37',
-            'goldSoft': '#f4e4a6',
-            'champagne': '#f7e7bf',
-            'noir': '#0b0b0d'
+            night: '#0b0b0d',
+            noir: '#111114',
+            gold: '#e8c77d',
+            goldSoft: '#f0dfb0',
+            ruby: '#b80f2f',
+            champagne: '#f5efe1',
           },
           fontFamily: {
-            'display': ['Playfair Display', 'serif']
-          }
-        }
-      }
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            glow: '0 0 0 2px rgba(232,199,125,0.35), 0 20px 60px rgba(0,0,0,0.5)',
+          },
+          backgroundImage: {
+            glam: 'radial-gradient(1000px 600px at 80% -10%, rgba(232,199,125,0.14), transparent 60%), linear-gradient(180deg, #0b0b0d 0%, #111114 70%, #0b0b0d 100%)',
+          },
+        },
+      },
     }
-  </script>  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
-</head>
-<body class="bg-noir text-white min-h-screen">
+  </script>
 
-<header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white">
-  <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
-    <a href="index.html#hero" class="flex items-center gap-4 group">
-      <img src="./assets/logo.webp" alt="Logo de la soirée" class="h-12 md:h-14 w-auto object-contain logo-glow" width="96" height="96" />
-      <span class="hidden sm:inline text-lg md:text-xl font-extrabold tracking-wide gold-text">NIGHT PARTY</span>
-    </a>
-    <div class="flex items-center gap-3">
-      <a href="index.html" class="inline-flex items-center gap-2 rounded-xl border border-white/15 text-white font-semibold text-[16px] px-4 py-2 hover:bg-white/10 transition">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-        </svg>
-        Accueil
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    .gold-text {
+      background: linear-gradient(135deg, #f7ebc2, #e8c77d, #b99243);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .logo-glow {
+      filter: drop-shadow(0 6px 18px rgba(232, 199, 125, .28)) drop-shadow(0 0 10px rgba(232, 199, 125, .18));
+    }
+
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .07;
+      mix-blend-mode: soft-light;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" opacity="0.5" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect filter="url(%23n)" width="100%" height="100%"/></svg>');
+    }
+  </style>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Actualités — Soirée Festival de Cannes">
+  <meta property="og:description" content="Annonces, infos pratiques, dernières nouvelles.">
+  <meta property="og:url" content="https://cannes-festival.netlify.app/news.html">
+  <link rel="canonical" href="https://cannes-festival.netlify.app/news.html">
+</head>
+
+<body class="bg-glam text-white font-sans noise">
+
+  <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white">
+    <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
+      <a href="index.html#hero" class="flex items-center gap-4 group">
+        <img src="./assets/logo.webp" alt="Logo de la soirée" class="h-12 md:h-14 w-auto object-contain logo-glow" width="96" height="96" />
+        <span class="hidden sm:inline text-lg md:text-xl font-extrabold tracking-wide gold-text">NIGHT PARTY</span>
       </a>
-      <a href="index.html#tickets" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-[16px] px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition">
+      <a href="index.html#tickets" class="ml-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-[16px] px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition">
         Confirmer
       </a>
+    </nav>
+  </header>
+
+  <section class="py-10 md:py-14">
+    <div class="container mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-4xl gold-text">Actualités</h1>
+      <p class="text-white/70 mt-2">Annonces et informations de dernière minute.</p>
     </div>
-  </nav>
-</header>
+  </section>
 
-<main class="container mx-auto px-6 py-10">
-  <h1 class="font-display text-4xl md:text-5xl gold-text mb-8">Actualités</h1>
-  
-  <div id="newsContainer" class="grid gap-6">
-    <p class="text-white/70">Chargement des actualités...</p>
-  </div>
-</main>
+  <main class="pb-20">
+    <div class="container mx-auto px-6">
+      <div id="newsView" class="grid gap-4">Chargement…</div>
+    </div>
+  </main>
 
-<script>
-  // Chargement et affichage des actualités
-  (async () => {
-    const container = document.getElementById('newsContainer');
-    if (!container) return;
-    
-    try {
-      const res = await fetch('./assets/news.json?v=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error();
-      const items = await res.json();
-      
-      if (!items.length) {
-        container.innerHTML = '<p class="text-white/70">Aucune actualité pour le moment.</p>';
-        return;
-      }
-      
-      container.innerHTML = items.map(news => `
-        <article class="bg-white/5 border border-white/10 rounded-2xl p-6">
-          <h2 class="text-2xl font-extrabold gold-text mb-3">${news.title}</h2>
-          <div class="text-white/60 text-sm mb-4">
-            ${news.date ? new Date(news.date).toLocaleDateString('fr-FR') : ''}
-            ${news.category ? ' • ' + news.category : ''}
-          </div>
-          ${news.description ? `<p class="text-white/80 mb-4">${news.description}</p>` : ''}
-          ${news.body_html ? `<div class="prose prose-invert max-w-none">${news.body_html}</div>` : ''}
-        </article>
-      `).join('');
-    } catch {
-      container.innerHTML = '<p class="text-white/70">Actualités indisponibles.</p>';
+  <footer class="border-t border-white/10 py-8 bg-noir">
+    <div class="container mx-auto px-6 text-white/70 text-sm">
+      <a class="underline hover:no-underline" href="index.html">← Retour à l’accueil</a>
+    </div>
+  </footer>
+
+  <script>
+    const NEWS_JSON_URL = `./assets/news.json?v=${Date.now()}`;
+    const dateFmt = new Intl.DateTimeFormat('fr-FR', {
+      dateStyle: 'short'
+    });
+    const dateTimeFmt = new Intl.DateTimeFormat('fr-FR', {
+      dateStyle: 'short',
+      timeStyle: 'medium'
+    });
+
+    function formatDate(s, withTime = true) {
+      if (!s) return '';
+      const d = new Date(s);
+      if (isNaN(d)) return s;
+      return withTime ? dateTimeFmt.format(d) : dateFmt.format(d);
     }
-  })();
-</script>
+
+    function ensureMeta(name, attr, value) {
+      let el = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', value);
+    }
+
+    function setDetailSEO(n) {
+      document.title = `${n.title} — Soirée Festival de Cannes`;
+      ensureMeta('description', 'name', n.description || n.title || 'Actualité');
+      ensureMeta('og:type', 'property', 'article');
+      ensureMeta('og:title', 'property', n.title);
+      ensureMeta('og:description', 'property', n.description || n.title || 'Actualité');
+      const canonical = new URL(location.href);
+      ensureMeta('og:url', 'property', canonical.toString());
+      if (n.image) {
+        ensureMeta('og:image', 'property', new URL(n.image, location.origin).toString());
+      }
+    }
+
+    const escAttr = (s) => String(s ?? '').replace(/"/g, '&quot;');
+
+    async function render() {
+      const el = document.getElementById('newsView');
+      const params = new URLSearchParams(location.search);
+      const slug = params.get('slug');
+
+      try {
+        const res = await fetch(NEWS_JSON_URL, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const items = await res.json();
+
+        // --- Vue LISTE ---
+        if (!slug) {
+          el.innerHTML = items.map(n => `
+            <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+              <h3 class="text-xl md:text-2xl font-extrabold">
+                <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90" href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a>
+              </h3>
+              <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
+              ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-3 rounded-xl border border-white/10">` : ''}
+              ${n.description ? `<p class="mt-3 text-white/80">${n.description}</p>` : ''}
+            </article>
+          `).join('') || '<p class="text-white/70">Aucune actualité.</p>';
+          return;
+        }
+
+        // --- Vue DÉTAIL ---
+        const n = items.find(x => x.slug === slug);
+        if (!n) {
+          el.innerHTML = '<p class="text-white/70">Article introuvable.</p>';
+          return;
+        }
+
+        setDetailSEO(n);
+        el.innerHTML = `
+          <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+            <h1 class="font-display text-2xl md:text-4xl gold-text">${n.title}</h1>
+            <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
+            ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-5 rounded-xl border border-white/10">` : ''}
+            <div class="prose prose-invert max-w-none mt-5">${n.body_html || ''}</div>
+            <p class="mt-6"><a href="news.html" class="underline decoration-gold/60 underline-offset-4">← Toutes les actus</a></p>
+          </article>
+        `;
+      } catch (err) {
+        console.error(err);
+        el.innerHTML = '<p class="text-white/70">Impossible de charger les actualités.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
 
 </body>
 </html>
