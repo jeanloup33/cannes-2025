@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Mobile nav
-  const toggle = document.querySelector('.nav-toggle');
-  const menus = document.querySelectorAll('.navmenu');
-  if (toggle) {
+  const toggle = document.querySelector('#nav-toggle'); // Changé de .nav-toggle à #nav-toggle
+  const menu = document.querySelector('#mobile-menu'); // Changé de .navmenu à #mobile-menu
+  if (toggle && menu) {
     const setOpen = (open) => {
       toggle.setAttribute('aria-expanded', String(open));
-      menus.forEach(m => m.classList.toggle('hidden', !open));
+      menu.classList.toggle('hidden', !open); // Utilise menu au lieu de menus
       document.body.classList.toggle('overflow-hidden', open);
     };
     setOpen(false);
@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
       if (!e.target.closest('header')) setOpen(false);
     });
-    menus.forEach(m => m.addEventListener('click', e => {
+    menu.addEventListener('click', e => { // Utilise menu au lieu de menus.forEach
       if (e.target.closest('a')) setOpen(false);
-    }));
+    });
   }
 
   // Smooth anchor scrolling with offset
