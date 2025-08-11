@@ -5,4 +5,4 @@ image: /uploads/glif-flux-jeanloup-flj5onw94lagw6jdcvyie7lt-modifie.webp
 category: Annonce
 description: ""
 ---
-Heureusement, sinon cela nous aurait manqué. A vos appareil photo.
+Heureusement, sinon cela nous aurait manqué. A vos appareils photo.
