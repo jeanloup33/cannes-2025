@@ -657,12 +657,12 @@ Je confirme
         target.innerHTML = '<p class="text-white/70">Aucune actualité pour le moment.</p>';
         return;
       }
-      // Tri par date descendante et prendre les 2 dernières
-      const latest = [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 2);
+      // Tri par date descendante et prendre les 3 dernières
+      const latest = [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 3);
       
       target.innerHTML = latest.map(news => `
         <article class="border-l-2 border-gold/30 pl-4">
-          <h3 class="text-lg md:text-xl font-extrabold">
+          <h3 class="text-lg md:text-xl font-extrabold uppercase">
             <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90"
                href="news.html?slug=${encodeURIComponent(news.slug)}">
               ${news.title}
