@@ -229,12 +229,19 @@
 	</section>
 	
     <!-- Actus -->
+	<!-- Actus -->
 	<section id="latest-news" class="py-10">
-	<div class="container mx-auto px-6"> <div class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
-	<div class="flex items-start justify-between gap-4">
-	<div> <div class="text-xs uppercase tracking-wide text-white/60">Dernière actu</div> 
-	<h2 id="latestNewsTitle" class="mt-1 text-xl md:text-2xl font-extrabold"> Chargement… </h2> </div>
-	<a href="news.html" class="shrink-0 rounded-xl border border-white/15 px-3 py-2 text-sm hover:bg-white/10">Toutes les actus</a> </div> </div> </div> 
+	<div class="container mx-auto px-6">
+	<div class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+	<div class="flex items-start justify-between gap-4 mb-4">
+	<div class="text-xs uppercase tracking-wide text-white/60">Dernières actus</div> 
+	<a href="news.html" class="shrink-0 rounded-xl border border-white/15 px-3 py-2 text-sm hover:bg-white/10">Toutes les actus</a>
+	</div>
+	<div id="latestNewsContainer" class="grid gap-4">
+	Chargement…
+	</div>
+	</div>
+	</div> 
 	</section>
 
 
@@ -640,26 +647,36 @@ Je confirme
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
   (async () => {
-    const target = document.getElementById('latestNewsTitle');
+    const target = document.getElementById('latestNewsContainer');
     if (!target) return;
     try {
       const res = await fetch('./assets/news.json?v=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error();
       const items = await res.json();
       if (!items.length) {
-        target.textContent = 'Aucune actualité pour le moment.';
+        target.innerHTML = '<p class="text-white/70">Aucune actualité pour le moment.</p>';
         return;
       }
-      // Tri par date descendante si besoin
-      const latest = [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))[0];
-      target.innerHTML = `
-        <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90"
-           href="news.html?slug=${encodeURIComponent(latest.slug)}">
-          ${latest.title}
-        </a>
-      `;
+      // Tri par date descendante et prendre les 2 dernières
+      const latest = [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 2);
+      
+      target.innerHTML = latest.map(news => `
+        <article class="border-l-2 border-gold/30 pl-4">
+          <h3 class="text-lg md:text-xl font-extrabold">
+            <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90"
+               href="news.html?slug=${encodeURIComponent(news.slug)}">
+              ${news.title}
+            </a>
+          </h3>
+          <div class="text-white/60 text-sm mt-1">
+            ${news.date ? new Date(news.date).toLocaleDateString('fr-FR') : ''}
+            ${news.category ? ' • ' + news.category : ''}
+          </div>
+          ${news.description ? `<p class="text-white/80 text-sm mt-2">${news.description}</p>` : ''}
+        </article>
+      `).join('');
     } catch {
-      target.textContent = 'Actualités indisponibles.';
+      target.innerHTML = '<p class="text-white/70">Actualités indisponibles.</p>';
     }
   })();
 </script>
