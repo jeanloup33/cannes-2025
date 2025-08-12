@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = a.getAttribute('href');
       if (id.length > 1 && document.querySelector(id)) {
         e.preventDefault();
-        const y = document.querySelector(id).getBoundingClientRect().top + window.scrollY - 120;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+        const target = document.querySelector(id);
+        const headerHeight = document.querySelector('header').offsetHeight;
+        const targetPosition = target.offsetTop - headerHeight - 20;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
       }
     });
   });
