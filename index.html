@@ -107,13 +107,7 @@
   /* renforce la lisibilité sur header sombre */
   backdrop-filter: blur(0.5px);
 }
-#commentaires { margin-top: 2rem; }
-#commentaires form { display: grid; gap: .75rem; max-width: 600px; }
-#commentList { margin-top: 1rem; display: grid; gap: .75rem; }
-.comment { padding: .75rem; border: 1px solid #ddd; border-radius: .5rem; background: #fff; }
-.commentHeader { display: flex; justify-content: space-between; align-items: center; font-size: .9rem; color: #555; }
-.commentBody { margin-top: .5rem; white-space: pre-wrap; word-wrap: break-word; }
-.commentActions button { background: none; border: none; color: #e11d48; cursor: pointer; }
+
   </style>
 </head>
 <body class="bg-glam text-white font-sans noise">
@@ -444,44 +438,8 @@ Je confirme
 <p id="rsvpMsg" class="text-sm text-amber-300/80 hidden"></p> </form>
     </div>
   </section>
-<!-- Commentaires -->
-<section id="commentaires" class="my-12"> <div class="mx-auto w-full max-w-3xl px-4"> <h2 class="text-center font-display text-3xl md:text-4xl gold-text"> Commentaires </h2>
-<p><br /></p>
-<form id="commentForm" autocomplete="off"
-  class="mx-auto grid max-w-2xl grid-cols-1 gap-4 items-start sm:[grid-template-columns:120px_1fr]">
-  <div class="contents">
-    <label for="commentName" class="self-center text-sm font-medium text-amber-300/90 sm:justify-self-start">
-      Nom
-    </label>
-    <input id="commentName" name="name" type="text" maxlength="50" placeholder="Votre nom"
-      class="w-full rounded-xl border border-neutral-800 bg-black/60 px-4 py-2.5 text-neutral-100 placeholder:text-neutral-400 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/40" />
-  </div>
 
-  <div class="contents">
-    <label for="commentMsg" class="self-start text-sm font-medium text-amber-300/90 sm:justify-self-start">
-      Message
-    </label>
-    <div class="space-y-2">
-      <textarea id="commentMsg" name="message" required maxlength="500" placeholder="Votre commentaire..."
-        class="min-h-[120px] w-full resize-y rounded-xl border border-neutral-800 bg-black/60 px-4 py-3 text-neutral-100 placeholder:text-neutral-400 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/40"></textarea>
-      <div class="flex items-center justify-between text-xs text-amber-300/70">
-        <span>Pas d’identification requise</span>
-        <span><span id="charCount">0</span>/500</span>
-      </div>
-    </div>
-  </div>
 
-  <div class="sm:col-start-2 flex justify-end">
-    <button type="submit"
-      class="inline-flex items-center gap-2 rounded-xl bg-red-900 px-5 py-2.5 font-medium text-white shadow-sm transition hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 active:scale-[.99]">
-      Publier
-    </button>
-  </div>
-</form>
-
-<div id="commentList" aria-live="polite" class="mt-6 grid max-w-2xl gap-4 mx-auto"></div>
-
-</div> </section>
 
   <!-- Infos -->
   <section id="contact" class="py-16">
@@ -513,149 +471,7 @@ Je confirme
   </footer>
 
   <script src="./app.js?v=20250808" defer></script>
-<script>
-(() => {
-  const STORAGE_KEY = 'pwa-comments';
 
-  const load = () => {
-    try {
-      const r = localStorage.getItem(STORAGE_KEY);
-      const a = r ? JSON.parse(r) : [];
-      return Array.isArray(a) ? a : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const save = (l) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(l));
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const uid = () =>
-    Math.random().toString(36).slice(2) + Date.now().toString(36);
-  const fmt = (t) => new Date(t).toLocaleString('fr-FR'); // Formatage localisé
-  const initials = (name = 'Anonyme') =>
-    (name
-      .trim()
-      .split(/\s+/)
-      .slice(0, 2)
-      .map((p) => p[0] ?.toUpperCase() || '')
-      .join('')) || 'A';
-
-  const form = document.getElementById('commentForm');
-  const nameEl = document.getElementById('commentName');
-  const msgEl = document.getElementById('commentMsg');
-  const listEl = document.getElementById('commentList');
-  const charCount = document.getElementById('charCount');
-
-  if (!form || !msgEl || !listEl) return;
-
-  const render = () => {
-    const items = load().sort((a, b) => b.ts - a.ts);
-    listEl.innerHTML = '';
-
-    if (!items.length) {
-      const p = document.createElement('p');
-      p.className = 'text-center text-amber-300/70';
-      p.textContent = 'Aucun commentaire pour le moment. Soyez le premier !';
-      listEl.appendChild(p);
-      return;
-    }
-
-    items.forEach((c) => {
-      // Carte
-      const card = document.createElement('article');
-      card.className = 'rounded-2xl border border-neutral-800 bg-gradient-to-br from-[#0b0b0b] to-black/70 p-4 shadow-sm';
-
-      // En-tête
-      const head = document.createElement('div');
-      head.className = 'flex items-center justify-between';
-
-      // Bloc gauche: avatar + meta
-      const left = document.createElement('div');
-      left.className = 'flex items-center gap-3';
-
-      const avatar = document.createElement('div');
-      avatar.className = 'grid h-9 w-9 place-items-center rounded-full bg-amber-400/15 ring-1 ring-amber-400/30 text-amber-300 text-sm font-semibold';
-      avatar.textContent = initials(c.name || 'Anonyme');
-
-      const meta = document.createElement('div');
-
-      const nm = document.createElement('div');
-      nm.className = 'text-sm font-medium text-neutral-100';
-      nm.textContent = c.name || 'Anonyme';
-
-      const dt = document.createElement('div');
-      dt.className = 'text-xs text-amber-300/70';
-      dt.textContent = fmt(c.ts);
-
-      meta.append(nm, dt);
-      left.append(avatar, meta);
-
-      // Bouton supprimer
-      const del = document.createElement('button');
-      del.type = 'button';
-      del.className = 'text-xs text-red-400 hover:text-red-300 transition';
-      del.textContent = 'Supprimer';
-      del.onclick = () => {
-        if (confirm('Supprimer ce commentaire ?')) {
-          save(load().filter((x) => x.id !== c.id));
-          render(); // On met à jour l'affichage juste après
-        }
-      };
-
-      head.append(left, del);
-
-      // Corps
-      const body = document.createElement('div');
-      body.className = 'mt-3 whitespace-pre-wrap break-words text-neutral-100';
-      body.textContent = c.message;
-
-      card.append(head, body);
-      listEl.appendChild(card);
-    });
-
-  };
-
-  // Compteur de caractères
-  if (charCount) {
-    const updateCount = () => {
-      charCount.textContent = String((msgEl.value || '').length);
-    };
-    msgEl.addEventListener('input', updateCount);
-    updateCount();
-  }
-
-  // Soumission du formulaire
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = (nameEl ?.value || '').trim();
-    const msg = (msgEl.value || '').trim();
-    if (!msg) {
-      msgEl.focus();
-      return;
-    }
-    const list = load();
-    list.push({
-      id: uid(),
-      name: name || 'Anonyme',
-      message: msg,
-      ts: Date.now()
-    });
-    save(list);
-    form.reset();
-    if (charCount) charCount.textContent = '0';
-    render();
-  });
-
-  // Premier rendu à l'initialisation
-  render();
-})();
-</script>
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
