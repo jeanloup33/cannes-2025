@@ -484,12 +484,8 @@
               <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
               <div class="rounded-xl bg-black/20 p-4">
                  <div id="giscus-container">
-                   <!-- Formulaire de commentaires partagés -->
-                      <form name="commentaires" method="POST" netlify netlify-honeypot="bot-field" id="commentForm" class="space-y-4">
-                        <input type="hidden" name="form-name" value="commentaires" />
-                        <p class="hidden">
-                          <label>Ne pas remplir: <input name="bot-field" /></label>
-                        </p>
+                   <!-- Formulaire de commentaires Airtable -->
+                       <form id="commentForm" class="space-y-4">
                         <div>
                           <label class="block text-sm font-medium text-white/80 mb-2">Votre nom ou pseudo</label>
                           <input type="text" name="nom" id="commentName" required 
@@ -752,26 +748,92 @@ Je confirme
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
 <!-- Giscus est déjà chargé dans le HTML -->
   
-  <!-- Script pour commentaires partagés -->
+  <!-- Script pour commentaires Airtable -->
    <script>
-     // Système de commentaires partagés via Netlify
+     // Configuration Airtable - À MODIFIER avec vos vraies valeurs
+     const AIRTABLE_CONFIG = {
+       baseId: 'VOTRE_BASE_ID',        // Ex: appXXXXXXXXXXXXXX
+       tableName: 'Comments',          // Nom de votre table
+       apiKey: 'VOTRE_CLE_API'         // Votre clé API Airtable
+     };
+     
+     const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tableName}`;
+     
      let allComments = [];
      
-     // Charger les commentaires depuis l'API Netlify
-     async function loadComments() {
+     // Créer un commentaire dans Airtable
+     async function createComment(nom, message) {
        try {
-         const response = await fetch('/.netlify/functions/get-comments');
+         const response = await fetch(AIRTABLE_URL, {
+           method: 'POST',
+           headers: {
+             'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({
+             records: [{
+               fields: {
+                 Nom: nom.trim(),
+                 Message: message.trim(),
+                 Date: new Date().toLocaleDateString('fr-FR', {
+                   day: 'numeric',
+                   month: 'long',
+                   hour: '2-digit',
+                   minute: '2-digit'
+                 })
+               }
+             }]
+           })
+         });
+         
          if (response.ok) {
-           allComments = await response.json();
-           displayComments();
+           console.log('✅ Commentaire créé dans Airtable');
+           return true;
          } else {
-           // Fallback: afficher message d'attente
-           displayComments();
+           console.error('❌ Erreur Airtable:', await response.text());
+           return false;
          }
        } catch (error) {
-         console.log('Chargement des commentaires en cours...');
-         displayComments();
+         console.error('❌ Erreur réseau:', error);
+         return false;
        }
+     }
+     
+     // Charger les commentaires depuis Airtable
+     async function loadComments() {
+       try {
+         const response = await fetch(`${AIRTABLE_URL}?sort[0][field]=Date&sort[0][direction]=desc`, {
+           headers: {
+             'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`
+           }
+         });
+         
+         if (response.ok) {
+           const data = await response.json();
+           allComments = data.records.map(record => record.fields);
+           console.log(`📥 ${allComments.length} commentaires chargés depuis Airtable`);
+         } else {
+           console.log('⚠️ Airtable non configuré, utilisation du fallback');
+           // Fallback vers comments.json
+           const fallbackResponse = await fetch('./comments.json');
+           if (fallbackResponse.ok) {
+             allComments = await fallbackResponse.json();
+           }
+         }
+       } catch (error) {
+         console.log('⚠️ Erreur Airtable, utilisation du fallback');
+         // Fallback vers comments.json
+         try {
+           const fallbackResponse = await fetch('./comments.json');
+           if (fallbackResponse.ok) {
+             allComments = await fallbackResponse.json();
+           }
+         } catch (fallbackError) {
+           console.log('📝 Aucun commentaire disponible');
+         }
+       }
+       
+       displayComments();
      }
      
      function displayComments() {
@@ -787,14 +849,14 @@ Je confirme
          <div class="bg-white/5 rounded-xl p-4 border border-white/10">
            <div class="flex items-center gap-3 mb-2">
              <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
-               ${comment.nom.charAt(0).toUpperCase()}
+               ${(comment.Nom || comment.nom).charAt(0).toUpperCase()}
              </div>
              <div>
-               <p class="font-semibold text-white/90">${comment.nom}</p>
-               <p class="text-xs text-white/60">${comment.date || 'À l\'instant'}</p>
+               <p class="font-semibold text-white/90">${comment.Nom || comment.nom}</p>
+               <p class="text-xs text-white/60">${comment.Date || comment.date || 'À l\'instant'}</p>
              </div>
            </div>
-           <p class="text-white/80 leading-relaxed">${comment.message}</p>
+           <p class="text-white/80 leading-relaxed">${comment.Message || comment.message}</p>
          </div>
        `).join('');
      }
@@ -806,29 +868,43 @@ Je confirme
        const form = document.getElementById('commentForm');
        if (form) {
          form.addEventListener('submit', async (e) => {
+           e.preventDefault();
+           
            const button = form.querySelector('button');
            const originalText = button.textContent;
+           const nom = document.getElementById('commentName').value;
+           const message = document.getElementById('commentMessage').value;
+           
+           if (!nom.trim() || !message.trim()) {
+             alert('Veuillez remplir tous les champs');
+             return;
+           }
            
            // Animation de soumission
            button.textContent = '📤 Envoi en cours...';
            button.disabled = true;
            
-           // Le formulaire sera soumis normalement à Netlify
-           // Après soumission, afficher un message de succès
-           setTimeout(() => {
-             button.textContent = '✅ Message envoyé !';
+           // Créer le commentaire dans Airtable
+           const success = await createComment(nom, message);
+           
+           if (success) {
+             button.textContent = '✅ Message publié !';
              button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+             form.reset();
              
-             setTimeout(() => {
-               button.textContent = originalText;
-               button.style.background = '';
-               button.disabled = false;
-               form.reset();
-               
-               // Recharger les commentaires après un délai
-               setTimeout(loadComments, 2000);
-             }, 2000);
-           }, 1000);
+             // Recharger les commentaires après 2 secondes
+             setTimeout(loadComments, 2000);
+           } else {
+             button.textContent = '❌ Erreur, réessayez';
+             button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+           }
+           
+           // Restaurer le bouton après 3 secondes
+           setTimeout(() => {
+             button.textContent = originalText;
+             button.style.background = '';
+             button.disabled = false;
+           }, 3000);
          });
        }
        
