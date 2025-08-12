@@ -6,7 +6,7 @@
   <title>Soirée Festival de Cannes — 13 Septembre 2025 — Bruges</title>
   <meta name="description" content="Marchez sur le tapis rouge ! Soirée à thème Festival de Cannes — Glamour, DJ, tapis rouge, photobooth, dress code chic. 13/09/2025 à Bruges." />
   <meta name="theme-color" content="#0b0b0d" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cusdis.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://cusdis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cusdis.com; connect-src 'self' https://cusdis.com; frame-src https://cusdis.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://giscus.app; connect-src 'self' https://giscus.app https://api.github.com; frame-src https://giscus.app;" />
 
   <link rel="icon" href="./icons/icon-192.png?v=20250808" />
   <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
@@ -128,86 +128,37 @@
   }
 }
 
-/* Personnalisation Cusdis */
-#cusdis_thread {
-  --cusdis-color-primary: #e8c77d;
-  --cusdis-color-primary-dark: #b99243;
-  --cusdis-color-bg: rgba(0, 0, 0, 0.2);
-  --cusdis-color-bg-secondary: rgba(255, 255, 255, 0.05);
-  --cusdis-color-text: rgba(255, 255, 255, 0.9);
-  --cusdis-color-text-secondary: rgba(255, 255, 255, 0.7);
-  --cusdis-color-border: rgba(255, 255, 255, 0.1);
-  --cusdis-border-radius: 12px;
-  --cusdis-font-family: 'Manrope', system-ui, sans-serif;
+/* Personnalisation Giscus */
+.giscus, .giscus-frame {
+  width: 100% !important;
+  border-radius: 12px !important;
+  background: transparent !important;
 }
 
-#cusdis_thread iframe {
+/* Style du conteneur Giscus */
+#giscus-container {
+  min-height: 200px;
   border-radius: 12px;
 }
 
-/* Style des éléments Cusdis */
-#cusdis_thread .cusdis-button {
-  background: linear-gradient(135deg, #e8c77d, #b99243) !important;
-  color: #000 !important;
-  font-weight: 600 !important;
-  border-radius: 12px !important;
-  transition: all 0.2s ease !important;
+/* Personnalisation des couleurs Giscus via CSS variables */
+.giscus {
+  --color-canvas-default: rgba(0, 0, 0, 0.2) !important;
+  --color-canvas-subtle: rgba(255, 255, 255, 0.05) !important;
+  --color-border-default: rgba(255, 255, 255, 0.1) !important;
+  --color-fg-default: rgba(255, 255, 255, 0.9) !important;
+  --color-fg-muted: rgba(255, 255, 255, 0.7) !important;
+  --color-accent-emphasis: #e8c77d !important;
+  --color-accent-fg: #000 !important;
+  --color-btn-primary-bg: linear-gradient(135deg, #e8c77d, #b99243) !important;
+  --color-btn-primary-text: #000 !important;
 }
 
-#cusdis_thread .cusdis-button:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(232, 199, 125, 0.3) !important;
-}
-
-/* Masquer le champ email - sélecteurs renforcés */
-#cusdis_thread .cusdis-email-input,
-#cusdis_thread input[type="email"],
-#cusdis_thread input[placeholder*="email" i],
-#cusdis_thread input[placeholder*="Email" i],
-#cusdis_thread input[name*="email" i],
-#cusdis_thread input[id*="email" i],
-#cusdis_thread .email-field,
-#cusdis_thread .cusdis-form-item:has(input[type="email"]),
-#cusdis_thread .cusdis-form-group:has(input[type="email"]) {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
-
-/* Agrandir le champ message */
-#cusdis_thread .cusdis-textarea,
-#cusdis_thread textarea {
-  min-height: 120px !important;
-  height: 120px !important;
-  resize: vertical !important;
-}
-
-/* Améliorer l'espacement */
-#cusdis_thread .cusdis-form-group {
-  margin-bottom: 16px !important;
-}
-
-/* Style du conteneur principal */
-#cusdis_thread iframe {
-  border-radius: 12px !important;
-  min-height: 300px !important;
-}
-
-/* Masquage email par JavaScript si CSS ne suffit pas */
-#cusdis_thread {
-  --cusdis-email-display: none;
-}
-
-/* Sélecteurs additionnels pour masquer l'email */
-#cusdis_thread [data-field="email"],
-#cusdis_thread .field-email,
-#cusdis_thread label:has(+ input[type="email"]),
-#cusdis_thread label[for*="email" i] {
-  display: none !important;
-  visibility: hidden !important;
+/* Style responsive pour Giscus */
+@media (max-width: 768px) {
+  .giscus {
+    font-size: 14px !important;
+  }
 }
 
   </style>
@@ -531,25 +482,23 @@
             <div class="px-5 pb-5">
               <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
               <div class="rounded-xl bg-black/20 p-4">
-                 <div id="cusdis_thread"
-                      data-host="https://cusdis.com"
-                      data-app-id="7d0e6000-d403-4f39-b97d-c76ae849b011"
-                      data-page-id="cannes-night-2025"
-                      data-page-url="https://cannes-festival.netlify.app/"
-                      data-page-title="Festival de Cannes Night 2025"
-                      data-theme="dark"
-                      data-lang="fr"
-                      data-email-required="false">
-                   <!-- Fallback et diagnostic -->
-                    <div id="cusdis-fallback" class="text-center py-8 text-white/70">
-                      <div class="mb-4">💬</div>
-                      <p class="text-sm mb-2">Système de commentaires Cusdis</p>
-                      <p class="text-xs opacity-75">Chargement en cours...</p>
-                      <div id="cusdis-status" class="mt-4 p-3 bg-white/5 rounded-lg text-xs">
-                        <p>⏳ Tentative de connexion au serveur Cusdis...</p>
-                        <p class="mt-1">Si cette section reste visible, vérifiez la configuration.</p>
-                      </div>
-                    </div>
+                 <div id="giscus-container">
+                   <!-- Giscus Comments -->
+                     <script src="https://giscus.app/client.js"
+                             data-repo="jeanloup33/cannes-2025"
+                             data-repo-id="R_kgDONVGJJw"
+                             data-category="General"
+                             data-category-id="DIC_kwDONVGJJ84ClOQs"
+                             data-mapping="pathname"
+                             data-strict="0"
+                             data-reactions-enabled="1"
+                             data-emit-metadata="0"
+                             data-input-position="bottom"
+                             data-theme="dark"
+                             data-lang="fr"
+                             crossorigin="anonymous"
+                             async>
+                     </script>
                  </div>
                </div>
             </div>
@@ -776,70 +725,26 @@ Je confirme
   </script>
 
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
-<!-- Configuration française pour Cusdis -->
-  <script>
-    // Configuration locale française
-    window.CUSDIS_LOCALE = {
-      "powered_by": "Propulsé par Cusdis",
-      "post_comment": "Publier",
-      "loading": "Chargement...",
-      "name": "Nom",
-      "name_is_required": "Le nom est requis",
-      "email": "Email",
-      "email_is_required": "L'email est requis",
-      "website": "Site web",
-      "comment": "Commentaire",
-      "comment_is_required": "Le commentaire est requis",
-      "submit": "Publier",
-      "reply": "Répondre",
-      "approved": "Approuvé",
-      "waiting_for_approval": "En attente d'approbation",
-      "nickname": "Pseudo",
-       "reply_placeholder": "Un commentaire ?",
-       "comment_placeholder": "Partagez vos impressions sur l'événement...",
-       "name_placeholder": "Votre nom ou pseudo"
-    };
-  </script>
+<!-- Giscus est déjà chargé dans le HTML -->
   
-  <!-- Script Cusdis -->
-  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
-  
-  <!-- Script pour diagnostic et fallback Cusdis -->
+  <!-- Script pour Giscus -->
    <script>
-     // Diagnostic détaillé du chargement Cusdis
-     function updateCusdisStatus(message, isError = false) {
-       const status = document.getElementById('cusdis-status');
-       if (status) {
-         status.innerHTML = `<p style="color: ${isError ? '#ff6b6b' : '#4ecdc4'}">${message}</p>`;
+     // Configuration du thème Giscus selon le mode sombre
+     function setGiscusTheme() {
+       const giscusFrame = document.querySelector('iframe.giscus-frame');
+       if (giscusFrame) {
+         giscusFrame.contentWindow.postMessage({
+           giscus: {
+             setConfig: {
+               theme: 'dark'
+             }
+           }
+         }, 'https://giscus.app');
        }
      }
      
-     // Test de connectivité au serveur Cusdis
-      fetch('https://cusdis.com/js/cusdis.es.js', { mode: 'no-cors' })
-        .then(() => {
-          updateCusdisStatus('✅ Serveur Cusdis officiel accessible');
-        })
-        .catch(() => {
-          updateCusdisStatus('❌ Serveur Cusdis inaccessible - Problème de connexion', true);
-        });
-     
-     // Vérifier le chargement après 5 secondes
-     setTimeout(() => {
-       const cusdisThread = document.getElementById('cusdis_thread');
-       const fallback = document.getElementById('cusdis-fallback');
-       
-       if (cusdisThread && fallback) {
-         const iframe = cusdisThread.querySelector('iframe');
-         if (iframe) {
-           // Cusdis chargé avec succès
-           fallback.style.display = 'none';
-           updateCusdisStatus('✅ Cusdis chargé avec succès');
-         } else {
-           // Cusdis n'a pas pu se charger
-           updateCusdisStatus('❌ Échec du chargement Cusdis<br>• Vérifiez le domaine dans le dashboard<br>• App ID: 7d0e6000-d403-4f39-b97d-c76ae849b011<br>• URL: ' + window.location.href, true);
-         }
-       }
-     }, 5000);
+     // Attendre que Giscus soit chargé
+     setTimeout(setGiscusTheme, 2000);
    </script>
 <script>
   (async () => {
