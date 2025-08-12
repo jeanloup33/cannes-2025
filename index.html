@@ -524,61 +524,107 @@ Je confirme
       }
 
       // Test des notifications push
-      const notifTestBtn = document.getElementById('notifTestBtn');
-      if (notifTestBtn) {
-        notifTestBtn.addEventListener('click', async () => {
-          try {
-            // Feedback haptique
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-            
-            // Vérifier le support des notifications
-            if (!('Notification' in window)) {
-              alert('Ce navigateur ne supporte pas les notifications');
-              return;
-            }
+       const notifTestBtn = document.getElementById('notifTestBtn');
+       if (notifTestBtn) {
+         notifTestBtn.addEventListener('click', async () => {
+           try {
+             console.log('🔔 Début du test des notifications');
+             
+             // Feedback haptique
+             if (navigator.vibrate) {
+               navigator.vibrate([100, 50, 100]);
+               console.log('✅ Vibration activée');
+             }
+             
+             // Vérifier le protocole HTTPS
+             if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+               alert('⚠️ Les notifications nécessitent HTTPS ou localhost.\nTestez sur localhost ou déployez en HTTPS.');
+               return;
+             }
+             console.log('✅ Protocole vérifié:', location.protocol);
+             
+             // Vérifier le support des notifications
+             if (!('Notification' in window)) {
+               alert('❌ Ce navigateur ne supporte pas les notifications.\nEssayez Chrome, Firefox ou Edge.');
+               console.error('❌ API Notification non supportée');
+               return;
+             }
+             console.log('✅ API Notification supportée');
 
-            // Demander la permission
-            let permission = Notification.permission;
-            if (permission === 'default') {
-              permission = await Notification.requestPermission();
-            }
+             // Vérifier la permission actuelle
+             let permission = Notification.permission;
+             console.log('🔐 Permission actuelle:', permission);
+             
+             if (permission === 'default') {
+               console.log('📝 Demande de permission...');
+               permission = await Notification.requestPermission();
+               console.log('📝 Nouvelle permission:', permission);
+             }
 
-            if (permission === 'granted') {
-              // Créer une notification de test
-              const notification = new Notification('🎬 Festival de Cannes Night', {
-                body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
-                icon: './icons/icon-192.png',
-                badge: './icons/icon-192.png',
-                tag: 'cannes-test',
-                requireInteraction: true,
-                vibrate: [200, 100, 200],
-                actions: [
-                  { action: 'view', title: 'Voir l\'événement' },
-                  { action: 'close', title: 'Fermer' }
-                ]
-              });
+             if (permission === 'granted') {
+               console.log('✅ Permission accordée, création de la notification...');
+               
+               // Créer une notification de test simple d'abord
+               const notification = new Notification('🎬 Festival de Cannes Night', {
+                 body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
+                 icon: './icons/icon-192.png',
+                 tag: 'cannes-test'
+               });
+               
+               console.log('✅ Notification créée avec succès');
 
-              notification.onclick = () => {
-                window.focus();
-                notification.close();
-              };
+               notification.onclick = () => {
+                 console.log('👆 Clic sur notification');
+                 window.focus();
+                 notification.close();
+               };
 
-              // Fermer automatiquement après 5 secondes
-              setTimeout(() => notification.close(), 5000);
-              
-              // Mettre à jour le bouton
-              notifTestBtn.innerHTML = '✅ Notifications activées';
-              notifTestBtn.disabled = true;
-              notifTestBtn.classList.add('opacity-75');
-            } else {
-              alert('Permission refusée. Activez les notifications dans les paramètres de votre navigateur.');
-            }
-          } catch (err) {
-            console.error('Erreur notification:', err);
-            alert('Erreur lors du test des notifications');
-          }
-        });
-      }
+               notification.onerror = (error) => {
+                 console.error('❌ Erreur notification:', error);
+               };
+
+               // Fermer automatiquement après 5 secondes
+               setTimeout(() => {
+                 notification.close();
+                 console.log('⏰ Notification fermée automatiquement');
+               }, 5000);
+               
+               // Mettre à jour le bouton
+               notifTestBtn.innerHTML = '✅ Notifications activées';
+               notifTestBtn.disabled = true;
+               notifTestBtn.classList.add('opacity-75');
+               
+               console.log('🎉 Test des notifications terminé avec succès');
+               
+             } else if (permission === 'denied') {
+               alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
+               console.warn('❌ Permission refusée par l\'utilisateur');
+             } else {
+               alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
+               console.warn('⚠️ Permission dans un état inattendu:', permission);
+             }
+             
+           } catch (err) {
+             console.error('💥 Erreur complète:', err);
+             console.error('💥 Stack trace:', err.stack);
+             
+             let errorMsg = 'Erreur lors du test des notifications:\n\n';
+             
+             if (err.name === 'NotAllowedError') {
+               errorMsg += '❌ Permission refusée par le navigateur';
+             } else if (err.name === 'NotSupportedError') {
+               errorMsg += '❌ Notifications non supportées sur cet appareil';
+             } else if (err.message.includes('https')) {
+               errorMsg += '🔒 HTTPS requis pour les notifications';
+             } else {
+               errorMsg += '⚠️ ' + err.message;
+             }
+             
+             errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
+             alert(errorMsg);
+           }
+         });
+       }
     });
   </script>
 
