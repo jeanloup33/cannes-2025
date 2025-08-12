@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = a.getAttribute('href');
       if (id.length > 1 && document.querySelector(id)) {
         e.preventDefault();
-        const y = document.querySelector(id).getBoundingClientRect().top + window.scrollY - 74;
+        const y = document.querySelector(id).getBoundingClientRect().top + window.scrollY - 90;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     });
