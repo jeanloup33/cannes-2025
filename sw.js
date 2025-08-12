@@ -41,6 +41,29 @@ const GOOGLE_FONTS_FILES_RE = new RegExp('^https://fonts\\.gstatic\\.com/.', 'i'
 const NEWS_JSON_PATH = '/assets/news.json';
 const HTML_NETWORK_FIRST = new Set(['/', '/index.html', '/news.html']);
 
+// Notifications push
+self.addEventListener('push', (event) => {
+  const options = {
+    body: 'Nouvelle actualité Festival de Cannes !',
+    icon: './icons/icon-192.png',
+    badge: './icons/icon-192.png',
+    vibrate: [200, 100, 200],
+    tag: 'cannes-news',
+    requireInteraction: true
+  };
+  event.waitUntil(
+    self.registration.showNotification('Cannes Night', options)
+  );
+});
+
+// Gestion des clics sur notifications
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow('/')
+  );
+});
+
 
 // ===================================================================
 // FONCTIONS UTILITAIRES
@@ -106,9 +129,24 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Stratégie A: Toujours via le réseau pour les données dynamiques (news.json)
+  // Stratégie améliorée pour news.json : Network First avec cache intelligent
   if (req.method === 'GET' && isNewsJson(url)) {
-    event.respondWith(fetch(new Request(req, { cache: 'no-store' })));
+    event.respondWith((async () => {
+      try {
+        // Toujours essayer le réseau en premier pour les dernières news
+        const networkResponse = await fetch(new Request(req, { cache: 'no-store' }));
+        // Mettre à jour le cache avec la nouvelle version
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(req, networkResponse.clone());
+        return networkResponse;
+      } catch (error) {
+        // Fallback vers le cache si réseau indisponible
+        const cachedResponse = await caches.match(req);
+        return cachedResponse || new Response('[]', { 
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    })());
     return;
   }
 

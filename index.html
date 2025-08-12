@@ -6,6 +6,7 @@
   <title>Soirée Festival de Cannes — 13 Septembre 2025 — Bruges</title>
   <meta name="description" content="Marchez sur le tapis rouge ! Soirée à thème Festival de Cannes — Glamour, DJ, tapis rouge, photobooth, dress code chic. 13/09/2025 à Bruges." />
   <meta name="theme-color" content="#0b0b0d" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; connect-src 'self';" />
 
   <link rel="icon" href="./icons/icon-192.png?v=20250808" />
   <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
@@ -45,6 +46,10 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Preload des ressources critiques -->
+  <link rel="preload" href="./assets/hero.webp" as="image" />
+  <link rel="preload" href="./assets/logo.webp" as="image" />
 
   <style>
     .gold-text { background: linear-gradient(135deg, #f7ebc2, #e8c77d, #b99243); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -108,6 +113,21 @@
   backdrop-filter: blur(0.5px);
 }
 
+/* Améliorer les zones tactiles */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px;
+}
+
+/* Mode sombre automatique */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0b0b0d;
+    --text-color: #f5efe1;
+  }
+}
+
   </style>
 </head>
 <body class="bg-glam text-white font-sans noise">
@@ -116,8 +136,8 @@
 
 <!-- Burger -->
 <button id="nav-toggle"
-        class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5"
-        aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
+        class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
+        aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu de navigation">
   <span class="sr-only">Menu</span>
   <div class="w-6 h-[2px] bg-white my-1"></div>
   <div class="w-6 h-[2px] bg-white my-1"></div>
@@ -232,6 +252,11 @@
         <a href="#program" class="px-6 py-3 rounded-2xl border border-white/15 hover:bg-white/10">Découvrir le programme</a>
       </div>
       <div class="mt-10 text-white/70 text-sm">Dress code: Black tie, glamour & doré</div>
+      
+      <!-- Bouton partage natif -->
+      <button id="shareBtn" class="mt-6 hidden px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition touch-target">
+        📤 Partager l'événement
+      </button>
     </div>
 	</section>
 	
@@ -333,12 +358,12 @@
     <div class="container mx-auto px-6">
       <h2 class="font-display text-3xl md:text-4xl gold-text">Galerie</h2>
       <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
-        <img src="./assets/gallery2.webp" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 1">
-        <img src="./assets/gallery3.webp" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 2">
-        <img src="./assets/gallery4.webp" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 3">
-        <img src="./assets/gallery5.webp" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 4">
-        <img src="./assets/gallery6.webp" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 5">
-        <img src="./assets/gallery7.webp" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 6">
+        <img src="./assets/gallery2.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 1">
+        <img src="./assets/gallery3.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 2">
+        <img src="./assets/gallery4.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 3">
+        <img src="./assets/gallery5.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 4">
+        <img src="./assets/gallery6.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 5">
+        <img src="./assets/gallery7.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 6">
       </div>
     </div>
   </section>
@@ -471,6 +496,31 @@ Je confirme
   </footer>
 
   <script src="./app.js?v=20250808" defer></script>
+  
+  <!-- Partage natif et feedback haptique -->
+  <script>
+    // Partage natif
+    document.addEventListener('DOMContentLoaded', () => {
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share && shareBtn) {
+        shareBtn.classList.remove('hidden');
+        shareBtn.addEventListener('click', async () => {
+          try {
+            // Feedback haptique
+            if (navigator.vibrate) navigator.vibrate(50);
+            
+            await navigator.share({
+              title: 'Festival de Cannes Night',
+              text: 'Rejoignez-nous pour une soirée d\'exception ! Tapis rouge, glamour et DJ set.',
+              url: window.location.href
+            });
+          } catch (err) {
+            console.log('Partage annulé ou non supporté');
+          }
+        });
+      }
+    });
+  </script>
 
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
