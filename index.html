@@ -480,15 +480,25 @@
             <div class="px-5 pb-5">
               <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
               <div class="rounded-xl bg-black/20 p-4">
-                <div id="cusdis_thread"
-                     data-host="https://commentaires.jeanloup.xyz"
-                     data-app-id="6f0f32bb-b9a0-4871-953e-1ab125328535"
-                     data-page-id="cannes-night-2025"
-                     data-page-url="https://cannes-festival.netlify.app/"
-                     data-page-title="Festival de Cannes Night 2025"
-                     data-theme="dark">
-                </div>
-              </div>
+                 <div id="cusdis_thread"
+                      data-host="https://commentaires.jeanloup.xyz"
+                      data-app-id="6f0f32bb-b9a0-4871-953e-1ab125328535"
+                      data-page-id="cannes-night-2025"
+                      data-page-url="https://cannes-festival.netlify.app/"
+                      data-page-title="Festival de Cannes Night 2025"
+                      data-theme="dark">
+                   <!-- Fallback pour développement local -->
+                   <div id="cusdis-fallback" class="text-center py-8 text-white/70">
+                     <div class="mb-4">💬</div>
+                     <p class="text-sm mb-2">Système de commentaires Cusdis</p>
+                     <p class="text-xs opacity-75">Disponible en production sur le site déployé</p>
+                     <div class="mt-4 p-3 bg-white/5 rounded-lg text-xs">
+                       <p>En localhost, Cusdis ne peut pas se charger pour des raisons de sécurité.</p>
+                       <p class="mt-1">Les commentaires seront fonctionnels sur votre site Netlify !</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
@@ -696,6 +706,25 @@ Je confirme
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
 <!-- Script Cusdis -->
   <script async defer src="https://commentaires.jeanloup.xyz/js/cusdis.es.js"></script>
+  
+  <!-- Script pour gérer le fallback Cusdis -->
+  <script>
+    // Vérifier si Cusdis s'est chargé après 3 secondes
+    setTimeout(() => {
+      const cusdisThread = document.getElementById('cusdis_thread');
+      const fallback = document.getElementById('cusdis-fallback');
+      
+      if (cusdisThread && fallback) {
+        // Si Cusdis ne s'est pas chargé (pas d'iframe), garder le fallback
+        const iframe = cusdisThread.querySelector('iframe');
+        if (iframe) {
+          // Cusdis chargé, masquer le fallback
+          fallback.style.display = 'none';
+        }
+        // Sinon, le fallback reste visible
+      }
+    }, 3000);
+  </script>
 <script>
   (async () => {
     const target = document.getElementById('latestNewsContainer');
