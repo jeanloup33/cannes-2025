@@ -253,10 +253,15 @@
       </div>
       <div class="mt-10 text-white/70 text-sm">Dress code: Black tie, glamour & doré</div>
       
-      <!-- Bouton partage natif -->
-      <button id="shareBtn" class="mt-6 hidden px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition touch-target">
-        📤 Partager l'événement
-      </button>
+      <!-- Boutons d'action -->
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="shareBtn" class="hidden px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition touch-target">
+          📤 Partager l'événement
+        </button>
+        <button id="notifTestBtn" class="px-4 py-2 rounded-xl bg-gold/20 hover:bg-gold/30 text-gold font-semibold transition touch-target">
+          🔔 Tester les notifications
+        </button>
+      </div>
     </div>
 	</section>
 	
@@ -497,18 +502,16 @@ Je confirme
 
   <script src="./app.js?v=20250808" defer></script>
   
-  <!-- Partage natif et feedback haptique -->
+  <!-- Partage natif, notifications push et feedback haptique -->
   <script>
-    // Partage natif
     document.addEventListener('DOMContentLoaded', () => {
+      // Partage natif
       const shareBtn = document.getElementById('shareBtn');
       if (navigator.share && shareBtn) {
         shareBtn.classList.remove('hidden');
         shareBtn.addEventListener('click', async () => {
           try {
-            // Feedback haptique
             if (navigator.vibrate) navigator.vibrate(50);
-            
             await navigator.share({
               title: 'Festival de Cannes Night',
               text: 'Rejoignez-nous pour une soirée d\'exception ! Tapis rouge, glamour et DJ set.',
@@ -516,6 +519,63 @@ Je confirme
             });
           } catch (err) {
             console.log('Partage annulé ou non supporté');
+          }
+        });
+      }
+
+      // Test des notifications push
+      const notifTestBtn = document.getElementById('notifTestBtn');
+      if (notifTestBtn) {
+        notifTestBtn.addEventListener('click', async () => {
+          try {
+            // Feedback haptique
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            
+            // Vérifier le support des notifications
+            if (!('Notification' in window)) {
+              alert('Ce navigateur ne supporte pas les notifications');
+              return;
+            }
+
+            // Demander la permission
+            let permission = Notification.permission;
+            if (permission === 'default') {
+              permission = await Notification.requestPermission();
+            }
+
+            if (permission === 'granted') {
+              // Créer une notification de test
+              const notification = new Notification('🎬 Festival de Cannes Night', {
+                body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
+                icon: './icons/icon-192.png',
+                badge: './icons/icon-192.png',
+                tag: 'cannes-test',
+                requireInteraction: true,
+                vibrate: [200, 100, 200],
+                actions: [
+                  { action: 'view', title: 'Voir l\'événement' },
+                  { action: 'close', title: 'Fermer' }
+                ]
+              });
+
+              notification.onclick = () => {
+                window.focus();
+                notification.close();
+              };
+
+              // Fermer automatiquement après 5 secondes
+              setTimeout(() => notification.close(), 5000);
+              
+              // Mettre à jour le bouton
+              notifTestBtn.innerHTML = '✅ Notifications activées';
+              notifTestBtn.disabled = true;
+              notifTestBtn.classList.add('opacity-75');
+            } else {
+              alert('Permission refusée. Activez les notifications dans les paramètres de votre navigateur.');
+            }
+          } catch (err) {
+            console.error('Erreur notification:', err);
+            alert('Erreur lors du test des notifications');
           }
         });
       }
