@@ -6,7 +6,7 @@
   <title>Soirée Festival de Cannes — 13 Septembre 2025 — Bruges</title>
   <meta name="description" content="Marchez sur le tapis rouge ! Soirée à thème Festival de Cannes — Glamour, DJ, tapis rouge, photobooth, dress code chic. 13/09/2025 à Bruges." />
   <meta name="theme-color" content="#0b0b0d" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://identity.netlify.com; connect-src 'self' https://identity.netlify.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://commentaires.jeanloup.xyz; connect-src 'self' https://commentaires.jeanloup.xyz; frame-src https://commentaires.jeanloup.xyz;" />
 
   <link rel="icon" href="./icons/icon-192.png?v=20250808" />
   <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
@@ -126,6 +126,37 @@
     --bg-color: #0b0b0d;
     --text-color: #f5efe1;
   }
+}
+
+/* Personnalisation Cusdis */
+#cusdis_thread {
+  --cusdis-color-primary: #e8c77d;
+  --cusdis-color-primary-dark: #b99243;
+  --cusdis-color-bg: rgba(0, 0, 0, 0.2);
+  --cusdis-color-bg-secondary: rgba(255, 255, 255, 0.05);
+  --cusdis-color-text: rgba(255, 255, 255, 0.9);
+  --cusdis-color-text-secondary: rgba(255, 255, 255, 0.7);
+  --cusdis-color-border: rgba(255, 255, 255, 0.1);
+  --cusdis-border-radius: 12px;
+  --cusdis-font-family: 'Manrope', system-ui, sans-serif;
+}
+
+#cusdis_thread iframe {
+  border-radius: 12px;
+}
+
+/* Style des éléments Cusdis */
+#cusdis_thread .cusdis-button {
+  background: linear-gradient(135deg, #e8c77d, #b99243) !important;
+  color: #000 !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+#cusdis_thread .cusdis-button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(232, 199, 125, 0.3) !important;
 }
 
   </style>
@@ -431,6 +462,40 @@
 </details>
 
 </div> </section>
+
+  <!-- Commentaires -->
+  <section id="commentaires" class="container mx-auto px-5 py-10 md:py-14">
+    <h2 class="text-2xl md:text-3xl font-extrabold tracking-wide gold-text mb-6">Vos impressions</h2>
+    <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
+      <details class="group">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none hover:bg-white/5 transition-colors">
+          <span class="text-base md:text-lg font-semibold text-white/90">💬 Partagez vos attentes et impressions</span>
+          <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10">
+            <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span>
+            <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span>
+          </span>
+        </summary>
+        <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+          <div class="overflow-hidden">
+            <div class="px-5 pb-5">
+              <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
+              <div class="rounded-xl bg-black/20 p-4">
+                <div id="cusdis_thread"
+                     data-host="https://commentaires.jeanloup.xyz"
+                     data-app-id="6f0f32bb-b9a0-4871-953e-1ab125328535"
+                     data-page-id="cannes-night-2025"
+                     data-page-url="https://cannes-festival.netlify.app/"
+                     data-page-title="Festival de Cannes Night 2025"
+                     data-theme="dark">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
   <!-- Billetterie / CTA -->
   <section id="tickets" class="py-20 md:py-28 bg-noir">
     <div class="container mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
@@ -629,7 +694,8 @@ Je confirme
   </script>
 
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
-<!-- Script Netlify Identity retiré pour éviter les erreurs CSP en développement -->
+<!-- Script Cusdis -->
+  <script async defer src="https://commentaires.jeanloup.xyz/js/cusdis.es.js"></script>
 <script>
   (async () => {
     const target = document.getElementById('latestNewsContainer');
