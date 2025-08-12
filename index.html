@@ -159,6 +159,33 @@
   box-shadow: 0 4px 12px rgba(232, 199, 125, 0.3) !important;
 }
 
+/* Masquer le champ email */
+#cusdis_thread .cusdis-email-input,
+#cusdis_thread input[type="email"],
+#cusdis_thread input[placeholder*="email" i],
+#cusdis_thread input[placeholder*="Email" i] {
+  display: none !important;
+}
+
+/* Agrandir le champ message */
+#cusdis_thread .cusdis-textarea,
+#cusdis_thread textarea {
+  min-height: 120px !important;
+  height: 120px !important;
+  resize: vertical !important;
+}
+
+/* Améliorer l'espacement */
+#cusdis_thread .cusdis-form-group {
+  margin-bottom: 16px !important;
+}
+
+/* Style du conteneur principal */
+#cusdis_thread iframe {
+  border-radius: 12px !important;
+  min-height: 300px !important;
+}
+
   </style>
 </head>
 <body class="bg-glam text-white font-sans noise">
@@ -486,7 +513,9 @@
                       data-page-id="cannes-night-2025"
                       data-page-url="https://cannes-festival.netlify.app/"
                       data-page-title="Festival de Cannes Night 2025"
-                      data-theme="dark">
+                      data-theme="dark"
+                      data-lang="fr"
+                      data-email-required="false">
                    <!-- Fallback et diagnostic -->
                     <div id="cusdis-fallback" class="text-center py-8 text-white/70">
                       <div class="mb-4">💬</div>
@@ -704,8 +733,33 @@ Je confirme
   </script>
 
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
-<!-- Script Cusdis -->
-   <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<!-- Configuration française pour Cusdis -->
+  <script>
+    // Configuration locale française
+    window.CUSDIS_LOCALE = {
+      "powered_by": "Propulsé par Cusdis",
+      "post_comment": "Publier un commentaire",
+      "loading": "Chargement...",
+      "name": "Nom",
+      "name_is_required": "Le nom est requis",
+      "email": "Email",
+      "email_is_required": "L'email est requis",
+      "website": "Site web",
+      "comment": "Commentaire",
+      "comment_is_required": "Le commentaire est requis",
+      "submit": "Publier",
+      "reply": "Répondre",
+      "approved": "Approuvé",
+      "waiting_for_approval": "En attente d'approbation",
+      "nickname": "Pseudonyme",
+      "reply_placeholder": "Répondre à ce commentaire...",
+      "comment_placeholder": "Partagez vos impressions sur l'événement...",
+      "name_placeholder": "Votre nom ou pseudonyme"
+    };
+  </script>
+  
+  <!-- Script Cusdis -->
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
   
   <!-- Script pour diagnostic et fallback Cusdis -->
    <script>
