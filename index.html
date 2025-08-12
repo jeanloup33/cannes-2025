@@ -871,20 +871,26 @@ Je confirme
          return;
        }
        
-       commentsList.innerHTML = allComments.map(comment => `
-         <div class="bg-white/5 rounded-xl p-4 border border-white/10">
-           <div class="flex items-center gap-3 mb-2">
-             <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
-               ${(comment.Nom || comment.nom).charAt(0).toUpperCase()}
-             </div>
-             <div>
-               <p class="font-semibold text-white/90">${comment.Nom || comment.nom}</p>
-               <p class="text-xs text-white/60">${comment.Date || comment.date || 'À l\'instant'}</p>
-             </div>
-           </div>
-           <p class="text-white/80 leading-relaxed">${comment.Message || comment.message}</p>
-         </div>
-       `).join('');
+       commentsList.innerHTML = allComments.map(comment => {
+          const nom = comment.Nom || comment.nom || 'Anonyme';
+          const message = comment.Message || comment.message || 'Message vide';
+          const date = comment.Date || comment.date || 'À l\'instant';
+          
+          return `
+            <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
+                  ${nom.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p class="font-semibold text-white/90">${nom}</p>
+                  <p class="text-xs text-white/60">${date}</p>
+                </div>
+              </div>
+              <p class="text-white/80 leading-relaxed">${message}</p>
+            </div>
+          `;
+        }).join('');
      }
      
      // Gestion du formulaire
