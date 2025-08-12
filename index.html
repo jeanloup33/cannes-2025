@@ -159,12 +159,22 @@
   box-shadow: 0 4px 12px rgba(232, 199, 125, 0.3) !important;
 }
 
-/* Masquer le champ email */
+/* Masquer le champ email - sélecteurs renforcés */
 #cusdis_thread .cusdis-email-input,
 #cusdis_thread input[type="email"],
 #cusdis_thread input[placeholder*="email" i],
-#cusdis_thread input[placeholder*="Email" i] {
+#cusdis_thread input[placeholder*="Email" i],
+#cusdis_thread input[name*="email" i],
+#cusdis_thread input[id*="email" i],
+#cusdis_thread .email-field,
+#cusdis_thread .cusdis-form-item:has(input[type="email"]),
+#cusdis_thread .cusdis-form-group:has(input[type="email"]) {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Agrandir le champ message */
@@ -184,6 +194,20 @@
 #cusdis_thread iframe {
   border-radius: 12px !important;
   min-height: 300px !important;
+}
+
+/* Masquage email par JavaScript si CSS ne suffit pas */
+#cusdis_thread {
+  --cusdis-email-display: none;
+}
+
+/* Sélecteurs additionnels pour masquer l'email */
+#cusdis_thread [data-field="email"],
+#cusdis_thread .field-email,
+#cusdis_thread label:has(+ input[type="email"]),
+#cusdis_thread label[for*="email" i] {
+  display: none !important;
+  visibility: hidden !important;
 }
 
   </style>
@@ -692,6 +716,25 @@ Je confirme
                  notification.close();
                  console.log('⏰ Notification fermée automatiquement');
                }, 5000);
+      
+      // Script additionnel pour masquer l'email après chargement
+      setTimeout(() => {
+        const cusdisIframe = document.querySelector('#cusdis_thread iframe');
+        if (cusdisIframe) {
+          try {
+            const iframeDoc = cusdisIframe.contentDocument || cusdisIframe.contentWindow.document;
+            const emailInputs = iframeDoc.querySelectorAll('input[type="email"], input[placeholder*="email" i], input[name*="email" i]');
+            emailInputs.forEach(input => {
+              const parent = input.closest('.form-group, .field, .input-group, div');
+              if (parent) parent.style.display = 'none';
+              input.style.display = 'none';
+            });
+          } catch (e) {
+            // Cross-origin, utiliser postMessage si nécessaire
+            console.log('Email masking: Cross-origin iframe detected');
+          }
+        }
+      }, 7000);
                
                // Mettre à jour le bouton
                notifTestBtn.innerHTML = '✅ Notifications activées';
@@ -738,7 +781,7 @@ Je confirme
     // Configuration locale française
     window.CUSDIS_LOCALE = {
       "powered_by": "Propulsé par Cusdis",
-      "post_comment": "Publier un commentaire",
+      "post_comment": "Publier",
       "loading": "Chargement...",
       "name": "Nom",
       "name_is_required": "Le nom est requis",
@@ -751,10 +794,10 @@ Je confirme
       "reply": "Répondre",
       "approved": "Approuvé",
       "waiting_for_approval": "En attente d'approbation",
-      "nickname": "Pseudonyme",
-      "reply_placeholder": "Répondre à ce commentaire...",
-      "comment_placeholder": "Partagez vos impressions sur l'événement...",
-      "name_placeholder": "Votre nom ou pseudonyme"
+      "nickname": "Pseudo",
+       "reply_placeholder": "Un commentaire ?",
+       "comment_placeholder": "Partagez vos impressions sur l'événement...",
+       "name_placeholder": "Votre nom ou pseudo"
     };
   </script>
   
