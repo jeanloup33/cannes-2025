@@ -6,7 +6,7 @@
   <title>Soirée Festival de Cannes — 13 Septembre 2025 — Bruges</title>
   <meta name="description" content="Marchez sur le tapis rouge ! Soirée à thème Festival de Cannes — Glamour, DJ, tapis rouge, photobooth, dress code chic. 13/09/2025 à Bruges." />
   <meta name="theme-color" content="#0b0b0d" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://giscus.app; connect-src 'self' https://giscus.app https://api.github.com; frame-src https://giscus.app;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; connect-src 'self';" />
 
   <link rel="icon" href="./icons/icon-192.png?v=20250808" />
   <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
@@ -128,36 +128,37 @@
   }
 }
 
-/* Personnalisation Giscus */
-.giscus, .giscus-frame {
-  width: 100% !important;
-  border-radius: 12px !important;
-  background: transparent !important;
-}
-
-/* Style du conteneur Giscus */
+/* Styles pour le système de commentaires */
 #giscus-container {
   min-height: 200px;
   border-radius: 12px;
 }
 
-/* Personnalisation des couleurs Giscus via CSS variables */
-.giscus {
-  --color-canvas-default: rgba(0, 0, 0, 0.2) !important;
-  --color-canvas-subtle: rgba(255, 255, 255, 0.05) !important;
-  --color-border-default: rgba(255, 255, 255, 0.1) !important;
-  --color-fg-default: rgba(255, 255, 255, 0.9) !important;
-  --color-fg-muted: rgba(255, 255, 255, 0.7) !important;
-  --color-accent-emphasis: #e8c77d !important;
-  --color-accent-fg: #000 !important;
-  --color-btn-primary-bg: linear-gradient(135deg, #e8c77d, #b99243) !important;
-  --color-btn-primary-text: #000 !important;
+/* Animation pour les nouveaux commentaires */
+#commentsList > div {
+  animation: slideIn 0.3s ease-out;
 }
 
-/* Style responsive pour Giscus */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Style responsive pour les commentaires */
 @media (max-width: 768px) {
-  .giscus {
-    font-size: 14px !important;
+  #commentForm {
+    font-size: 14px;
+  }
+  
+  #commentForm input,
+  #commentForm textarea {
+    padding: 12px 16px;
   }
 }
 
@@ -483,22 +484,30 @@
               <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
               <div class="rounded-xl bg-black/20 p-4">
                  <div id="giscus-container">
-                   <!-- Giscus Comments -->
-                      <script src="https://giscus.app/client.js"
-                              data-repo="jeanloup33/cannes-2025"
-                              data-repo-id="R_kgDOPYtuxg"
-                              data-category="General"
-                              data-category-id="DIC_kwDOPYtuxs4CuGWX"
-                              data-mapping="pathname"
-                              data-strict="0"
-                              data-reactions-enabled="1"
-                              data-emit-metadata="0"
-                              data-input-position="bottom"
-                              data-theme="dark"
-                              data-lang="fr"
-                              crossorigin="anonymous"
-                              async>
-                      </script>
+                   <!-- Formulaire de commentaires simple -->
+                     <form id="commentForm" class="space-y-4">
+                       <div>
+                         <label class="block text-sm font-medium text-white/80 mb-2">Votre nom ou pseudo</label>
+                         <input type="text" id="commentName" required 
+                                class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors" 
+                                placeholder="Votre nom...">
+                       </div>
+                       <div>
+                         <label class="block text-sm font-medium text-white/80 mb-2">Votre message</label>
+                         <textarea id="commentMessage" required rows="4"
+                                   class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors resize-vertical" 
+                                   placeholder="Partagez vos impressions sur l'événement..."></textarea>
+                       </div>
+                       <button type="submit" 
+                               class="w-full rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold px-6 py-3 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition-all">
+                         💬 Publier mon message
+                       </button>
+                     </form>
+                     
+                     <!-- Messages des visiteurs -->
+                     <div id="commentsList" class="mt-8 space-y-4">
+                       <!-- Les commentaires apparaîtront ici -->
+                     </div>
                  </div>
                </div>
             </div>
@@ -727,24 +736,86 @@ Je confirme
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
 <!-- Giscus est déjà chargé dans le HTML -->
   
-  <!-- Script pour Giscus -->
+  <!-- Script pour commentaires simples -->
    <script>
-     // Configuration du thème Giscus selon le mode sombre
-     function setGiscusTheme() {
-       const giscusFrame = document.querySelector('iframe.giscus-frame');
-       if (giscusFrame) {
-         giscusFrame.contentWindow.postMessage({
-           giscus: {
-             setConfig: {
-               theme: 'dark'
-             }
-           }
-         }, 'https://giscus.app');
+     // Système de commentaires local
+     const comments = JSON.parse(localStorage.getItem('cannes-comments') || '[]');
+     
+     function displayComments() {
+       const commentsList = document.getElementById('commentsList');
+       if (!commentsList) return;
+       
+       if (comments.length === 0) {
+         commentsList.innerHTML = '<p class="text-white/50 text-center py-4">Soyez le premier à laisser un message ! 🌟</p>';
+         return;
        }
+       
+       commentsList.innerHTML = comments.map(comment => `
+         <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+           <div class="flex items-center gap-3 mb-2">
+             <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
+               ${comment.name.charAt(0).toUpperCase()}
+             </div>
+             <div>
+               <p class="font-semibold text-white/90">${comment.name}</p>
+               <p class="text-xs text-white/60">${comment.date}</p>
+             </div>
+           </div>
+           <p class="text-white/80 leading-relaxed">${comment.message}</p>
+         </div>
+       `).join('');
      }
      
-     // Attendre que Giscus soit chargé
-     setTimeout(setGiscusTheme, 2000);
+     function addComment(name, message) {
+       const comment = {
+         id: Date.now(),
+         name: name.trim(),
+         message: message.trim(),
+         date: new Date().toLocaleDateString('fr-FR', {
+           day: 'numeric',
+           month: 'long',
+           hour: '2-digit',
+           minute: '2-digit'
+         })
+       };
+       
+       comments.unshift(comment);
+       localStorage.setItem('cannes-comments', JSON.stringify(comments));
+       displayComments();
+       
+       // Animation de succès
+       const form = document.getElementById('commentForm');
+       const button = form.querySelector('button');
+       const originalText = button.textContent;
+       
+       button.textContent = '✅ Message publié !';
+       button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+       
+       setTimeout(() => {
+         button.textContent = originalText;
+         button.style.background = '';
+       }, 2000);
+     }
+     
+     // Initialisation
+     document.addEventListener('DOMContentLoaded', () => {
+       displayComments();
+       
+       const form = document.getElementById('commentForm');
+       if (form) {
+         form.addEventListener('submit', (e) => {
+           e.preventDefault();
+           
+           const name = document.getElementById('commentName').value;
+           const message = document.getElementById('commentMessage').value;
+           
+           if (name.trim() && message.trim()) {
+             addComment(name, message);
+             form.reset();
+           }
+         });
+       }
+     });
    </script>
 <script>
   (async () => {
