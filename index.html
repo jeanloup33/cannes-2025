@@ -6,7 +6,7 @@
   <title>Soirée Festival de Cannes — 13 Septembre 2025 — Bruges</title>
   <meta name="description" content="Marchez sur le tapis rouge ! Soirée à thème Festival de Cannes — Glamour, DJ, tapis rouge, photobooth, dress code chic. 13/09/2025 à Bruges." />
   <meta name="theme-color" content="#0b0b0d" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://commentaires.jeanloup.xyz; connect-src 'self' https://commentaires.jeanloup.xyz; frame-src https://commentaires.jeanloup.xyz;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://commentaires.jeanloup.xyz; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://commentaires.jeanloup.xyz; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://commentaires.jeanloup.xyz; connect-src 'self' https://commentaires.jeanloup.xyz; frame-src https://commentaires.jeanloup.xyz;" />
 
   <link rel="icon" href="./icons/icon-192.png?v=20250808" />
   <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
@@ -487,16 +487,16 @@
                       data-page-url="https://cannes-festival.netlify.app/"
                       data-page-title="Festival de Cannes Night 2025"
                       data-theme="dark">
-                   <!-- Fallback pour développement local -->
-                   <div id="cusdis-fallback" class="text-center py-8 text-white/70">
-                     <div class="mb-4">💬</div>
-                     <p class="text-sm mb-2">Système de commentaires Cusdis</p>
-                     <p class="text-xs opacity-75">Disponible en production sur le site déployé</p>
-                     <div class="mt-4 p-3 bg-white/5 rounded-lg text-xs">
-                       <p>En localhost, Cusdis ne peut pas se charger pour des raisons de sécurité.</p>
-                       <p class="mt-1">Les commentaires seront fonctionnels sur votre site Netlify !</p>
-                     </div>
-                   </div>
+                   <!-- Fallback et diagnostic -->
+                    <div id="cusdis-fallback" class="text-center py-8 text-white/70">
+                      <div class="mb-4">💬</div>
+                      <p class="text-sm mb-2">Système de commentaires Cusdis</p>
+                      <p class="text-xs opacity-75">Chargement en cours...</p>
+                      <div id="cusdis-status" class="mt-4 p-3 bg-white/5 rounded-lg text-xs">
+                        <p>⏳ Tentative de connexion au serveur Cusdis...</p>
+                        <p class="mt-1">Si cette section reste visible, vérifiez la configuration.</p>
+                      </div>
+                    </div>
                  </div>
                </div>
             </div>
@@ -707,24 +707,43 @@ Je confirme
 <!-- Script Cusdis -->
   <script async defer src="https://commentaires.jeanloup.xyz/js/cusdis.es.js"></script>
   
-  <!-- Script pour gérer le fallback Cusdis -->
-  <script>
-    // Vérifier si Cusdis s'est chargé après 3 secondes
-    setTimeout(() => {
-      const cusdisThread = document.getElementById('cusdis_thread');
-      const fallback = document.getElementById('cusdis-fallback');
-      
-      if (cusdisThread && fallback) {
-        // Si Cusdis ne s'est pas chargé (pas d'iframe), garder le fallback
-        const iframe = cusdisThread.querySelector('iframe');
-        if (iframe) {
-          // Cusdis chargé, masquer le fallback
-          fallback.style.display = 'none';
-        }
-        // Sinon, le fallback reste visible
-      }
-    }, 3000);
-  </script>
+  <!-- Script pour diagnostic et fallback Cusdis -->
+   <script>
+     // Diagnostic détaillé du chargement Cusdis
+     function updateCusdisStatus(message, isError = false) {
+       const status = document.getElementById('cusdis-status');
+       if (status) {
+         status.innerHTML = `<p style="color: ${isError ? '#ff6b6b' : '#4ecdc4'}">${message}</p>`;
+       }
+     }
+     
+     // Test de connectivité au serveur Cusdis
+     fetch('https://commentaires.jeanloup.xyz/js/cusdis.es.js', { mode: 'no-cors' })
+       .then(() => {
+         updateCusdisStatus('✅ Serveur Cusdis accessible');
+       })
+       .catch(() => {
+         updateCusdisStatus('❌ Serveur Cusdis inaccessible - Vérifiez commentaires.jeanloup.xyz', true);
+       });
+     
+     // Vérifier le chargement après 5 secondes
+     setTimeout(() => {
+       const cusdisThread = document.getElementById('cusdis_thread');
+       const fallback = document.getElementById('cusdis-fallback');
+       
+       if (cusdisThread && fallback) {
+         const iframe = cusdisThread.querySelector('iframe');
+         if (iframe) {
+           // Cusdis chargé avec succès
+           fallback.style.display = 'none';
+           updateCusdisStatus('✅ Cusdis chargé avec succès');
+         } else {
+           // Cusdis n'a pas pu se charger
+           updateCusdisStatus('❌ Échec du chargement Cusdis<br>• Vérifiez le domaine dans le dashboard<br>• App ID: 6f0f32bb-b9a0-4871-953e-1ab125328535<br>• URL: ' + window.location.href, true);
+         }
+       }
+     }, 5000);
+   </script>
 <script>
   (async () => {
     const target = document.getElementById('latestNewsContainer');
