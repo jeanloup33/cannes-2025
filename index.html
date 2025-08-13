@@ -1044,7 +1044,10 @@ Je confirme
                  ]
                });
              });
-           };
+           } else {
+             console.log('❌ Service Worker non supporté ou permissions non accordées');
+           }
+         };
          
        // Envoyer une notification lors d'un nouveau commentaire
        function sendCommentNotification(nom) {
@@ -1234,7 +1237,19 @@ setTimeout(forceShowWidget, 3000);
 // Rendre la fonction globale pour tests manuels
 window.forceShowWidget = forceShowWidget;
 
+// Fonction pour forcer l'affichage du bouton de test
+window.forceShowTestButton = function() {
+  const container = document.getElementById('test-notification-container');
+  if (container) {
+    container.style.display = 'block';
+    console.log('🧪 Bouton de test forcé à s\'afficher');
+  } else {
+    console.log('❌ Élément test-notification-container non trouvé');
+  }
+};
+
 console.log('📱 Pour afficher manuellement: forceShowWidget()');
+console.log('🧪 Pour afficher bouton test: forceShowTestButton()');
 </script>
 
 </html>
