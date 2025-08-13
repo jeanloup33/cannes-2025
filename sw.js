@@ -1,6 +1,3 @@
-Voici le code de votre Service Worker, formaté pour une meilleure lisibilité et commenté pour expliquer chaque section.
-
-```javascript
 // ===================================================================
 // SERVICE WORKER CONFIGURATION
 // ===================================================================
@@ -256,4 +253,3 @@ self.addEventListener('fetch', (event) => {
     );
   }
 });
-```
