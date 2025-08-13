@@ -982,7 +982,7 @@ Je confirme
        // ===================================================================
        
        // Demander la permission pour les notifications
-       async function requestNotificationPermission() {
+       window.requestNotificationPermission = async function() {
          if ('Notification' in window && 'serviceWorker' in navigator) {
            const permission = await Notification.requestPermission();
            if (permission === 'granted') {
@@ -994,7 +994,7 @@ Je confirme
              console.log('❌ Notifications refusées');
            }
          }
-       }
+       };
        
        // S'abonner aux notifications push
        async function subscribeToPush() {
@@ -1007,14 +1007,14 @@ Je confirme
        }
        
        // Masquer le prompt de notification
-         function hideNotificationPrompt() {
+         window.hideNotificationPrompt = function() {
            const prompt = document.getElementById('notification-prompt');
            if (prompt) {
              prompt.style.display = 'none';
            }
-         }
-         
-         // Afficher le bouton de test si notifications activées
+         };
+          
+          // Afficher le bouton de test si notifications activées
          function showTestButton() {
            const container = document.getElementById('test-notification-container');
            if (container && Notification.permission === 'granted') {
@@ -1023,7 +1023,7 @@ Je confirme
          }
          
          // Envoyer une notification de test
-         function sendTestNotification() {
+          window.sendTestNotification = function() {
            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
              navigator.serviceWorker.ready.then(registration => {
                registration.showNotification('Test Festival de Cannes 🎬', {
@@ -1043,9 +1043,8 @@ Je confirme
                  ]
                });
              });
-           }
-         }
-       
+           };
+         
        // Envoyer une notification lors d'un nouveau commentaire
        function sendCommentNotification(nom) {
          if ('serviceWorker' in navigator && Notification.permission === 'granted') {
