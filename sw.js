@@ -43,24 +43,59 @@ const HTML_NETWORK_FIRST = new Set(['/', '/index.html', '/news.html']);
 
 // Notifications push
 self.addEventListener('push', (event) => {
-  const options = {
+  let options = {
     body: 'Nouvelle actualité Festival de Cannes !',
     icon: './icons/icon-192.png',
     badge: './icons/icon-192.png',
     vibrate: [200, 100, 200],
     tag: 'cannes-news',
-    requireInteraction: true
+    requireInteraction: false,
+    data: { url: '/' }
   };
+  
+  // Si des données sont envoyées avec la notification push
+  if (event.data) {
+    try {
+      const data = event.data.json();
+      options = { ...options, ...data };
+    } catch (e) {
+      console.log('Données push non-JSON:', event.data.text());
+    }
+  }
+  
   event.waitUntil(
-    self.registration.showNotification('Cannes Night', options)
+    self.registration.showNotification('Festival de Cannes 🎬', options)
   );
 });
 
-// Gestion des clics sur notifications
+// Gestion des clics sur les notifications
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
+  
+  const urlToOpen = event.notification.data?.url || '/';
+  
   event.waitUntil(
-    clients.openWindow('/')
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then(clientList => {
+        // Si une fenêtre est déjà ouverte, la focuser et naviguer
+        for (const client of clientList) {
+          if (client.url.includes(self.location.origin)) {
+            client.focus();
+            if (urlToOpen.includes('#')) {
+              // Pour les ancres, envoyer un message au client
+              client.postMessage({
+                type: 'NAVIGATE_TO_ANCHOR',
+                anchor: urlToOpen.split('#')[1]
+              });
+            } else {
+              client.navigate(urlToOpen);
+            }
+            return;
+          }
+        }
+        // Sinon, ouvrir une nouvelle fenêtre
+        return clients.openWindow(urlToOpen);
+      })
   );
 });
 
