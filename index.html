@@ -217,13 +217,29 @@ window.sendTestNotification = function() {
   console.log('🧪 Test de notification');
   if ('serviceWorker' in navigator && Notification.permission === 'granted') {
     navigator.serviceWorker.ready.then(registration => {
-      registration.showNotification('Test Festival de Cannes 🎬', {
-        body: 'Ceci est une notification de test ! Le système fonctionne parfaitement.',
+      registration.showNotification('🎬 Festival de Cannes - Test', {
+        body: 'Notification de test réussie ! Cliquez pour revenir au site.',
         icon: './icons/icon-192.png',
         badge: './icons/icon-192.png',
-        vibrate: [200, 100, 200],
+        image: './assets/hero.webp',
+        vibrate: [200, 100, 200, 100, 200],
         tag: 'cannes-test',
-        data: { url: '/#commentaires' }
+        requireInteraction: true,
+        silent: false,
+        timestamp: Date.now(),
+        data: { url: '/#commentaires' },
+        actions: [
+          {
+            action: 'view',
+            title: '👀 Voir le site',
+            icon: './icons/icon-192.png'
+          },
+          {
+            action: 'close',
+            title: '❌ Fermer',
+            icon: './icons/icon-192.png'
+          }
+        ]
       });
       console.log('✅ Notification de test envoyée');
     }).catch(error => {
@@ -1101,26 +1117,47 @@ Je confirme
           window.sendTestNotification = function() {
            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
              navigator.serviceWorker.ready.then(registration => {
-               registration.showNotification('Test Festival de Cannes 🎬', {
-                 body: 'Ceci est une notification de test ! Le système fonctionne parfaitement.',
+               registration.showNotification('🎬 Festival de Cannes - Test Widget', {
+                 body: 'Test depuis le widget ! Cliquez pour revenir au site.',
                  icon: './icons/icon-192.png',
                  badge: './icons/icon-192.png',
-                 vibrate: [200, 100, 200],
-                 tag: 'cannes-test',
-                 requireInteraction: false,
+                 image: './assets/hero.webp',
+                 vibrate: [200, 100, 200, 100, 200],
+                 tag: 'cannes-widget-test',
+                 requireInteraction: true,
+                 silent: false,
+                 timestamp: Date.now(),
                  data: { url: '/#commentaires' },
                  actions: [
                    {
                      action: 'view',
-                     title: 'Voir les commentaires',
+                     title: '👀 Voir les commentaires',
+                     icon: './icons/icon-192.png'
+                   },
+                   {
+                     action: 'close',
+                     title: '❌ Fermer',
                      icon: './icons/icon-192.png'
                    }
                  ]
                });
+               console.log('✅ Notification widget envoyée avec requireInteraction=true');
+               
+               // Fallback : notification simple si la première échoue
+               setTimeout(() => {
+                 if (Notification.permission === 'granted') {
+                   new Notification('🎬 Fallback - Festival de Cannes', {
+                     body: 'Notification de secours ! Votre système fonctionne.',
+                     icon: './icons/icon-192.png'
+                   });
+                   console.log('✅ Notification fallback envoyée');
+                 }
+               }, 1000);
              });
            } else {
-             console.log('❌ Service Worker non supporté ou permissions non accordées');
-           }
+               console.log('❌ Service Worker non supporté ou permissions non accordées');
+               alert('Veuillez d\'abord activer les notifications en cliquant sur "Activer".');
+             }
          };
          
        // Envoyer une notification lors d'un nouveau commentaire
