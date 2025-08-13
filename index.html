@@ -696,30 +696,31 @@ Je confirme
              if (permission === 'granted') {
                console.log('✅ Permission accordée, création de la notification...');
                
-               // Créer une notification de test simple d'abord
-               const notification = new Notification('🎬 Festival de Cannes Night', {
-                 body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
-                 icon: './icons/icon-192.png',
-                 tag: 'cannes-test'
-               });
-               
-               console.log('✅ Notification créée avec succès');
-
-               notification.onclick = () => {
-                 console.log('👆 Clic sur notification');
-                 window.focus();
-                 notification.close();
-               };
-
-               notification.onerror = (error) => {
-                 console.error('❌ Erreur notification:', error);
-               };
-
-               // Fermer automatiquement après 5 secondes
-               setTimeout(() => {
-                 notification.close();
-                 console.log('⏰ Notification fermée automatiquement');
-               }, 5000);
+               // Utiliser le Service Worker pour les notifications
+               if ('serviceWorker' in navigator) {
+                 navigator.serviceWorker.ready.then(registration => {
+                   registration.showNotification('🎬 Festival de Cannes Night', {
+                     body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
+                     icon: './icons/icon-192.png',
+                     badge: './icons/icon-192.png',
+                     tag: 'cannes-test',
+                     vibrate: [200, 100, 200],
+                     data: { url: '/#commentaires' },
+                     actions: [
+                       {
+                         action: 'view',
+                         title: 'Voir le site',
+                         icon: './icons/icon-192.png'
+                       }
+                     ]
+                   });
+                   console.log('✅ Notification créée via Service Worker');
+                 }).catch(error => {
+                   console.log('❌ Erreur Service Worker:', error);
+                 });
+               } else {
+                  console.log('❌ Service Worker non supporté');
+                }
       
       // Script additionnel pour masquer l'email après chargement
       setTimeout(() => {
