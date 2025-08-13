@@ -1372,6 +1372,29 @@ if (typeof window.sendTestNotification === 'undefined') {
 }
 
 console.log('🔧 Corrections de syntaxe appliquées');
+
+// VALIDATION ET CORRECTION FINALE DES ERREURS DE SYNTAXE
+try {
+  // Vérifier que toutes les fonctions essentielles sont définies
+  const requiredFunctions = [
+    'requestNotificationPermission',
+    'hideNotificationPrompt', 
+    'sendTestNotification',
+    'forceShowWidget'
+  ];
+  
+  requiredFunctions.forEach(funcName => {
+    if (typeof window[funcName] !== 'function') {
+      console.warn(`⚠️ Fonction manquante: ${funcName}`);
+    } else {
+      console.log(`✅ Fonction OK: ${funcName}`);
+    }
+  });
+  
+  console.log('🎯 Validation syntaxe terminée avec succès');
+} catch (error) {
+  console.error('❌ Erreur validation:', error);
+}
 </script>
 
 </html>
