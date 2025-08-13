@@ -1081,37 +1081,49 @@ Je confirme
          }
        };
        
-       // Vérifier le support des notifications
-       if ('Notification' in window && 'serviceWorker' in navigator) {
-         if (Notification.permission === 'default') {
-           // Afficher le prompt après 5 secondes
-           setTimeout(() => {
-             const prompt = document.getElementById('notification-prompt');
-             if (prompt) {
-               prompt.style.display = 'block';
-             }
-           }, 5000);
-         } else if (Notification.permission === 'granted') {
-           // Si notifications déjà accordées, afficher le widget avec le bouton test
-           setTimeout(() => {
-             const prompt = document.getElementById('notification-prompt');
-             if (prompt) {
-               // Modifier le texte pour les utilisateurs qui ont déjà accepté
-               const title = prompt.querySelector('h4');
-               const description = prompt.querySelector('p');
-               if (title) title.textContent = 'Notifications activées ✅';
-               if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
-               
-               // Masquer les boutons Activer/Plus tard
-               const buttons = prompt.querySelector('.flex.gap-2');
-               if (buttons) buttons.style.display = 'none';
-               
-               // Afficher le bouton de test
-               showTestButton();
-               prompt.style.display = 'block';
-             }
-           }, 3000);
+       // FORCER L'AFFICHAGE DU WIDGET POUR TESTS
+       // Afficher le widget après 2 secondes, peu importe le statut
+       setTimeout(() => {
+         const prompt = document.getElementById('notification-prompt');
+         if (prompt) {
+           console.log('🔔 Affichage forcé du widget de notification');
+           
+           // Adapter l'interface selon les permissions
+           if (Notification.permission === 'granted') {
+             // Utilisateur a déjà accepté
+             const title = prompt.querySelector('h4');
+             const description = prompt.querySelector('p');
+             if (title) title.textContent = 'Notifications activées ✅';
+             if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
+             
+             // Masquer les boutons Activer/Plus tard
+             const buttons = prompt.querySelector('.flex.gap-2');
+             if (buttons) buttons.style.display = 'none';
+             
+             // Afficher le bouton de test
+             showTestButton();
+           } else if (Notification.permission === 'denied') {
+             // Utilisateur a refusé
+             const title = prompt.querySelector('h4');
+             const description = prompt.querySelector('p');
+             if (title) title.textContent = 'Notifications désactivées';
+             if (description) description.textContent = 'Vous pouvez réactiver les notifications dans les paramètres de votre navigateur.';
+             
+             // Masquer les boutons Activer/Plus tard
+             const buttons = prompt.querySelector('.flex.gap-2');
+             if (buttons) buttons.style.display = 'none';
+           }
+           // Sinon garder l'interface par défaut pour 'default'
+           
+           prompt.style.display = 'block';
          }
+       }, 2000);
+       
+       // Vérifier le support des notifications (pour logs)
+       if ('Notification' in window && 'serviceWorker' in navigator) {
+         console.log('📱 Support notifications:', Notification.permission);
+       } else {
+         console.log('❌ Notifications non supportées');
        }
          
          // Écouter les messages du Service Worker
