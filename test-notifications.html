@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Notifications - Festival de Cannes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b0b0b;
+            color: white;
+            padding: 20px;
+        }
+        .widget {
+            background: linear-gradient(to right, #66000f, #8b0000);
+            border: 1px solid #e8c77d;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        button {
+            background: linear-gradient(to right, #e8c77d, #b99243);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .test-button {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 Test Notifications Festival de Cannes</h1>
+    
+    <div class="widget">
+        <h3>🔔 Notifications Festival</h3>
+        <p>Testez le système de notifications push</p>
+        
+        <button onclick="requestPermission()">Activer les notifications</button>
+        <button onclick="sendTest()" class="test-button">🧪 Test notification</button>
+        <button onclick="sendSimple()" class="test-button">📱 Test simple</button>
+    </div>
+    
+    <div id="status"></div>
+    
+    <script>
+        // Fonctions de test simples et propres
+        function log(message) {
+            console.log(message);
+            document.getElementById('status').innerHTML += '<p>' + message + '</p>';
+        }
+        
+        async function requestPermission() {
+            log('🔔 Demande de permission...');
+            
+            if (!('Notification' in window)) {
+                log('❌ Notifications non supportées');
+                return;
+            }
+            
+            try {
+                const permission = await Notification.requestPermission();
+                log('📝 Permission: ' + permission);
+                
+                if (permission === 'granted') {
+                    log('✅ Permissions accordées !');
+                } else {
+                    log('❌ Permissions refusées');
+                }
+            } catch (error) {
+                log('❌ Erreur: ' + error.message);
+            }
+        }
+        
+        function sendSimple() {
+            log('📱 Test notification simple...');
+            
+            if (Notification.permission !== 'granted') {
+                log('⚠️ Veuillez d\'abord activer les notifications');
+                return;
+            }
+            
+            try {
+                const notification = new Notification('🎬 Festival de Cannes', {
+                    body: 'Test de notification simple !',
+                    icon: './icons/icon-192.png'
+                });
+                
+                log('✅ Notification simple envoyée');
+                
+                notification.onclick = function() {
+                    log('👆 Notification cliquée');
+                    notification.close();
+                };
+                
+            } catch (error) {
+                log('❌ Erreur notification simple: ' + error.message);
+            }
+        }
+        
+        function sendTest() {
+            log('🧪 Test notification Service Worker...');
+            
+            if (Notification.permission !== 'granted') {
+                log('⚠️ Veuillez d\'abord activer les notifications');
+                return;
+            }
+            
+            if (!('serviceWorker' in navigator)) {
+                log('❌ Service Worker non supporté');
+                sendSimple();
+                return;
+            }
+            
+            navigator.serviceWorker.ready.then(function(registration) {
+                log('📡 Service Worker prêt');
+                
+                registration.showNotification('🎬 Festival de Cannes - Test', {
+                    body: 'Test depuis Service Worker !',
+                    icon: './icons/icon-192.png',
+                    badge: './icons/icon-192.png',
+                    vibrate: [200, 100, 200],
+                    tag: 'test-cannes',
+                    requireInteraction: true,
+                    actions: [
+                        {
+                            action: 'view',
+                            title: 'Voir',
+                            icon: './icons/icon-192.png'
+                        }
+                    ]
+                });
+                
+                log('✅ Notification Service Worker envoyée');
+                
+            }).catch(function(error) {
+                log('❌ Erreur Service Worker: ' + error.message);
+                sendSimple();
+            });
+        }
+        
+        // Enregistrer le Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(function(registration) {
+                    log('✅ Service Worker enregistré');
+                })
+                .catch(function(error) {
+                    log('❌ Erreur Service Worker: ' + error.message);
+                });
+        }
+        
+        log('🚀 Page de test chargée');
+    </script>
+</body>
+</html>
