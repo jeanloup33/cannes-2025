@@ -1196,4 +1196,44 @@ Je confirme
 </script>
 <script> if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.update())); } </script>
 </body>
+
+<!-- SCRIPT DE DEBUG WIDGET NOTIFICATION -->
+<script>
+// Script immédiat pour forcer l'affichage du widget
+console.log('🚀 Script de debug widget démarré');
+
+// Fonction pour afficher le widget immédiatement
+function forceShowWidget() {
+  console.log('🔍 Recherche de l\'élément notification-prompt...');
+  const prompt = document.getElementById('notification-prompt');
+  
+  if (prompt) {
+    console.log('✅ Élément trouvé ! Affichage forcé...');
+    prompt.style.display = 'block';
+    prompt.style.position = 'fixed';
+    prompt.style.bottom = '20px';
+    prompt.style.right = '20px';
+    prompt.style.zIndex = '9999';
+    console.log('🎉 Widget affiché avec succès !');
+  } else {
+    console.log('❌ Élément notification-prompt non trouvé');
+    console.log('🔍 Éléments disponibles:', document.querySelectorAll('[id*="notification"]'));
+  }
+}
+
+// Essayer immédiatement
+forceShowWidget();
+
+// Essayer après 1 seconde
+setTimeout(forceShowWidget, 1000);
+
+// Essayer après 3 secondes
+setTimeout(forceShowWidget, 3000);
+
+// Rendre la fonction globale pour tests manuels
+window.forceShowWidget = forceShowWidget;
+
+console.log('📱 Pour afficher manuellement: forceShowWidget()');
+</script>
+
 </html>
