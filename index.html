@@ -1165,7 +1165,7 @@ Je confirme
          if ('serviceWorker' in navigator && Notification.permission === 'granted') {
            navigator.serviceWorker.ready.then(registration => {
              registration.showNotification('Festival de Cannes 🎬', {
-               body: `${nom} a ajouté un nouveau commentaire ! Venez voir les dernières impressions.`,
+               body: nom + ' a ajouté un nouveau commentaire ! Venez voir les dernières impressions.',
                icon: './icons/icon-192.png',
                badge: './icons/icon-192.png',
                vibrate: [200, 100, 200],
