@@ -775,7 +775,7 @@ Je confirme
              errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
              alert(errorMsg);
            }
-         });
+          });
        }
     });
   </script>
@@ -1016,12 +1016,12 @@ Je confirme
          };
           
           // Afficher le bouton de test si notifications activées
-         function showTestButton() {
+         window.showTestButton = function() {
            const container = document.getElementById('test-notification-container');
            if (container && Notification.permission === 'granted') {
              container.style.display = 'block';
            }
-         }
+         };
          
          // Envoyer une notification de test
           window.sendTestNotification = function() {
