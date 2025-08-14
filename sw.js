@@ -25,8 +25,7 @@ const PRECACHE_URLS = [
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/assets/hero.webp',
-  '/assets/logo.webp',
-  '/assets/logo.png'
+  '/assets/logo.webp'
 ];
 
 // Expressions régulières pour identifier les types de requêtes

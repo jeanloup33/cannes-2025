@@ -54,8 +54,18 @@ window.sendTestNotification = function() {
     
     // Test Service Worker si disponible
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(function(registration) {
-        console.log('📡 Service Worker prêt');
+      navigator.serviceWorker.ready.then(async function(registration) {
+        // Attendre que le Service Worker soit actif
+        if (registration.active?.state !== 'activated') {
+          console.log('⏳ Attente activation Service Worker...');
+          await new Promise(resolve => {
+            const sw = registration.installing || registration.waiting || registration.active;
+            if (sw.state === 'activated') resolve();
+            else sw.addEventListener('statechange', () => sw.state === 'activated' && resolve());
+          });
+        }
+        
+        console.log('📡 Service Worker prêt et actif');
         
         registration.showNotification('🎬 Festival de Cannes - Test SW', {
           body: 'Test depuis Service Worker !',

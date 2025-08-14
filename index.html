@@ -213,10 +213,10 @@ window.hideNotificationPrompt = function() {
 
 console.log('🎯 Fonctions widget définies globalement');
 </script>
-<script src="./notifications.js" defer></script>
 
 </head>
 <body class="bg-glam text-white font-sans noise">
+  <script src="./notifications.js" defer></script>
   <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
 
 <button id="nav-toggle"
@@ -336,9 +336,6 @@ console.log('🎯 Fonctions widget définies globalement');
       <div class="mt-6 flex flex-wrap gap-3">
         <button id="shareBtn" class="hidden px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition touch-target">
           📤 Partager l'événement
-        </button>
-        <button id="notifTestBtn" class="px-4 py-2 rounded-xl bg-gold/20 hover:bg-gold/30 text-gold font-semibold transition touch-target">
-          🔔 Tester les notifications
         </button>
       </div>
     </div>
@@ -661,6 +658,31 @@ Je confirme
   <script src="./app.js?v=20250808" defer></script>
   
   <script>
+    // ENREGISTREMENT DU SERVICE WORKER (ESSENTIEL POUR LES NOTIFICATIONS)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const registration = await navigator.serviceWorker.register('./sw.js');
+          console.log('✅ Service Worker enregistré:', registration.scope);
+          
+          // Attendre que le Service Worker soit actif
+          if (registration.installing) {
+            console.log('🔄 Service Worker en cours d\'installation...');
+          } else if (registration.waiting) {
+            console.log('⏳ Service Worker en attente...');
+          } else if (registration.active) {
+            console.log('🎯 Service Worker actif et prêt !');
+          }
+        } catch (error) {
+          console.error('❌ Erreur Service Worker:', error);
+        }
+      });
+    } else {
+      console.log('❌ Service Worker non supporté');
+    }
+  </script>
+  
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Partage natif
       const shareBtn = document.getElementById('shareBtn');
@@ -670,8 +692,8 @@ Je confirme
           try {
             if (navigator.vibrate) navigator.vibrate(50);
             await navigator.share({
-              title: 'Festival de Cannes Night',
-              text: 'Rejoignez-nous pour une soirée d\'exception ! Tapis rouge, glamour et DJ set.',
+              title: 'Festival de Cannes à Courbevoie 🎬',
+          text: `Rejoignez-nous pour une soirée d'exception ! Tapis rouge, glamour et DJ set.`, 
               url: window.location.href
             });
           } catch (err) {
@@ -680,140 +702,8 @@ Je confirme
         });
       }
 
-      // Test des notifications push
-        const notifTestBtn = document.getElementById('notifTestBtn');
-        if (notifTestBtn) {
-          notifTestBtn.addEventListener('click', async () => {
-            try {
-              console.log('🔔 Début du test des notifications');
-              
-              // Feedback haptique
-              if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100]);
-                console.log('✅ Vibration activée');
-              }
-              
-              // Vérifier le protocole HTTPS
-              if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-                alert('⚠️ Les notifications nécessitent HTTPS ou localhost.\nTestez sur localhost ou déployez en HTTPS.');
-                return;
-              }
-              console.log('✅ Protocole vérifié:', location.protocol);
-              
-              // Vérifier le support des notifications
-              if (!('Notification' in window)) {
-                alert('❌ Ce navigateur ne supporte pas les notifications.\nEssayez Chrome, Firefox ou Edge.');
-                console.error('❌ API Notification non supportée');
-                return;
-              }
-              console.log('✅ API Notification supportée');
+  
 
-              // Vérifier la permission actuelle
-              let permission = Notification.permission;
-              console.log('🔐 Permission actuelle:', permission);
-              
-              if (permission === 'default') {
-                console.log('📝 Demande de permission...');
-                permission = await Notification.requestPermission();
-                console.log('📝 Nouvelle permission:', permission);
-              }
-
-              if (permission === 'granted') {
-                console.log('✅ Permission accordée, création de la notification...');
-                
-                // Utiliser le Service Worker pour les notifications
-                if ('serviceWorker' in navigator) {
-                  navigator.serviceWorker.ready.then(registration => {
-                    registration.showNotification('🎬 Festival de Cannes Night', {
-                      body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
-                      icon: './icons/icon-192.png',
-                      badge: './icons/icon-192.png',
-                      tag: 'cannes-test',
-                      vibrate: [200, 100, 200],
-                      data: { url: '/#commentaires' },
-                      actions: [
-                        {
-                          action: 'view',
-                          title: 'Voir le site',
-                          icon: './icons/icon-192.png'
-                        }
-                      ]
-                    });
-                    console.log('✅ Notification créée via Service Worker');
-                    
-                    // Fallback notification simple
-                    setTimeout(() => {
-                      try {
-                        new Notification('🎬 Test Simple - Festival de Cannes', {
-                          body: 'Notification de test visible ! Le système fonctionne.',
-                          icon: './icons/icon-192.png',
-                          requireInteraction: false
-                        });
-                        console.log('✅ Notification simple de test envoyée');
-                      } catch (e) {
-                        console.log('❌ Erreur notification simple:', e);
-                        alert('✅ Test réussi ! Notifications configurées (vérifiez paramètres système)');
-                      }
-                    }, 1500);
-                    
-                  }).catch(error => {
-                    console.log('❌ Erreur Service Worker:', error);
-                    // Notification de secours directe
-                    try {
-                      new Notification('🎬 Secours - Festival de Cannes', {
-                        body: 'Notification de secours - Test réussi !',
-                        icon: './icons/icon-192.png'
-                      });
-                      console.log('✅ Notification de secours envoyée');
-                    } catch (e) {
-                      alert('✅ Test fonctionnel ! Vérifiez paramètres notifications.');
-                    }
-                  });
-                } else {
-                  console.log('❌ Service Worker non supporté');
-                  // Notification directe si pas de Service Worker
-                  try {
-                    new Notification('🎬 Direct - Festival de Cannes', {
-                      body: 'Test direct sans Service Worker !',
-                      icon: './icons/icon-192.png'
-                    });
-                    console.log('✅ Notification directe envoyée');
-                  } catch (e) {
-                    alert('✅ Test OK ! Vérifiez paramètres notifications.');
-                  }
-                }
-                
-                // Terminer le test
-                setTimeout(() => {
-                  notifTestBtn.classList.remove('opacity-75');
-                  console.log('🎉 Test des notifications terminé avec succès');
-                }, 3000);
-                
-              } else if (permission === 'denied') {
-                alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
-                console.warn('❌ Permission refusée par l\'utilisateur');
-              } else {
-                alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
-                console.warn('⚠️ Permission dans un état inattendu:', permission);
-              }
-            } catch (err) {
-              console.error('💥 Erreur complète:', err);
-              console.error('💥 Stack trace:', err.stack);
-              
-              let errorMsg = '❌ Erreur lors du test des notifications.\n\n';
-              if (err.name === 'NotAllowedError') {
-                errorMsg += 'Les notifications sont bloquées. Autorisez-les dans les paramètres de votre navigateur.';
-              } else if (err.name === 'NotSupportedError') {
-                errorMsg += 'Votre navigateur ne supporte pas les notifications.';
-              } else {
-                errorMsg += 'Erreur technique: ' + err.message;
-              }
-              
-              alert(errorMsg);
-            }
-          });
-        }
-      }
 
     // Script additionnel pour masquer l'email après chargement
     setTimeout(() => {
@@ -834,13 +724,26 @@ Je confirme
       }
     }, 7000);
 
-    // Gestion des commentaires Airtable
-              alert(errorMsg);
-            }
-           });
+    // Script de masquage email corrigé
+    setTimeout(() => {
+      const cusdisIframe = document.querySelector('#cusdis_thread iframe');
+      if (cusdisIframe) {
+        try {
+          const iframeDoc = cusdisIframe.contentDocument || cusdisIframe.contentWindow.document;
+          const emailInputs = iframeDoc.querySelectorAll('input[type="email"], input[placeholder*="email" i], input[name*="email" i]');
+          emailInputs.forEach(input => {
+            const parent = input.closest('.form-group, .field, .input-group, div');
+            if (parent) parent.style.display = 'none';
+            input.style.display = 'none';
+          });
+        } catch (e) {
+          console.log('Email masking: Cross-origin iframe detected');
         }
-    });
-  </script>
+      }
+    }, 7000);
+    
+  });
+</script>
 
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
 <script>
@@ -1130,7 +1033,7 @@ Je confirme
               });
             } else {
                 console.log('❌ Service Worker non supporté ou permissions non accordées');
-                alert('Veuillez d\'abord activer les notifications en cliquant sur "Activer".');
+                alert('Veuillez d\\\'abord activer les notifications en cliquant sur "Activer".');
               }
           };
           
