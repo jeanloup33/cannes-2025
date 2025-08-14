@@ -211,64 +211,56 @@ window.hideNotificationPrompt = function() {
 
 window.sendTestNotification = function() {
   console.log('🧪 Test de notification');
-  if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.showNotification('🎬 Festival de Cannes - Test', {
-        body: 'Notification de test réussie ! Cliquez pour revenir au site.',
-        icon: './icons/icon-192.png',
-        badge: './icons/icon-192.png',
-        image: './assets/hero.webp',
-        vibrate: [200, 100, 200, 100, 200],
-        tag: 'cannes-test',
-        requireInteraction: true,
-        silent: false,
-        timestamp: Date.now(),
-        data: { url: '/#commentaires' },
-        actions: [
-          {
-            action: 'view',
-            title: '👀 Voir le site',
-            icon: './icons/icon-192.png'
-          },
-          {
-            action: 'close',
-            title: '❌ Fermer',
-            icon: './icons/icon-192.png'
-          }
-        ]
-      });
-      console.log('✅ Notification de test envoyée');
-      
-      // Fallback : notification simple pour garantir la visibilité
-      setTimeout(() => {
-        try {
-          new Notification('🎬 Notification Simple - Festival de Cannes', {
-            body: 'Si vous voyez ceci, les notifications fonctionnent !',
-            icon: './icons/icon-192.png',
-            requireInteraction: false
-          });
-          console.log('✅ Notification fallback simple envoyée');
-        } catch (e) {
-          console.log('❌ Erreur notification fallback:', e);
-          alert('✅ Test réussi ! Les notifications sont configurées (vérifiez vos paramètres système si elles n\'apparaissent pas)');
-        }
-      }, 1000);
-      
-    }).catch(error => {
-      console.error('❌ Erreur notification:', error);
-      // Notification de secours directe
-      try {
-        new Notification('🎬 Secours - Festival de Cannes', {
-          body: 'Notification de secours - Le système fonctionne !',
-          icon: './icons/icon-192.png'
-        });
-        console.log('✅ Notification de secours envoyée');
-      } catch (e) {
-        alert('✅ Système fonctionnel ! Vérifiez vos paramètres de notifications système.');
-      }
-    });
-  } else {
+  
+  if (Notification.permission !== 'granted') {
     alert('Veuillez d\'abord activer les notifications.');
+    return;
+  }
+  
+  try {
+    // Test notification simple d'abord
+    const notification = new Notification('🎬 Festival de Cannes', {
+      body: 'Test de notification simple !',
+      icon: './icons/icon-192.png'
+    });
+    
+    console.log('✅ Notification simple envoyée');
+    
+    notification.onclick = function() {
+      console.log('👆 Notification cliquée');
+      notification.close();
+    };
+    
+    // Test Service Worker si disponible
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(function(registration) {
+        console.log('📡 Service Worker prêt');
+        
+        registration.showNotification('🎬 Festival de Cannes - Test SW', {
+          body: 'Test depuis Service Worker !',
+          icon: './icons/icon-192.png',
+          badge: './icons/icon-192.png',
+          vibrate: [200, 100, 200],
+          tag: 'test-cannes',
+          requireInteraction: true,
+          actions: [
+            {
+              action: 'view',
+              title: 'Voir',
+              icon: './icons/icon-192.png'
+            }
+          ]
+        });
+        
+        console.log('✅ Notification Service Worker envoyée');
+      }).catch(function(error) {
+        console.log('❌ Erreur Service Worker: ' + error.message);
+      });
+    }
+    
+  } catch (error) {
+    console.log('❌ Erreur notification: ' + error.message);
+    alert('Erreur lors du test de notification: ' + error.message);
   }
 };
 
