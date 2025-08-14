@@ -887,17 +887,6 @@ Je confirme
     }, 7000);
 
     // Gestion des commentaires Airtable
-              if (err.name === 'NotAllowedError') {
-                errorMsg += '❌ Permission refusée par le navigateur';
-              } else if (err.name === 'NotSupportedError') {
-                errorMsg += '❌ Notifications non supportées sur cet appareil';
-              } else if (err.message.includes('https')) {
-                errorMsg += '🔒 HTTPS requis pour les notifications';
-              } else {
-                errorMsg += '⚠️ ' + err.message;
-              }
-              
-              errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
               alert(errorMsg);
             }
            });
