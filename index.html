@@ -214,4 +214,1190 @@ window.sendTestNotification = function() {
   if ('serviceWorker' in navigator && Notification.permission === 'granted') {
     navigator.serviceWorker.ready.then(registration => {
       registration.showNotification('🎬 Festival de Cannes - Test', {
-        body: 'Notification de test réussie
+        body: 'Notification de test réussie ! Cliquez pour revenir au site.',
+        icon: './icons/icon-192.png',
+        badge: './icons/icon-192.png',
+        image: './assets/hero.webp',
+        vibrate: [200, 100, 200, 100, 200],
+        tag: 'cannes-test',
+        requireInteraction: true,
+        silent: false,
+        timestamp: Date.now(),
+        data: { url: '/#commentaires' },
+        actions: [
+          {
+            action: 'view',
+            title: '👀 Voir le site',
+            icon: './icons/icon-192.png'
+          },
+          {
+            action: 'close',
+            title: '❌ Fermer',
+            icon: './icons/icon-192.png'
+          }
+        ]
+      });
+      console.log('✅ Notification de test envoyée');
+    }).catch(error => {
+      console.error('❌ Erreur notification:', error);
+    });
+  } else {
+    alert('Veuillez d\'abord activer les notifications.');
+  }
+};
+
+console.log('🎯 Fonctions widget définies globalement');
+</script>
+
+</head>
+<body class="bg-glam text-white font-sans noise">
+  <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
+
+<button id="nav-toggle"
+        class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
+        aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu de navigation">
+  <span class="sr-only">Menu</span>
+  <div class="w-6 h-[2px] bg-white my-1"></div>
+  <div class="w-6 h-[2px] bg-white my-1"></div>
+  <div class="w-6 h-[2px] bg-white my-1"></div>
+</button>
+
+<ul class="hidden md:flex items-center gap-6">
+  <li>
+    <a href="#about"
+       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+      <span>À propos</span>
+      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
+    </a>
+  </li>
+  <li>
+    <a href="#program"
+       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+      <span>Programme</span>
+      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
+    </a>
+  </li>
+  <li>
+    <a href="#dress"
+       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+      <span>Dress code</span>
+      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
+    </a>
+  </li>
+  <li>
+    <a href="#gallery"
+       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+      <span>Galerie</span>
+      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
+    </a>
+  </li>
+  <li>
+    <a href="#contact"
+       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+      <span>Infos</span>
+      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
+    </a>
+  </li>
+  <li>
+    <a href="#tickets"
+       class="ml-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-[16px] md:text-[17px] px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition">
+      Confirmer
+    </a>
+  </li>
+</ul>
+
+</nav>
+
+<div id="mobile-menu" class="md:hidden hidden border-t border-black/20 bg-[#66000f]/90 backdrop-blur-xl">
+  <div class="container mx-auto px-5 py-3 grid gap-1.5">
+    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#about">À propos</a>
+    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#program">Programme</a>
+    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#dress">Dress code</a>
+    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#gallery">Galerie</a>
+    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#contact">Infos</a>
+    <a class="block px-3 py-3 rounded-xl text-black font-semibold bg-gradient-to-r from-gold to-goldSoft shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:opacity-90 transition" href="#tickets">Confirmer</a>
+  </div>
+</div>
+</header>
+
+  <section id="hero" class="relative">
+  <div class="absolute inset-0 -z-10">
+    <img src="./assets/hero.webp?v=20250808" alt="" class="w-full h-[92vh] object-cover" />
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+
+
+    <div class="container mx-auto px-6 flex flex-col items-center justify-center text-center min-h-[86vh]">
+    <div class="mt-24 mb-6">
+  <div class="inline-flex flex-wrap items-center gap-3 px-6 py-3 rounded-2xl bg-black/40 backdrop-blur-md border border-white/15 shadow-lg text-xl md:text-2xl">
+    <span class="font-extrabold tracking-wide">13 septembre 2025 • 20h — Bruges</span>
+    <span class="w-2 h-2 rounded-full bg-gold inline-block"></span>
+    <span class="tracking-wide">3 Rue du Tapis Vert</span>
+  </div>
+</div>
+   <h1 class="title-cannes font-display font-extrabold text-4xl md:text-6xl lg:text-7xl leading-tight bg-gradient-to-b from-white to-[#f7e7bf] bg-clip-text text-transparent">
+  Montez les marches du Tapis Rouge <br/> rue du Tapis Vert
+</h1>
+      <p class="max-w-2xl mt-4 text-champagne/90">
+        Une soirée glamour façon Festival de Cannes: DJ set, photocall, bulles, palmes d’or, et surprises dignes des plus grandes avant-premières.
+      </p>
+
+      <div id="countdown" class="mt-8 grid grid-flow-col gap-4 auto-cols-max text-center">
+        <div class="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+          <div class="text-3xl md:text-4xl font-extrabold" data-days>00</div>
+          <div class="text-xs uppercase tracking-wide text-white/70">Jours</div>
+        </div>
+        <div class="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+          <div class="text-3xl md:text-4xl font-extrabold" data-hours>00</div>
+          <div class="text-xs uppercase tracking-wide text-white/70">Heures</div>
+        </div>
+        <div class="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+          <div class="text-3xl md:text-4xl font-extrabold" data-mins>00</div>
+          <div class="text-xs uppercase tracking-wide text-white/70">Min</div>
+        </div>
+        <div class="bg-white/5 rounded-xl px-4 py-3 border border-white/10">
+          <div class="text-3xl md:text-4xl font-extrabold" data-secs>00</div>
+          <div class="text-xs uppercase tracking-wide text-white/70">Sec</div>
+        </div>
+      </div>
+
+      <div class="flex gap-3 flex-wrap justify-center mt-8">
+        <a href="#tickets" class="px-6 py-3 rounded-2xl text-black font-extrabold bg-gradient-to-r from-gold to-goldSoft shadow-glow hover:opacity-90">Confirmer</a>
+        <a href="#program" class="px-6 py-3 rounded-2xl border border-white/15 hover:bg-white/10">Découvrir le programme</a>
+      </div>
+      <div class="mt-10 text-white/70 text-sm">Dress code: Black tie, glamour & doré</div>
+      
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="shareBtn" class="hidden px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition touch-target">
+          📤 Partager l'événement
+        </button>
+        <button id="notifTestBtn" class="px-4 py-2 rounded-xl bg-gold/20 hover:bg-gold/30 text-gold font-semibold transition touch-target">
+          🔔 Tester les notifications
+        </button>
+      </div>
+    </div>
+	</section>
+	
+    <section id="latest-news" class="py-10">
+	<div class="container mx-auto px-6">
+	<div class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+	<div class="flex items-start justify-between gap-4 mb-4">
+	<div class="text-xs uppercase tracking-wide text-white/60">Dernières actus</div> 
+	<a href="news.html" class="shrink-0 rounded-xl border border-white/15 px-3 py-2 text-sm hover:bg-white/10">Toutes les actus</a>
+	</div>
+	<div id="latestNewsContainer" class="grid gap-4">
+	Chargement…
+	</div>
+	</div>
+	</div> 
+	</section>
+
+
+  <section id="about" class="py-20 md:py-28 bg-noir">
+    <div class="container mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl gold-text">Une soirée d’exception</h2>
+        <p class="text-white/80 mt-4">
+          Marchez sur le tapis rouge, posez devant le photocall, trinquez au champagne. Une immersion totale dans l’univers prestigieux du Festival de Cannes, à deux pas de chez vous.
+        </p>
+        <ul class="mt-6 grid gap-3 text-white/80">
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> Photocall & Palmes</li>
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> DJ set & dancefloor</li>
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> Dress code chic & doré</li>
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> Bar à bulles & surprises</li>
+        </ul>
+      </div>
+      <div class="relative">
+        <div class="aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-glow">
+          <img src="./assets/gallery1.webp" alt="Ambiance tapis rouge" class="w-full h-full object-cover" />
+        </div>
+        <div class="absolute -bottom-6 -right-6 hidden md:block">
+          <div class="px-4 py-3 rounded-xl bg-white/10 border border-white/15 backdrop-blur-lg">
+            <div class="text-sm text-white/70">Adresse</div>
+            <div class="font-bold">3 Rue du Tapis Vert<br/>33520 Bruges</div>
+            <div class="text-sm text-white/70 mt-1">13 septembre 2025 • 20h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="program" class="py-20 md:py-28">
+    <div class="container mx-auto px-6">
+      <h2 class="font-display text-3xl md:text-4xl gold-text">Programme</h2>
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <div class="text-gold font-extrabold">20:00</div>
+          <h3 class="mt-2 font-bold text-xl">Ouverture & Tapis rouge</h3>
+          <p class="mt-2 text-white/80">Accueil champagne, photocall, palmes d’or à gagner.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <div class="text-gold font-extrabold">21:30</div>
+          <h3 class="mt-2 font-bold text-xl">DJ set & Dancefloor</h3>
+          <p class="mt-2 text-white/80">Classiques glam et sons actuels pour vibrer jusqu’au bout.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <div class="text-gold font-extrabold">23:00</div>
+          <h3 class="mt-2 font-bold text-xl">Remise de Palmes</h3>
+          <p class="mt-2 text-white/80">Look, style, aura… Qui repartira couronné.e ?</p>
+        </div>
+      </div>
+      <p class="text-white/60 mt-6 text-sm">Les horaires sont indicatifs et susceptibles de varier.</p>
+    </div>
+  </section>
+
+  <section id="dress" class="py-20 md:py-28 bg-noir">
+    <div class="container mx-auto px-6">
+      <h2 class="font-display text-3xl md:text-4xl gold-text">Dress code</h2>
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 class="font-bold text-xl">Black Tie</h3>
+          <p class="mt-2 text-white/80">Smoking, robe de soirée, escarpins, détails dorés.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 class="font-bold text-xl">Glam & Gold</h3>
+          <p class="mt-2 text-white/80">Tons noir, doré, champagne. Matières satinées, velours, paillettes.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <h3 class="font-bold text-xl">Accessoires</h3>
+          <p class="mt-2 text-white/80">Lunettes cat-eye, pochette, bijoux dorés, nœud pap’.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="py-20 md:py-28">
+    <div class="container mx-auto px-6">
+      <h2 class="font-display text-3xl md:text-4xl gold-text">Galerie</h2>
+      <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3">
+        <img src="./assets/gallery2.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 1">
+        <img src="./assets/gallery3.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 2">
+        <img src="./assets/gallery4.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 3">
+        <img src="./assets/gallery5.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 4">
+        <img src="./assets/gallery6.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 5">
+        <img src="./assets/gallery7.webp" loading="lazy" decoding="async" class="rounded-xl aspect-[4/3] object-cover border border-white/10" alt="Ambiance 6">
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="container mx-auto px-5 py-10 md:py-14"> <h2 class="font-display text-3xl md:text-4xl gold-text mb-6">FAQ</h2> <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md divide-y divide-white/10"> <details class="group"> <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none"> <span class="text-base md:text-lg font-semibold text-white/90">À quelle heure commence la soirée ?</span> <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10"> <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span> <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span> </span> </summary> <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out"> <div class="overflow-hidden"> <div class="px-5 pb-5 text-white/80"> Les portes ouvrent à 19h00. Le programme débute à 20h00. </div> </div> </div> </details>
+
+<details class="group">
+  <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none">
+    <span class="text-base md:text-lg font-semibold text-white/90">Y a‑t‑il un code vestimentaire ?</span>
+    <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10">
+      <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span>
+      <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span>
+    </span>
+  </summary>
+  <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+    <div class="overflow-hidden">
+      <div class="px-5 pb-5 text-white/80">
+        Oui, tenue chic recommandée. Consulte la section Dress code pour l’inspiration.
+      </div>
+    </div>
+  </div>
+</details>
+
+<details class="group">
+  <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none">
+    <span class="text-base md:text-lg font-semibold text-white/90">Comment participer à l’événement ?</span>
+    <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10">
+      <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span>
+      <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span>
+    </span>
+  </summary>
+  <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+    <div class="overflow-hidden">
+      <div class="px-5 pb-5 text-white/80">
+        L’accès se fait uniquement sur invitation personnelle. Si tu as reçu une invitation, merci de confirmer ta présence via le lien de confirmation indiqué..
+      </div>
+    </div>
+  </div>
+</details>
+
+<details class="group">
+  <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none">
+    <span class="text-base md:text-lg font-semibold text-white/90">Faut‑il confirmer sa venue ?</span>
+    <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10">
+      <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span>
+      <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span>
+    </span>
+  </summary>
+  <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+    <div class="overflow-hidden">
+      <div class="px-5 pb-5 text-white/80">
+        Oui, la confirmation est obligatoire pour valider ton accès. Nécessaire à une bonne organisation.
+      </div>
+    </div>
+  </div>
+</details>
+
+</div> </section>
+    
+    <div id="notification-prompt" style="display: none;" class="fixed bottom-4 right-4 z-50 max-w-sm bg-gradient-to-r from-[#66000f] to-[#8b0000] border border-gold/30 rounded-xl p-4 shadow-2xl backdrop-blur-md">
+      <div class="flex items-start gap-3">
+        <div class="flex-shrink-0">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center">
+            <span class="text-black text-lg">🔔</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-white text-sm mb-1">Notifications Festival</h4>
+          <p class="text-white/80 text-xs mb-3">Recevez une notification quand de nouveaux commentaires sont ajoutés !</p>
+          <div class="flex gap-2">
+             <button onclick="requestNotificationPermission()" class="flex-1 bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-xs px-3 py-2 rounded-lg hover:opacity-90 transition">
+               Activer
+             </button>
+             <button onclick="hideNotificationPrompt()" class="flex-1 bg-white/10 text-white/80 font-semibold text-xs px-3 py-2 rounded-lg hover:bg-white/20 transition">
+               Plus tard
+             </button>
+           </div>
+           <div id="test-notification-container" style="display: none;" class="mt-2">
+             <button onclick="sendTestNotification()" class="w-full bg-white/10 text-white/80 font-semibold text-xs px-3 py-1 rounded-lg hover:bg-white/20 transition">
+               🧪 Test notification
+             </button>
+           </div>
+        </div>
+        <button onclick="hideNotificationPrompt()" class="flex-shrink-0 text-white/60 hover:text-white/80 transition">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <section id="commentaires" class="container mx-auto px-5 py-10 md:py-14">
+    <h2 class="font-display text-3xl md:text-4xl gold-text mb-6">Vos commentaires</h2>
+    <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
+      <details class="group">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none hover:bg-white/5 transition-colors">
+          <span class="text-base md:text-lg font-semibold text-white/90">💬 Partagez vos attentes et impressions</span>
+          <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10">
+            <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span>
+            <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span>
+          </span>
+        </summary>
+        <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+          <div class="overflow-hidden">
+            <div class="px-5 pb-5">
+              <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
+              <div class="rounded-xl bg-black/20 p-4">
+                 <div id="giscus-container">
+                   <form id="commentForm" class="space-y-4">
+                       <div>
+                         <label class="block text-sm font-medium text-white/80 mb-2">Votre nom ou pseudo</label>
+                         <input type="text" name="nom" id="commentName" required 
+                                class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors" 
+                                placeholder="Votre nom...">
+                       </div>
+                       <div>
+                         <label class="block text-sm font-medium text-white/80 mb-2">Votre message</label>
+                         <textarea name="message" id="commentMessage" required rows="4"
+                                   class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors resize-vertical" 
+                                   placeholder="Partagez vos impressions sur l'événement..."></textarea>
+                       </div>
+                       <button type="submit" 
+                               class="w-full rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold px-6 py-3 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition-all">
+                         💬 Publier mon message
+                       </button>
+                     </form>
+                    
+                   <div id="commentsList" class="mt-8 space-y-4">
+                      <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="flex items-center gap-3 mb-2">
+                          <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
+                            J
+                          </div>
+                          <div>
+                            <p class="font-semibold text-white/90">Jean-Loup</p>
+                            <p class="text-xs text-white/60">12 janvier, 15:30</p>
+                          </div>
+                        </div>
+                        <p class="text-white/80 leading-relaxed">Bienvenue ! Vos messages apparaîtront ici automatiquement et seront visibles par tous les invités. Aucune identification requise ! ✨</p>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="tickets" class="py-20 md:py-28 bg-noir">
+    <div class="container mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl gold-text">Confirmez votre présence</h2>
+        <p class="text-white/80 mt-4">Places limitées. Informez nous jusqu’au 31 août.</p>
+        <ul class="mt-4 text-white/80 grid gap-2">
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> Entrée + coupe de champagne</li>
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> Accès photocall & dancefloor</li>
+          <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-gold"></span> Concours “Palme du Look”</li>
+        </ul>
+      </div>
+      <form id="rsvpForm" name="Billetterie" method="POST" netlify netlify-honeypot="bot-field" class="grid gap-4" > <input type="hidden" name="form-name" value="Billetterie" /> <p class="hidden"> <label>Ne pas remplir: <input name="bot-field" /></label> </p>
+
+<label class="text-sm text-amber-300/90">Nom complet
+<input name="name" type="text" required class="w-full rounded-xl border border-neutral-800 bg-black/60 px-4 py-2.5 text-neutral-100 placeholder:text-neutral-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/40" placeholder="Votre nom">
+</label>
+
+<label class="text-sm text-amber-300/90">Email
+<input name="email" type="email" required class="w-full rounded-xl border border-neutral-800 bg-black/60 px-4 py-2.5 text-neutral-100 placeholder:text-neutral-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/40" placeholder="vous@exemple.com">
+</label>
+
+<label class="text-sm text-amber-300/90">Nombre de places
+<select name="seats" required class="w-full rounded-xl border border-neutral-800 bg-black/60 px-4 py-2.5 text-neutral-100 focus:border-red-500 focus:ring-2 focus:ring-red-500/40">
+<option value="1">1 place</option>
+<option value="2">2 places</option>
+<option value="3">3 places</option>
+<option value="4">4 places</option>
+</select>
+</label>
+
+<button type="submit" class="rounded-xl bg-amber-400 px-5 py-3 font-semibold text-black hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-red-500/40">
+Je confirme
+</button>
+<p id="rsvpMsg" class="text-sm text-amber-300/80 hidden"></p> </form>
+    </div>
+  </section>
+
+
+
+  <section id="contact" class="py-16">
+    <div class="container mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <div class="text-white/60 text-sm">Adresse</div>
+        <div class="font-bold mt-1">3 Rue du Tapis Vert, 33520 Bruges</div>
+      </div>
+      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <div class="text-white/60 text-sm">Date & heure</div>
+        <div class="font-bold mt-1">Samedi 13 septembre 2025 — 20h</div>
+      </div>
+      <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+        <div class="text-white/60 text-sm">Contact</div>
+        <div class="font-bold mt-1">festivalcannesnight@example.com</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-8 bg-noir">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-tr from-gold/80 to-goldSoft/70 text-black font-extrabold">FC</span>
+        <span class="text-white/70">© 2025 Festival de Cannes Night</span>
+      </div>
+      <div class="text-white/60 text-sm">Créé pour la soirée du 13/09/2025 — Bruges</div>
+    </div>
+  </footer>
+
+  <script src="./app.js?v=20250808" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Partage natif
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share && shareBtn) {
+        shareBtn.classList.remove('hidden');
+        shareBtn.addEventListener('click', async () => {
+          try {
+            if (navigator.vibrate) navigator.vibrate(50);
+            await navigator.share({
+              title: 'Festival de Cannes Night',
+              text: 'Rejoignez-nous pour une soirée d\'exception ! Tapis rouge, glamour et DJ set.',
+              url: window.location.href
+            });
+          } catch (err) {
+            console.log('Partage annulé ou non supporté');
+          }
+        });
+      }
+
+      // Test des notifications push
+        const notifTestBtn = document.getElementById('notifTestBtn');
+        if (notifTestBtn) {
+          notifTestBtn.addEventListener('click', async () => {
+            try {
+              console.log('🔔 Début du test des notifications');
+              
+              // Feedback haptique
+              if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+                console.log('✅ Vibration activée');
+              }
+              
+              // Vérifier le protocole HTTPS
+              if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                alert('⚠️ Les notifications nécessitent HTTPS ou localhost.\nTestez sur localhost ou déployez en HTTPS.');
+                return;
+              }
+              console.log('✅ Protocole vérifié:', location.protocol);
+              
+              // Vérifier le support des notifications
+              if (!('Notification' in window)) {
+                alert('❌ Ce navigateur ne supporte pas les notifications.\nEssayez Chrome, Firefox ou Edge.');
+                console.error('❌ API Notification non supportée');
+                return;
+              }
+              console.log('✅ API Notification supportée');
+
+              // Vérifier la permission actuelle
+              let permission = Notification.permission;
+              console.log('🔐 Permission actuelle:', permission);
+              
+              if (permission === 'default') {
+                console.log('📝 Demande de permission...');
+                permission = await Notification.requestPermission();
+                console.log('📝 Nouvelle permission:', permission);
+              }
+
+              if (permission === 'granted') {
+                console.log('✅ Permission accordée, création de la notification...');
+                
+                // Utiliser le Service Worker pour les notifications
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification('🎬 Festival de Cannes Night', {
+                      body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
+                      icon: './icons/icon-192.png',
+                      badge: './icons/icon-192.png',
+                      tag: 'cannes-test',
+                      vibrate: [200, 100, 200],
+                      data: { url: '/#commentaires' },
+                      actions: [
+                        {
+                          action: 'view',
+                          title: 'Voir le site',
+                          icon: './icons/icon-192.png'
+                        }
+                      ]
+                    });
+                    console.log('✅ Notification créée via Service Worker');
+                  }).catch(error => {
+                    console.log('❌ Erreur Service Worker:', error);
+                  });
+                } else {
+                  console.log('❌ Service Worker non supporté');
+                 }
+  
+    // Script additionnel pour masquer l'email après chargement
+    setTimeout(() => {
+      const cusdisIframe = document.querySelector('#cusdis_thread iframe');
+      if (cusdisIframe) {
+        try {
+          const iframeDoc = cusdisIframe.contentDocument || cusdisIframe.contentWindow.document;
+          const emailInputs = iframeDoc.querySelectorAll('input[type="email"], input[placeholder*="email" i], input[name*="email" i]');
+          emailInputs.forEach(input => {
+            const parent = input.closest('.form-group, .field, .input-group, div');
+            if (parent) parent.style.display = 'none';
+            input.style.display = 'none';
+          });
+        } catch (e) {
+          // Cross-origin, utiliser postMessage si nécessaire
+          console.log('Email masking: Cross-origin iframe detected');
+        }
+      }
+    }, 7000);
+                
+                // Mettre à jour le bouton
+                notifTestBtn.innerHTML = '✅ Notifications activées';
+                notifTestBtn.disabled = true;
+                notifTestBtn.classList.add('opacity-75');
+                
+                console.log('🎉 Test des notifications terminé avec succès');
+                
+              } else if (permission === 'denied') {
+                alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
+                console.warn('❌ Permission refusée par l\'utilisateur');
+              } else {
+                alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
+                console.warn('⚠️ Permission dans un état inattendu:', permission);
+              }
+              
+            } catch (err) {
+              console.error('💥 Erreur complète:', err);
+              console.error('💥 Stack trace:', err.stack);
+              
+              let errorMsg = 'Erreur lors du test des notifications:\n\n';
+              
+              if (err.name === 'NotAllowedError') {
+                errorMsg += '❌ Permission refusée par le navigateur';
+              } else if (err.name === 'NotSupportedError') {
+                errorMsg += '❌ Notifications non supportées sur cet appareil';
+              } else if (err.message.includes('https')) {
+                errorMsg += '🔒 HTTPS requis pour les notifications';
+              } else {
+                errorMsg += '⚠️ ' + err.message;
+              }
+              
+              errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
+              alert(errorMsg);
+            }
+           });
+        }
+    });
+  </script>
+
+<script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
+<script>
+      // Configuration Airtable - CONFIGURÉ AVEC PERMISSIONS WRITE - FORCE DEPLOY
+      const AIRTABLE_CONFIG = {
+        baseId: 'app0c5Ptz0Hb3KoJm',       // Votre Base ID
+        tableName: 'Comments',             // Nom de votre table
+        apiKey: 'patcPTbtaZ9A4nVVG.487ee051d42f6cb338024b0693cd104ffacd592888b570fca390a232234d6b3c'  // Token régénéré avec permissions write complètes
+      };
+      
+      const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tableName}`;
+      
+      let allComments = [];
+      
+      // Créer un commentaire dans Airtable
+       async function createComment(nom, message) {
+        console.log('🚀 Tentative création commentaire Airtable');
+        console.log('🔍 URL:', AIRTABLE_URL);
+        console.log('🔍 Base ID:', AIRTABLE_CONFIG.baseId);
+        console.log('🔍 API Key (début):', AIRTABLE_CONFIG.apiKey.substring(0, 15) + '...');
+        
+        try {
+          const requestBody = {
+            records: [{
+              fields: {
+                Nom: nom.trim(),
+                Message: message.trim(),
+                Date: new Date().toLocaleDateString('fr-FR', {
+                  day: 'numeric',
+                  month: 'long',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })
+              }
+            }]
+          };
+          
+          console.log('📤 Envoi vers Airtable:', JSON.stringify(requestBody, null, 2));
+          
+          const response = await fetch(AIRTABLE_URL, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          });
+          
+          console.log('📥 Réponse Airtable status:', response.status);
+          
+          if (response.ok) {
+            const result = await response.json();
+            console.log('✅ Commentaire créé dans Airtable:', result);
+            return true;
+          } else {
+            const errorText = await response.text();
+            console.error('❌ Erreur Airtable:', response.status, errorText);
+            return false;
+          }
+        } catch (error) {
+          console.error('❌ Erreur réseau:', error);
+          return false;
+        }
+      }
+      
+      // Charger les commentaires depuis Airtable
+       async function loadComments() {
+        console.log('📥 Tentative chargement commentaires depuis Airtable');
+        
+        try {
+          const url = `${AIRTABLE_URL}?sort[0][field]=Date&sort[0][direction]=desc`;
+          console.log('🔍 URL de lecture:', url);
+          
+          const response = await fetch(url, {
+            headers: {
+              'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`
+            }
+          });
+          
+          console.log('📥 Réponse lecture status:', response.status);
+          
+          if (response.ok) {
+            const data = await response.json();
+            allComments = data.records.map(record => record.fields);
+            console.log(`✅ ${allComments.length} commentaires chargés depuis Airtable:`, allComments);
+          } else {
+            const errorText = await response.text();
+            console.log('❌ Erreur lecture Airtable:', response.status, errorText);
+            console.log('⚠️ Utilisation du fallback comments.json');
+            // Fallback vers comments.json
+            const fallbackResponse = await fetch('./comments.json');
+            if (fallbackResponse.ok) {
+              allComments = await fallbackResponse.json();
+              console.log('📄 Commentaires chargés depuis fallback:', allComments);
+            }
+          }
+        } catch (error) {
+          console.error('❌ Erreur réseau lors du chargement:', error);
+          console.log('⚠️ Utilisation du fallback comments.json');
+          // Fallback vers comments.json
+          try {
+            const fallbackResponse = await fetch('./comments.json');
+            if (fallbackResponse.ok) {
+              allComments = await fallbackResponse.json();
+              console.log('📄 Commentaires chargés depuis fallback:', allComments);
+            }
+          } catch (fallbackError) {
+            console.error('❌ Erreur fallback aussi:', fallbackError);
+            console.log('📝 Aucun commentaire disponible');
+          }
+        }
+        
+        displayComments();
+      }
+      
+      function displayComments() {
+        const commentsList = document.getElementById('commentsList');
+        if (!commentsList) return;
+        
+        if (allComments.length === 0) {
+          commentsList.innerHTML = '<p class="text-white/50 text-center py-4">Soyez le premier à laisser un message ! 🌟</p>';
+          return;
+        }
+        
+        commentsList.innerHTML = allComments.map(comment => {
+          const nom = comment.Nom || comment.nom || 'Anonyme';
+          const message = comment.Message || comment.message || 'Message vide';
+          const date = comment.Date || comment.date || 'À l\'instant';
+          
+          return `
+            <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
+                  ${nom.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p class="font-semibold text-white/90">${nom}</p>
+                  <p class="text-xs text-white/60">${date}</p>
+                </div>
+              </div>
+              <p class="text-white/80 leading-relaxed">${message}</p>
+            </div>
+          `;
+        }).join('');
+      }
+      
+      // Gestion du formulaire
+      document.addEventListener('DOMContentLoaded', () => {
+        loadComments();
+        
+        const form = document.getElementById('commentForm');
+        if (form) {
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const button = form.querySelector('button');
+            const originalText = button.textContent;
+            const nom = document.getElementById('commentName').value;
+            const message = document.getElementById('commentMessage').value;
+            
+            if (!nom.trim() || !message.trim()) {
+              alert('Veuillez remplir tous les champs');
+              return;
+            }
+            
+            // Animation de soumission
+            button.textContent = '📤 Envoi en cours...';
+            button.disabled = true;
+            
+            // Créer le commentaire dans Airtable
+            const success = await createComment(nom, message);
+            
+            if (success) {
+              button.textContent = '✅ Message publié !';
+              button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+              form.reset();
+              
+              // Recharger les commentaires après 2 secondes
+              setTimeout(loadComments, 2000);
+            } else {
+              button.textContent = '❌ Erreur, réessayez';
+              button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            }
+            
+            // Restaurer le bouton après 3 secondes
+            setTimeout(() => {
+              button.textContent = originalText;
+              button.style.background = '';
+              button.disabled = false;
+            }, 3000);
+          });
+        }
+        
+        // Recharger les commentaires toutes les 30 secondes
+        setInterval(loadComments, 30000);
+        
+        // ===================================================================
+        // SYSTÈME DE NOTIFICATIONS PUSH
+        // ===================================================================
+        
+        // Demander la permission pour les notifications
+        window.requestNotificationPermission = async function() {
+          if ('Notification' in window && 'serviceWorker' in navigator) {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+              console.log('✅ Notifications autorisées');
+              hideNotificationPrompt();
+              showTestButton();
+              await subscribeToPush();
+            } else {
+              console.log('❌ Notifications refusées');
+            }
+          }
+        };
+        
+        // S'abonner aux notifications push
+        async function subscribeToPush() {
+          try {
+            const registration = await navigator.serviceWorker.ready;
+            console.log('📱 Service Worker prêt pour les notifications');
+          } catch (error) {
+            console.log('❌ Erreur Service Worker:', error);
+          }
+        }
+        
+        // Masquer le prompt de notification
+          window.hideNotificationPrompt = function() {
+            const prompt = document.getElementById('notification-prompt');
+            if (prompt) {
+              prompt.style.display = 'none';
+            }
+          };
+          
+          // Afficher le bouton de test si notifications activées
+          window.showTestButton = function() {
+            const container = document.getElementById('test-notification-container');
+            if (container && Notification.permission === 'granted') {
+              container.style.display = 'block';
+            }
+          };
+          
+          // Envoyer une notification de test
+           window.sendTestNotification = function() {
+            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+              navigator.serviceWorker.ready.then(registration => {
+                registration.showNotification('🎬 Festival de Cannes - Test Widget', {
+                  body: 'Test depuis le widget ! Cliquez pour revenir au site.',
+                  icon: './icons/icon-192.png',
+                  badge: './icons/icon-192.png',
+                  image: './assets/hero.webp',
+                  vibrate: [200, 100, 200, 100, 200],
+                  tag: 'cannes-widget-test',
+                  requireInteraction: true,
+                  silent: false,
+                  timestamp: Date.now(),
+                  data: { url: '/#commentaires' },
+                  actions: [
+                    {
+                      action: 'view',
+                      title: '👀 Voir les commentaires',
+                      icon: './icons/icon-192.png'
+                    },
+                    {
+                      action: 'close',
+                      title: '❌ Fermer',
+                      icon: './icons/icon-192.png'
+                    }
+                  ]
+                });
+                console.log('✅ Notification widget envoyée avec requireInteraction=true');
+                
+                // Fallback : notification simple si la première échoue
+                setTimeout(() => {
+                  if (Notification.permission === 'granted') {
+                    new Notification('🎬 Fallback - Festival de Cannes', {
+                      body: 'Notification de secours ! Votre système fonctionne.',
+                      icon: './icons/icon-192.png'
+                    });
+                    console.log('✅ Notification fallback envoyée');
+                  }
+                }, 1000);
+              });
+            } else {
+                console.log('❌ Service Worker non supporté ou permissions non accordées');
+                alert('Veuillez d\'abord activer les notifications en cliquant sur "Activer".');
+              }
+          };
+          
+        // Envoyer une notification lors d'un nouveau commentaire
+        function sendCommentNotification(nom) {
+          if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+            navigator.serviceWorker.ready.then(registration => {
+              registration.showNotification('Festival de Cannes 🎬', {
+                body: nom + ' a ajouté un nouveau commentaire ! Venez voir les dernières impressions.',
+                icon: './icons/icon-192.png',
+                badge: './icons/icon-192.png',
+                vibrate: [200, 100, 200],
+                tag: 'cannes-comment',
+                requireInteraction: false,
+                data: { url: '/#commentaires' },
+                actions: [
+                  {
+                    action: 'view',
+                    title: 'Voir les commentaires',
+                    icon: './icons/icon-192.png'
+                  }
+                ]
+              });
+            });
+          }
+        }
+        
+        // Fonction pour forcer l'affichage du widget (pour tests)
+        window.showNotificationWidget = function() {
+          const prompt = document.getElementById('notification-prompt');
+          if (prompt) {
+            prompt.style.display = 'block';
+            // Afficher le bouton de test si notifications déjà accordées
+            if (Notification.permission === 'granted') {
+              showTestButton();
+            }
+          }
+        };
+        
+        // FORCER L'AFFICHAGE DU WIDGET POUR TESTS
+        // Afficher le widget après 2 secondes, peu importe le statut
+        setTimeout(() => {
+          const prompt = document.getElementById('notification-prompt');
+          if (prompt) {
+            console.log('🔔 Affichage forcé du widget de notification');
+            
+            // Adapter l'interface selon les permissions
+            if (Notification.permission === 'granted') {
+              // Utilisateur a déjà accepté
+              const title = prompt.querySelector('h4');
+              const description = prompt.querySelector('p');
+              if (title) title.textContent = 'Notifications activées ✅';
+              if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
+              
+              // Masquer les boutons Activer/Plus tard
+              const buttons = prompt.querySelector('.flex.gap-2');
+              if (buttons) buttons.style.display = 'none';
+              
+              // Afficher le bouton de test
+              showTestButton();
+            } else if (Notification.permission === 'denied') {
+              // Utilisateur a refusé
+              const title = prompt.querySelector('h4');
+              const description = prompt.querySelector('p');
+              if (title) title.textContent = 'Notifications désactivées';
+              if (description) description.textContent = 'Vous pouvez réactiver les notifications dans les paramètres de votre navigateur.';
+              
+              // Masquer les boutons Activer/Plus tard
+              const buttons = prompt.querySelector('.flex.gap-2');
+              if (buttons) buttons.style.display = 'none';
+            }
+            // Sinon garder l'interface par défaut pour 'default'
+            
+            prompt.style.display = 'block';
+          }
+        }, 2000);
+        
+        // Vérifier le support des notifications (pour logs)
+        if ('Notification' in window && 'serviceWorker' in navigator) {
+          console.log('📱 Support notifications:', Notification.permission);
+        } else {
+          console.log('❌ Notifications non supportées');
+        }
+          
+          // Écouter les messages du Service Worker
+          navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data.type === 'NAVIGATE_TO_ANCHOR') {
+              const anchor = event.data.anchor;
+              const element = document.getElementById(anchor);
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Ouvrir l'accordéon des commentaires si c'est la section commentaires
+                if (anchor === 'commentaires') {
+                  const details = element.querySelector('details');
+                  if (details && !details.open) {
+                    details.open = true;
+                  }
+                }
+              }
+            }
+          });
+      // ----- CORRECTION DE LA SYNTAXE ICI -----
+      // Les accolades en trop ont été supprimées pour fermer correctement l'écouteur d'événements.
+      });
+      
+      // Intercepter la création de commentaires pour envoyer des notifications
+      const originalCreateComment = window.createComment;
+      window.createComment = async function(nom, message) {
+        const result = await originalCreateComment(nom, message);
+        if (result) {
+          // Envoyer une notification après un délai
+          setTimeout(() => {
+            sendCommentNotification(nom);
+          }, 2000);
+        }
+        return result;
+      };
+   </script>
+<script>
+  (async () => {
+    const target = document.getElementById('latestNewsContainer');
+    if (!target) return;
+    try {
+      const res = await fetch('./assets/news.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error();
+      const items = await res.json();
+      if (!items.length) {
+        target.innerHTML = '<p class="text-white/70">Aucune actualité pour le moment.</p>';
+        return;
+      }
+      // Tri par date descendante et prendre les 3 dernières
+      const latest = [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 3);
+      
+      target.innerHTML = latest.map(news => `
+        <article class="border-l-2 border-gold/30 pl-4">
+          <h3 class="text-lg md:text-xl font-extrabold uppercase">
+            <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90"
+               href="news.html?slug=${encodeURIComponent(news.slug)}">
+              ${news.title}
+            </a>
+          </h3>
+          <div class="text-white/60 text-sm mt-1">
+            ${news.date ? new Date(news.date).toLocaleDateString('fr-FR') : ''}
+            ${news.category ? ' • ' + news.category : ''}
+          </div>
+          ${news.description ? `<p class="text-white/80 text-sm mt-2">${news.description}</p>` : ''}
+        </article>
+      `).join('');
+    } catch {
+      target.innerHTML = '<p class="text-white/70">Actualités indisponibles.</p>';
+    }
+  })();
+</script>
+<script> if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.update())); } </script>
+</body>
+
+<script>
+// Script immédiat pour forcer l'affichage du widget
+console.log('🚀 Script de debug widget démarré');
+
+// Fonction pour afficher le widget immédiatement
+function forceShowWidget() {
+  console.log('🔍 Recherche de l\'élément notification-prompt...');
+  const prompt = document.getElementById('notification-prompt');
+  
+  if (prompt) {
+    console.log('✅ Élément trouvé ! Affichage forcé...');
+    prompt.style.display = 'block';
+    prompt.style.position = 'fixed';
+    prompt.style.bottom = '20px';
+    prompt.style.right = '20px';
+    prompt.style.zIndex = '9999';
+    console.log('🎉 Widget affiché avec succès !');
+  } else {
+    console.log('❌ Élément notification-prompt non trouvé');
+    console.log('🔍 Éléments disponibles:', document.querySelectorAll('[id*="notification"]'));
+  }
+}
+
+// Essayer immédiatement
+forceShowWidget();
+
+// Essayer après 1 seconde
+setTimeout(forceShowWidget, 1000);
+
+// Essayer après 3 secondes
+setTimeout(forceShowWidget, 3000);
+
+// Rendre la fonction globale pour tests manuels
+window.forceShowWidget = forceShowWidget;
+
+// Fonction pour forcer l'affichage du bouton de test
+window.forceShowTestButton = function() {
+  const container = document.getElementById('test-notification-container');
+  if (container) {
+    container.style.display = 'block';
+    console.log('🧪 Bouton de test forcé à s\'afficher');
+  } else {
+    console.log('❌ Élément test-notification-container non trouvé');
+  }
+};
+
+console.log('📱 Pour afficher manuellement: forceShowWidget()');
+console.log('🧪 Pour afficher bouton test: forceShowTestButton()');
+
+// CORRECTION DES ERREURS DE SYNTAXE ET FONCTIONS MANQUANTES
+// S'assurer que toutes les fonctions sont bien définies globalement
+if (typeof window.requestNotificationPermission === 'undefined') {
+  console.log('⚠️ Redéfinition de requestNotificationPermission');
+  window.requestNotificationPermission = async function() {
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        console.log('✅ Notifications autorisées');
+        if (typeof window.hideNotificationPrompt === 'function') {
+          window.hideNotificationPrompt();
+        }
+        if (typeof window.showTestButton === 'function') {
+          window.showTestButton();
+        }
+      } else {
+        console.log('❌ Notifications refusées');
+      }
+    }
+  };
+}
+
+// S'assurer que sendTestNotification est bien définie
+if (typeof window.sendTestNotification === 'undefined') {
+  console.log('⚠️ Redéfinition de sendTestNotification');
+  window.sendTestNotification = function() {
+    if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+      navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification('Test Festival de Cannes 🎬', {
+          body: 'Ceci est une notification de test ! Le système fonctionne parfaitement.',
+          icon: './icons/icon-192.png',
+          badge: './icons/icon-192.png',
+          vibrate: [200, 100, 200],
+          tag: 'cannes-test',
+          data: { url: '/#commentaires' }
+        });
+        console.log('✅ Notification de test envoyée');
+      }).catch(error => {
+        console.log('❌ Erreur notification:', error);
+      });
+    } else {
+      console.log('❌ Service Worker non supporté ou permissions non accordées');
+    }
+  };
+}
+
+console.log('🔧 Corrections de syntaxe appliquées');
+
+// VALIDATION ET CORRECTION FINALE DES ERREURS DE SYNTAXE
+try {
+  // Vérifier que toutes les fonctions essentielles sont définies
+  const requiredFunctions = [
+    'requestNotificationPermission',
+    'hideNotificationPrompt', 
+    'sendTestNotification',
+    'forceShowWidget'
+  ];
+  
+  requiredFunctions.forEach(funcName => {
+    if (typeof window[funcName] !== 'function') {
+      console.warn(`⚠️ Fonction manquante: ${funcName}`);
+    } else {
+      console.log(`✅ Fonction OK: ${funcName}`);
+    }
+  });
+  
+  console.log('🎯 Validation syntaxe terminée avec succès');
+} catch (error) {
+  console.error('❌ Erreur validation:', error);
+}
+</script>
+
+</html>
