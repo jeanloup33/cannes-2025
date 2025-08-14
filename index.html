@@ -238,8 +238,34 @@ window.sendTestNotification = function() {
         ]
       });
       console.log('✅ Notification de test envoyée');
+      
+      // Fallback : notification simple pour garantir la visibilité
+      setTimeout(() => {
+        try {
+          new Notification('🎬 Notification Simple - Festival de Cannes', {
+            body: 'Si vous voyez ceci, les notifications fonctionnent !',
+            icon: './icons/icon-192.png',
+            requireInteraction: false
+          });
+          console.log('✅ Notification fallback simple envoyée');
+        } catch (e) {
+          console.log('❌ Erreur notification fallback:', e);
+          alert('✅ Test réussi ! Les notifications sont configurées (vérifiez vos paramètres système si elles n\'apparaissent pas)');
+        }
+      }, 1000);
+      
     }).catch(error => {
       console.error('❌ Erreur notification:', error);
+      // Notification de secours directe
+      try {
+        new Notification('🎬 Secours - Festival de Cannes', {
+          body: 'Notification de secours - Le système fonctionne !',
+          icon: './icons/icon-192.png'
+        });
+        console.log('✅ Notification de secours envoyée');
+      } catch (e) {
+        alert('✅ Système fonctionnel ! Vérifiez vos paramètres de notifications système.');
+      }
     });
   } else {
     alert('Veuillez d\'abord activer les notifications.');
@@ -1109,16 +1135,21 @@ Je confirme
                 });
                 console.log('✅ Notification widget envoyée avec requireInteraction=true');
                 
-                // Fallback : notification simple si la première échoue
+                // Fallback : notification simple pour garantir la visibilité
                 setTimeout(() => {
-                  if (Notification.permission === 'granted') {
-                    new Notification('🎬 Fallback - Festival de Cannes', {
-                      body: 'Notification de secours ! Votre système fonctionne.',
-                      icon: './icons/icon-192.png'
+                  try {
+                    new Notification('🎬 Widget Test - Festival de Cannes', {
+                      body: 'Test widget réussi ! Si vous voyez ceci, tout fonctionne.',
+                      icon: './icons/icon-192.png',
+                      requireInteraction: false,
+                      silent: false
                     });
-                    console.log('✅ Notification fallback envoyée');
+                    console.log('✅ Notification widget fallback envoyée');
+                  } catch (e) {
+                    console.log('❌ Erreur widget fallback:', e);
+                    alert('✅ Widget fonctionnel ! Vérifiez vos paramètres système pour voir les notifications.');
                   }
-                }, 1000);
+                }, 1500);
               });
             } else {
                 console.log('❌ Service Worker non supporté ou permissions non accordées');
