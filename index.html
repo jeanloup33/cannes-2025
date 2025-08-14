@@ -895,9 +895,6 @@ Je confirme
     }, 7000);
 
     // Gestion des commentaires Airtable
-              
-              let errorMsg = 'Erreur lors du test des notifications:\n\n';
-              
               if (err.name === 'NotAllowedError') {
                 errorMsg += '❌ Permission refusée par le navigateur';
               } else if (err.name === 'NotSupportedError') {
