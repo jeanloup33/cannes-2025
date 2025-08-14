@@ -209,11 +209,45 @@ window.hideNotificationPrompt = function() {
   }
 };
 
-// Fonctions notifications chargées depuis notifications.js
+window.sendTestNotification = function() {
+  console.log('🧪 Test de notification');
+  if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+    navigator.serviceWorker.ready.then(registration => {
+      registration.showNotification('🎬 Festival de Cannes - Test', {
+        body: 'Notification de test réussie ! Cliquez pour revenir au site.',
+        icon: './icons/icon-192.png',
+        badge: './icons/icon-192.png',
+        image: './assets/hero.webp',
+        vibrate: [200, 100, 200, 100, 200],
+        tag: 'cannes-test',
+        requireInteraction: true,
+        silent: false,
+        timestamp: Date.now(),
+        data: { url: '/#commentaires' },
+        actions: [
+          {
+            action: 'view',
+            title: '👀 Voir le site',
+            icon: './icons/icon-192.png'
+          },
+          {
+            action: 'close',
+            title: '❌ Fermer',
+            icon: './icons/icon-192.png'
+          }
+        ]
+      });
+      console.log('✅ Notification de test envoyée');
+    }).catch(error => {
+      console.error('❌ Erreur notification:', error);
+    });
+  } else {
+    alert('Veuillez d\'abord activer les notifications.');
+  }
+};
 
 console.log('🎯 Fonctions widget définies globalement');
 </script>
-<script src="./notifications.js" defer></script>
 
 </head>
 <body class="bg-glam text-white font-sans noise">
@@ -740,81 +774,13 @@ Je confirme
                       ]
                     });
                     console.log('✅ Notification créée via Service Worker');
-                    
-                    // Fallback notification simple
-                    setTimeout(() => {
-                      try {
-                        new Notification('🎬 Test Simple - Festival de Cannes', {
-                          body: 'Notification de test visible ! Le système fonctionne.',
-                          icon: './icons/icon-192.png',
-                          requireInteraction: false
-                        });
-                        console.log('✅ Notification simple de test envoyée');
-                      } catch (e) {
-                        console.log('❌ Erreur notification simple:', e);
-                        alert('✅ Test réussi ! Notifications configurées (vérifiez paramètres système)');
-                      }
-                    }, 1500);
-                    
                   }).catch(error => {
                     console.log('❌ Erreur Service Worker:', error);
-                    // Notification de secours directe
-                    try {
-                      new Notification('🎬 Secours - Festival de Cannes', {
-                        body: 'Notification de secours - Test réussi !',
-                        icon: './icons/icon-192.png'
-                      });
-                      console.log('✅ Notification de secours envoyée');
-                    } catch (e) {
-                      alert('✅ Test fonctionnel ! Vérifiez paramètres notifications.');
-                    }
                   });
                 } else {
                   console.log('❌ Service Worker non supporté');
-                  // Notification directe si pas de Service Worker
-                  try {
-                    new Notification('🎬 Direct - Festival de Cannes', {
-                      body: 'Test direct sans Service Worker !',
-                      icon: './icons/icon-192.png'
-                    });
-                    console.log('✅ Notification directe envoyée');
-                  } catch (e) {
-                    alert('✅ Test OK ! Vérifiez paramètres notifications.');
-                  }
-                }
-                
-                // Terminer le test
-                setTimeout(() => {
-                  notifTestBtn.classList.remove('opacity-75');
-                  console.log('🎉 Test des notifications terminé avec succès');
-                }, 3000);
-                
-              } else if (permission === 'denied') {
-                alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
-                console.warn('❌ Permission refusée par l\'utilisateur');
-              } else {
-                alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
-                console.warn('⚠️ Permission dans un état inattendu:', permission);
-              }
-            } catch (err) {
-              console.error('💥 Erreur complète:', err);
-              console.error('💥 Stack trace:', err.stack);
-              
-              let errorMsg = '❌ Erreur lors du test des notifications.\n\n';
-              if (err.name === 'NotAllowedError') {
-                errorMsg += 'Les notifications sont bloquées. Autorisez-les dans les paramètres de votre navigateur.';
-              } else if (err.name === 'NotSupportedError') {
-                errorMsg += 'Votre navigateur ne supporte pas les notifications.';
-              } else {
-                errorMsg += 'Erreur technique: ' + err.message;
-              }
-              
-              alert(errorMsg);
-            }
-          });
-        }
-      }
-
+                 }
+  
     // Script additionnel pour masquer l'email après chargement
     setTimeout(() => {
       const cusdisIframe = document.querySelector('#cusdis_thread iframe');
@@ -833,8 +799,39 @@ Je confirme
         }
       }
     }, 7000);
-
-    // Gestion des commentaires Airtable
+                
+                // Mettre à jour le bouton
+                notifTestBtn.innerHTML = '✅ Notifications activées';
+                notifTestBtn.disabled = true;
+                notifTestBtn.classList.add('opacity-75');
+                
+                console.log('🎉 Test des notifications terminé avec succès');
+                
+              } else if (permission === 'denied') {
+                alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
+                console.warn('❌ Permission refusée par l\'utilisateur');
+              } else {
+                alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
+                console.warn('⚠️ Permission dans un état inattendu:', permission);
+              }
+              
+            } catch (err) {
+              console.error('💥 Erreur complète:', err);
+              console.error('💥 Stack trace:', err.stack);
+              
+              let errorMsg = 'Erreur lors du test des notifications:\n\n';
+              
+              if (err.name === 'NotAllowedError') {
+                errorMsg += '❌ Permission refusée par le navigateur';
+              } else if (err.name === 'NotSupportedError') {
+                errorMsg += '❌ Notifications non supportées sur cet appareil';
+              } else if (err.message.includes('https')) {
+                errorMsg += '🔒 HTTPS requis pour les notifications';
+              } else {
+                errorMsg += '⚠️ ' + err.message;
+              }
+              
+              errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
               alert(errorMsg);
             }
            });
@@ -986,8 +983,47 @@ Je confirme
           `;
         }).join('');
       }
+
+      // CORRECTION: Déplacer la fonction ici pour qu'elle soit dans la bonne portée
+      // Envoyer une notification lors d'un nouveau commentaire
+      function sendCommentNotification(nom) {
+        if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification('Festival de Cannes 🎬', {
+              body: nom + ' a ajouté un nouveau commentaire ! Venez voir les dernières impressions.',
+              icon: './icons/icon-192.png',
+              badge: './icons/icon-192.png',
+              vibrate: [200, 100, 200],
+              tag: 'cannes-comment',
+              requireInteraction: false,
+              data: { url: '/#commentaires' },
+              actions: [
+                {
+                  action: 'view',
+                  title: 'Voir les commentaires',
+                  icon: './icons/icon-192.png'
+                }
+              ]
+            });
+          });
+        }
+      }
+
+      // CORRECTION: Modifier la fonction originale avant que les écouteurs d'événements ne soient créés
+      // Intercepter la création de commentaires pour envoyer des notifications
+      const originalCreateComment = createComment;
+      createComment = async function(nom, message) {
+        const result = await originalCreateComment(nom, message);
+        if (result) {
+          // Envoyer une notification après un délai
+          setTimeout(() => {
+            sendCommentNotification(nom);
+          }, 2000);
+        }
+        return result;
+      };
       
-      // Gestion du formulaire
+      // Gestion du formulaire et des widgets de notification
       document.addEventListener('DOMContentLoaded', () => {
         loadComments();
         
@@ -1010,7 +1046,7 @@ Je confirme
             button.textContent = '📤 Envoi en cours...';
             button.disabled = true;
             
-            // Créer le commentaire dans Airtable
+            // Créer le commentaire dans Airtable (appelle maintenant la version modifiée)
             const success = await createComment(nom, message);
             
             if (success) {
@@ -1038,25 +1074,10 @@ Je confirme
         setInterval(loadComments, 30000);
         
         // ===================================================================
-        // SYSTÈME DE NOTIFICATIONS PUSH
+        // SYSTÈME DE NOTIFICATIONS PUSH (Logique du Widget)
         // ===================================================================
         
-        // Demander la permission pour les notifications
-        window.requestNotificationPermission = async function() {
-          if ('Notification' in window && 'serviceWorker' in navigator) {
-            const permission = await Notification.requestPermission();
-            if (permission === 'granted') {
-              console.log('✅ Notifications autorisées');
-              hideNotificationPrompt();
-              showTestButton();
-              await subscribeToPush();
-            } else {
-              console.log('❌ Notifications refusées');
-            }
-          }
-        };
-        
-        // S'abonner aux notifications push
+        // S'abonner aux notifications push (pour s'assurer que le SW est prêt)
         async function subscribeToPush() {
           try {
             const registration = await navigator.serviceWorker.ready;
@@ -1065,113 +1086,8 @@ Je confirme
             console.log('❌ Erreur Service Worker:', error);
           }
         }
-        
-        // Masquer le prompt de notification
-          window.hideNotificationPrompt = function() {
-            const prompt = document.getElementById('notification-prompt');
-            if (prompt) {
-              prompt.style.display = 'none';
-            }
-          };
-          
-          // Afficher le bouton de test si notifications activées
-          window.showTestButton = function() {
-            const container = document.getElementById('test-notification-container');
-            if (container && Notification.permission === 'granted') {
-              container.style.display = 'block';
-            }
-          };
-          
-          // Envoyer une notification de test
-           window.sendTestNotification = function() {
-            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-              navigator.serviceWorker.ready.then(registration => {
-                registration.showNotification('🎬 Festival de Cannes - Test Widget', {
-                  body: 'Test depuis le widget ! Cliquez pour revenir au site.',
-                  icon: './icons/icon-192.png',
-                  badge: './icons/icon-192.png',
-                  image: './assets/hero.webp',
-                  vibrate: [200, 100, 200, 100, 200],
-                  tag: 'cannes-widget-test',
-                  requireInteraction: true,
-                  silent: false,
-                  timestamp: Date.now(),
-                  data: { url: '/#commentaires' },
-                  actions: [
-                    {
-                      action: 'view',
-                      title: '👀 Voir les commentaires',
-                      icon: './icons/icon-192.png'
-                    },
-                    {
-                      action: 'close',
-                      title: '❌ Fermer',
-                      icon: './icons/icon-192.png'
-                    }
-                  ]
-                });
-                console.log('✅ Notification widget envoyée avec requireInteraction=true');
-                
-                // Fallback : notification simple pour garantir la visibilité
-                setTimeout(() => {
-                  try {
-                    new Notification('🎬 Widget Test - Festival de Cannes', {
-                      body: 'Test widget réussi ! Si vous voyez ceci, tout fonctionne.',
-                      icon: './icons/icon-192.png',
-                      requireInteraction: false,
-                      silent: false
-                    });
-                    console.log('✅ Notification widget fallback envoyée');
-                  } catch (e) {
-                    console.log('❌ Erreur widget fallback:', e);
-                    alert('✅ Widget fonctionnel ! Vérifiez vos paramètres système pour voir les notifications.');
-                  }
-                }, 1500);
-              });
-            } else {
-                console.log('❌ Service Worker non supporté ou permissions non accordées');
-                alert('Veuillez d\'abord activer les notifications en cliquant sur "Activer".');
-              }
-          };
-          
-        // Envoyer une notification lors d'un nouveau commentaire
-        function sendCommentNotification(nom) {
-          if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-            navigator.serviceWorker.ready.then(registration => {
-              registration.showNotification('Festival de Cannes 🎬', {
-                body: nom + ' a ajouté un nouveau commentaire ! Venez voir les dernières impressions.',
-                icon: './icons/icon-192.png',
-                badge: './icons/icon-192.png',
-                vibrate: [200, 100, 200],
-                tag: 'cannes-comment',
-                requireInteraction: false,
-                data: { url: '/#commentaires' },
-                actions: [
-                  {
-                    action: 'view',
-                    title: 'Voir les commentaires',
-                    icon: './icons/icon-192.png'
-                  }
-                ]
-              });
-            });
-          }
-        }
-        
-        // Fonction pour forcer l'affichage du widget (pour tests)
-        window.showNotificationWidget = function() {
-          const prompt = document.getElementById('notification-prompt');
-          if (prompt) {
-            prompt.style.display = 'block';
-            // Afficher le bouton de test si notifications déjà accordées
-            if (Notification.permission === 'granted') {
-              showTestButton();
-            }
-          }
-        };
-        
+
         // FORCER L'AFFICHAGE DU WIDGET POUR TESTS
-        // Afficher le widget après 2 secondes, peu importe le statut
         setTimeout(() => {
           const prompt = document.getElementById('notification-prompt');
           if (prompt) {
@@ -1179,75 +1095,45 @@ Je confirme
             
             // Adapter l'interface selon les permissions
             if (Notification.permission === 'granted') {
-              // Utilisateur a déjà accepté
               const title = prompt.querySelector('h4');
               const description = prompt.querySelector('p');
               if (title) title.textContent = 'Notifications activées ✅';
               if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
-              
-              // Masquer les boutons Activer/Plus tard
               const buttons = prompt.querySelector('.flex.gap-2');
               if (buttons) buttons.style.display = 'none';
-              
-              // Afficher le bouton de test
-              showTestButton();
+              const testContainer = document.getElementById('test-notification-container');
+              if (testContainer) testContainer.style.display = 'block';
             } else if (Notification.permission === 'denied') {
-              // Utilisateur a refusé
               const title = prompt.querySelector('h4');
               const description = prompt.querySelector('p');
               if (title) title.textContent = 'Notifications désactivées';
               if (description) description.textContent = 'Vous pouvez réactiver les notifications dans les paramètres de votre navigateur.';
-              
-              // Masquer les boutons Activer/Plus tard
               const buttons = prompt.querySelector('.flex.gap-2');
               if (buttons) buttons.style.display = 'none';
             }
-            // Sinon garder l'interface par défaut pour 'default'
             
             prompt.style.display = 'block';
           }
         }, 2000);
         
-        // Vérifier le support des notifications (pour logs)
-        if ('Notification' in window && 'serviceWorker' in navigator) {
-          console.log('📱 Support notifications:', Notification.permission);
-        } else {
-          console.log('❌ Notifications non supportées');
-        }
-          
-          // Écouter les messages du Service Worker
-          navigator.serviceWorker.addEventListener('message', (event) => {
-            if (event.data.type === 'NAVIGATE_TO_ANCHOR') {
-              const anchor = event.data.anchor;
-              const element = document.getElementById(anchor);
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-                // Ouvrir l'accordéon des commentaires si c'est la section commentaires
-                if (anchor === 'commentaires') {
-                  const details = element.querySelector('details');
-                  if (details && !details.open) {
-                    details.open = true;
-                  }
+        // Écouter les messages du Service Worker
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data.type === 'NAVIGATE_TO_ANCHOR') {
+            const anchor = event.data.anchor;
+            const element = document.getElementById(anchor);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+              if (anchor === 'commentaires') {
+                const details = element.querySelector('details');
+                if (details && !details.open) {
+                  details.open = true;
                 }
               }
             }
-          });
-      // ----- CORRECTION DE LA SYNTAXE ICI -----
-      // Les accolades en trop ont été supprimées pour fermer correctement l'écouteur d'événements.
+          }
+        });
+      // CORRECTION: Fin correcte du bloc DOMContentLoaded
       });
-      
-      // Intercepter la création de commentaires pour envoyer des notifications
-      const originalCreateComment = window.createComment;
-      window.createComment = async function(nom, message) {
-        const result = await originalCreateComment(nom, message);
-        if (result) {
-          // Envoyer une notification après un délai
-          setTimeout(() => {
-            sendCommentNotification(nom);
-          }, 2000);
-        }
-        return result;
-      };
    </script>
 <script>
   (async () => {
