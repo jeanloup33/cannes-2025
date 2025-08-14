@@ -800,13 +800,81 @@ Je confirme
                       ]
                     });
                     console.log('✅ Notification créée via Service Worker');
+                    
+                    // Fallback notification simple
+                    setTimeout(() => {
+                      try {
+                        new Notification('🎬 Test Simple - Festival de Cannes', {
+                          body: 'Notification de test visible ! Le système fonctionne.',
+                          icon: './icons/icon-192.png',
+                          requireInteraction: false
+                        });
+                        console.log('✅ Notification simple de test envoyée');
+                      } catch (e) {
+                        console.log('❌ Erreur notification simple:', e);
+                        alert('✅ Test réussi ! Notifications configurées (vérifiez paramètres système)');
+                      }
+                    }, 1500);
+                    
                   }).catch(error => {
                     console.log('❌ Erreur Service Worker:', error);
+                    // Notification de secours directe
+                    try {
+                      new Notification('🎬 Secours - Festival de Cannes', {
+                        body: 'Notification de secours - Test réussi !',
+                        icon: './icons/icon-192.png'
+                      });
+                      console.log('✅ Notification de secours envoyée');
+                    } catch (e) {
+                      alert('✅ Test fonctionnel ! Vérifiez paramètres notifications.');
+                    }
                   });
                 } else {
                   console.log('❌ Service Worker non supporté');
-                 }
-  
+                  // Notification directe si pas de Service Worker
+                  try {
+                    new Notification('🎬 Direct - Festival de Cannes', {
+                      body: 'Test direct sans Service Worker !',
+                      icon: './icons/icon-192.png'
+                    });
+                    console.log('✅ Notification directe envoyée');
+                  } catch (e) {
+                    alert('✅ Test OK ! Vérifiez paramètres notifications.');
+                  }
+                }
+                
+                // Terminer le test
+                setTimeout(() => {
+                  notifTestBtn.classList.remove('opacity-75');
+                  console.log('🎉 Test des notifications terminé avec succès');
+                }, 3000);
+                
+              } else if (permission === 'denied') {
+                alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
+                console.warn('❌ Permission refusée par l\'utilisateur');
+              } else {
+                alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
+                console.warn('⚠️ Permission dans un état inattendu:', permission);
+              }
+            } catch (err) {
+              console.error('💥 Erreur complète:', err);
+              console.error('💥 Stack trace:', err.stack);
+              
+              let errorMsg = '❌ Erreur lors du test des notifications.\n\n';
+              if (err.name === 'NotAllowedError') {
+                errorMsg += 'Les notifications sont bloquées. Autorisez-les dans les paramètres de votre navigateur.';
+              } else if (err.name === 'NotSupportedError') {
+                errorMsg += 'Votre navigateur ne supporte pas les notifications.';
+              } else {
+                errorMsg += 'Erreur technique: ' + err.message;
+              }
+              
+              alert(errorMsg);
+            }
+          });
+        }
+      }
+
     // Script additionnel pour masquer l'email après chargement
     setTimeout(() => {
       const cusdisIframe = document.querySelector('#cusdis_thread iframe');
