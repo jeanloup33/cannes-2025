@@ -11,7 +11,6 @@
   <link rel="icon" href="./icons/icon-192.png?v=20250808" />
   <link rel="manifest" href="./manifest.webmanifest?v=20250808" />
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -43,11 +42,9 @@
   </script>
 
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
   
-  <!-- Preload des ressources critiques -->
   <link rel="preload" href="./assets/hero.webp" as="image" fetchpriority="high" />
   <link rel="preload" href="./assets/logo.webp" as="image" fetchpriority="high" />
 
@@ -60,7 +57,7 @@
 /* Effet glow doré type enseigne + léger halo vertical */
 .title-cannes{
   position:relative;
-  color:#fff;                 /* lettres blanches comme l’exemple */
+  color:#fff;              /* lettres blanches comme l’exemple */
   letter-spacing:.5px;
   text-shadow:
     0 0 0 rgba(0,0,0,0),      /* fix safari layers */
@@ -164,7 +161,6 @@
 
   </style>
 
-<!-- SCRIPT GLOBAL POUR BOUTONS WIDGET -->
 <script>
 // Définir les fonctions globalement AVANT le DOMContentLoaded
 // pour que les attributs onclick fonctionnent
@@ -255,10 +251,8 @@ console.log('🎯 Fonctions widget définies globalement');
 
 </head>
 <body class="bg-glam text-white font-sans noise">
-  <!-- Header / Nav -->
-<header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <!-- Logo + titre --> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
+  <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
 
-<!-- Burger -->
 <button id="nav-toggle"
         class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
         aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu de navigation">
@@ -268,7 +262,6 @@ console.log('🎯 Fonctions widget définies globalement');
   <div class="w-6 h-[2px] bg-white my-1"></div>
 </button>
 
-<!-- Menu desktop -->
 <ul class="hidden md:flex items-center gap-6">
   <li>
     <a href="#about"
@@ -315,7 +308,6 @@ console.log('🎯 Fonctions widget définies globalement');
 
 </nav>
 
-<!-- MENU MOBILE -->
 <div id="mobile-menu" class="md:hidden hidden border-t border-black/20 bg-[#66000f]/90 backdrop-blur-xl">
   <div class="container mx-auto px-5 py-3 grid gap-1.5">
     <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#about">À propos</a>
@@ -328,11 +320,9 @@ console.log('🎯 Fonctions widget définies globalement');
 </div>
 </header>
 
-  <!-- Hero -->
   <section id="hero" class="relative">
   <div class="absolute inset-0 -z-10">
     <img src="./assets/hero.webp?v=20250808" alt="" class="w-full h-[92vh] object-cover" />
-    <!-- Overlay noir -->
     <div class="absolute inset-0 bg-black/40"></div>
   </div>
 
@@ -377,7 +367,6 @@ console.log('🎯 Fonctions widget définies globalement');
       </div>
       <div class="mt-10 text-white/70 text-sm">Dress code: Black tie, glamour & doré</div>
       
-      <!-- Boutons d'action -->
       <div class="mt-6 flex flex-wrap gap-3">
         <button id="shareBtn" class="hidden px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition touch-target">
           📤 Partager l'événement
@@ -389,9 +378,7 @@ console.log('🎯 Fonctions widget définies globalement');
     </div>
 	</section>
 	
-    <!-- Actus -->
-	<!-- Actus -->
-	<section id="latest-news" class="py-10">
+    <section id="latest-news" class="py-10">
 	<div class="container mx-auto px-6">
 	<div class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
 	<div class="flex items-start justify-between gap-4 mb-4">
@@ -406,7 +393,6 @@ console.log('🎯 Fonctions widget définies globalement');
 	</section>
 
 
-  <!-- À propos -->
   <section id="about" class="py-20 md:py-28 bg-noir">
     <div class="container mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
       <div>
@@ -436,7 +422,6 @@ console.log('🎯 Fonctions widget définies globalement');
     </div>
   </section>
 
-  <!-- Programme -->
   <section id="program" class="py-20 md:py-28">
     <div class="container mx-auto px-6">
       <h2 class="font-display text-3xl md:text-4xl gold-text">Programme</h2>
@@ -461,7 +446,6 @@ console.log('🎯 Fonctions widget définies globalement');
     </div>
   </section>
 
-  <!-- Dress code -->
   <section id="dress" class="py-20 md:py-28 bg-noir">
     <div class="container mx-auto px-6">
       <h2 class="font-display text-3xl md:text-4xl gold-text">Dress code</h2>
@@ -482,7 +466,6 @@ console.log('🎯 Fonctions widget définies globalement');
     </div>
   </section>
 
-  <!-- Galerie -->
   <section id="gallery" class="py-20 md:py-28">
     <div class="container mx-auto px-6">
       <h2 class="font-display text-3xl md:text-4xl gold-text">Galerie</h2>
@@ -497,10 +480,8 @@ console.log('🎯 Fonctions widget définies globalement');
     </div>
   </section>
 
-  <!-- FAQ -->
-<section id="faq" class="container mx-auto px-5 py-10 md:py-14"> <h2 class="font-display text-3xl md:text-4xl gold-text mb-6">FAQ</h2> <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md divide-y divide-white/10"> <!-- Item 1 --> <details class="group"> <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none"> <span class="text-base md:text-lg font-semibold text-white/90">À quelle heure commence la soirée ?</span> <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10"> <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span> <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span> </span> </summary> <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out"> <div class="overflow-hidden"> <div class="px-5 pb-5 text-white/80"> Les portes ouvrent à 19h00. Le programme débute à 20h00. </div> </div> </div> </details>
+  <section id="faq" class="container mx-auto px-5 py-10 md:py-14"> <h2 class="font-display text-3xl md:text-4xl gold-text mb-6">FAQ</h2> <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md divide-y divide-white/10"> <details class="group"> <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none"> <span class="text-base md:text-lg font-semibold text-white/90">À quelle heure commence la soirée ?</span> <span class="relative inline-flex h-6 w-6 items-center justify-center rounded-md bg-white/10"> <span class="absolute h-0.5 w-3.5 bg-white transition-transform duration-200"></span> <span class="absolute h-3.5 w-0.5 bg-white transition-transform duration-200 group-open:scale-y-0"></span> </span> </summary> <div class="grid grid-rows-[0fr] group-open:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out"> <div class="overflow-hidden"> <div class="px-5 pb-5 text-white/80"> Les portes ouvrent à 19h00. Le programme débute à 20h00. </div> </div> </div> </details>
 
-<!-- Item 2 -->
 <details class="group">
   <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none">
     <span class="text-base md:text-lg font-semibold text-white/90">Y a‑t‑il un code vestimentaire ?</span>
@@ -518,7 +499,6 @@ console.log('🎯 Fonctions widget définies globalement');
   </div>
 </details>
 
-<!-- Item 3 -->
 <details class="group">
   <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none">
     <span class="text-base md:text-lg font-semibold text-white/90">Comment participer à l’événement ?</span>
@@ -536,7 +516,6 @@ console.log('🎯 Fonctions widget définies globalement');
   </div>
 </details>
 
-<!-- Item 4 -->
 <details class="group">
   <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 list-none">
     <span class="text-base md:text-lg font-semibold text-white/90">Faut‑il confirmer sa venue ?</span>
@@ -556,7 +535,6 @@ console.log('🎯 Fonctions widget définies globalement');
 
 </div> </section>
     
-    <!-- Prompt de notification -->
     <div id="notification-prompt" style="display: none;" class="fixed bottom-4 right-4 z-50 max-w-sm bg-gradient-to-r from-[#66000f] to-[#8b0000] border border-gold/30 rounded-xl p-4 shadow-2xl backdrop-blur-md">
       <div class="flex items-start gap-3">
         <div class="flex-shrink-0">
@@ -575,7 +553,6 @@ console.log('🎯 Fonctions widget définies globalement');
                Plus tard
              </button>
            </div>
-           <!-- Bouton de test (visible seulement si notifications activées) -->
            <div id="test-notification-container" style="display: none;" class="mt-2">
              <button onclick="sendTestNotification()" class="w-full bg-white/10 text-white/80 font-semibold text-xs px-3 py-1 rounded-lg hover:bg-white/20 transition">
                🧪 Test notification
@@ -590,8 +567,7 @@ console.log('🎯 Fonctions widget définies globalement');
       </div>
     </div>
     
-    <!-- Commentaires -->
-  <section id="commentaires" class="container mx-auto px-5 py-10 md:py-14">
+    <section id="commentaires" class="container mx-auto px-5 py-10 md:py-14">
     <h2 class="font-display text-3xl md:text-4xl gold-text mb-6">Vos commentaires</h2>
     <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
       <details class="group">
@@ -608,44 +584,41 @@ console.log('🎯 Fonctions widget définies globalement');
               <p class="text-white/70 text-sm mb-4">Partagez vos questions, attentes ou souvenirs de nos précédentes soirées !</p>
               <div class="rounded-xl bg-black/20 p-4">
                  <div id="giscus-container">
-                   <!-- Formulaire de commentaires Airtable -->
-                       <form id="commentForm" class="space-y-4">
-                        <div>
-                          <label class="block text-sm font-medium text-white/80 mb-2">Votre nom ou pseudo</label>
-                          <input type="text" name="nom" id="commentName" required 
-                                 class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors" 
-                                 placeholder="Votre nom...">
-                        </div>
-                        <div>
-                          <label class="block text-sm font-medium text-white/80 mb-2">Votre message</label>
-                          <textarea name="message" id="commentMessage" required rows="4"
-                                    class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors resize-vertical" 
-                                    placeholder="Partagez vos impressions sur l'événement..."></textarea>
-                        </div>
-                        <button type="submit" 
-                                class="w-full rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold px-6 py-3 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition-all">
-                          💬 Publier mon message
-                        </button>
-                      </form>
-                     
-                     <!-- Messages des visiteurs -->
-                      <div id="commentsList" class="mt-8 space-y-4">
-                        <!-- Les commentaires apparaîtront ici automatiquement -->
-                        <div class="bg-white/5 rounded-xl p-4 border border-white/10">
-                          <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
-                              J
-                            </div>
-                            <div>
-                              <p class="font-semibold text-white/90">Jean-Loup</p>
-                              <p class="text-xs text-white/60">12 janvier, 15:30</p>
-                            </div>
+                   <form id="commentForm" class="space-y-4">
+                       <div>
+                         <label class="block text-sm font-medium text-white/80 mb-2">Votre nom ou pseudo</label>
+                         <input type="text" name="nom" id="commentName" required 
+                                class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors" 
+                                placeholder="Votre nom...">
+                       </div>
+                       <div>
+                         <label class="block text-sm font-medium text-white/80 mb-2">Votre message</label>
+                         <textarea name="message" id="commentMessage" required rows="4"
+                                   class="w-full rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white placeholder:text-white/50 focus:border-gold focus:ring-2 focus:ring-gold/20 transition-colors resize-vertical" 
+                                   placeholder="Partagez vos impressions sur l'événement..."></textarea>
+                       </div>
+                       <button type="submit" 
+                               class="w-full rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold px-6 py-3 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition-all">
+                         💬 Publier mon message
+                       </button>
+                     </form>
+                    
+                   <div id="commentsList" class="mt-8 space-y-4">
+                      <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="flex items-center gap-3 mb-2">
+                          <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
+                            J
                           </div>
-                          <p class="text-white/80 leading-relaxed">Bienvenue ! Vos messages apparaîtront ici automatiquement et seront visibles par tous les invités. Aucune identification requise ! ✨</p>
+                          <div>
+                            <p class="font-semibold text-white/90">Jean-Loup</p>
+                            <p class="text-xs text-white/60">12 janvier, 15:30</p>
+                          </div>
                         </div>
+                        <p class="text-white/80 leading-relaxed">Bienvenue ! Vos messages apparaîtront ici automatiquement et seront visibles par tous les invités. Aucune identification requise ! ✨</p>
                       </div>
+                    </div>
                  </div>
-               </div>
+                </div>
             </div>
           </div>
         </div>
@@ -653,7 +626,6 @@ console.log('🎯 Fonctions widget définies globalement');
     </div>
   </section>
 
-  <!-- Billetterie / CTA -->
   <section id="tickets" class="py-20 md:py-28 bg-noir">
     <div class="container mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
       <div>
@@ -693,7 +665,6 @@ Je confirme
 
 
 
-  <!-- Infos -->
   <section id="contact" class="py-16">
     <div class="container mx-auto px-6 grid md:grid-cols-3 gap-6">
       <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
@@ -711,7 +682,6 @@ Je confirme
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="border-t border-white/10 py-8 bg-noir">
     <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3">
@@ -724,7 +694,6 @@ Je confirme
 
   <script src="./app.js?v=20250808" defer></script>
   
-  <!-- Partage natif, notifications push et feedback haptique -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Partage natif
@@ -746,148 +715,145 @@ Je confirme
       }
 
       // Test des notifications push
-       const notifTestBtn = document.getElementById('notifTestBtn');
-       if (notifTestBtn) {
-         notifTestBtn.addEventListener('click', async () => {
-           try {
-             console.log('🔔 Début du test des notifications');
-             
-             // Feedback haptique
-             if (navigator.vibrate) {
-               navigator.vibrate([100, 50, 100]);
-               console.log('✅ Vibration activée');
-             }
-             
-             // Vérifier le protocole HTTPS
-             if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-               alert('⚠️ Les notifications nécessitent HTTPS ou localhost.\nTestez sur localhost ou déployez en HTTPS.');
-               return;
-             }
-             console.log('✅ Protocole vérifié:', location.protocol);
-             
-             // Vérifier le support des notifications
-             if (!('Notification' in window)) {
-               alert('❌ Ce navigateur ne supporte pas les notifications.\nEssayez Chrome, Firefox ou Edge.');
-               console.error('❌ API Notification non supportée');
-               return;
-             }
-             console.log('✅ API Notification supportée');
+        const notifTestBtn = document.getElementById('notifTestBtn');
+        if (notifTestBtn) {
+          notifTestBtn.addEventListener('click', async () => {
+            try {
+              console.log('🔔 Début du test des notifications');
+              
+              // Feedback haptique
+              if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+                console.log('✅ Vibration activée');
+              }
+              
+              // Vérifier le protocole HTTPS
+              if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                alert('⚠️ Les notifications nécessitent HTTPS ou localhost.\nTestez sur localhost ou déployez en HTTPS.');
+                return;
+              }
+              console.log('✅ Protocole vérifié:', location.protocol);
+              
+              // Vérifier le support des notifications
+              if (!('Notification' in window)) {
+                alert('❌ Ce navigateur ne supporte pas les notifications.\nEssayez Chrome, Firefox ou Edge.');
+                console.error('❌ API Notification non supportée');
+                return;
+              }
+              console.log('✅ API Notification supportée');
 
-             // Vérifier la permission actuelle
-             let permission = Notification.permission;
-             console.log('🔐 Permission actuelle:', permission);
-             
-             if (permission === 'default') {
-               console.log('📝 Demande de permission...');
-               permission = await Notification.requestPermission();
-               console.log('📝 Nouvelle permission:', permission);
-             }
+              // Vérifier la permission actuelle
+              let permission = Notification.permission;
+              console.log('🔐 Permission actuelle:', permission);
+              
+              if (permission === 'default') {
+                console.log('📝 Demande de permission...');
+                permission = await Notification.requestPermission();
+                console.log('📝 Nouvelle permission:', permission);
+              }
 
-             if (permission === 'granted') {
-               console.log('✅ Permission accordée, création de la notification...');
-               
-               // Utiliser le Service Worker pour les notifications
-               if ('serviceWorker' in navigator) {
-                 navigator.serviceWorker.ready.then(registration => {
-                   registration.showNotification('🎬 Festival de Cannes Night', {
-                     body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
-                     icon: './icons/icon-192.png',
-                     badge: './icons/icon-192.png',
-                     tag: 'cannes-test',
-                     vibrate: [200, 100, 200],
-                     data: { url: '/#commentaires' },
-                     actions: [
-                       {
-                         action: 'view',
-                         title: 'Voir le site',
-                         icon: './icons/icon-192.png'
-                       }
-                     ]
-                   });
-                   console.log('✅ Notification créée via Service Worker');
-                 }).catch(error => {
-                   console.log('❌ Erreur Service Worker:', error);
-                 });
-               } else {
+              if (permission === 'granted') {
+                console.log('✅ Permission accordée, création de la notification...');
+                
+                // Utiliser le Service Worker pour les notifications
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification('🎬 Festival de Cannes Night', {
+                      body: 'Test de notification réussi ! Vous recevrez les actualités de l\'événement.',
+                      icon: './icons/icon-192.png',
+                      badge: './icons/icon-192.png',
+                      tag: 'cannes-test',
+                      vibrate: [200, 100, 200],
+                      data: { url: '/#commentaires' },
+                      actions: [
+                        {
+                          action: 'view',
+                          title: 'Voir le site',
+                          icon: './icons/icon-192.png'
+                        }
+                      ]
+                    });
+                    console.log('✅ Notification créée via Service Worker');
+                  }).catch(error => {
+                    console.log('❌ Erreur Service Worker:', error);
+                  });
+                } else {
                   console.log('❌ Service Worker non supporté');
-                }
-      
-      // Script additionnel pour masquer l'email après chargement
-      setTimeout(() => {
-        const cusdisIframe = document.querySelector('#cusdis_thread iframe');
-        if (cusdisIframe) {
-          try {
-            const iframeDoc = cusdisIframe.contentDocument || cusdisIframe.contentWindow.document;
-            const emailInputs = iframeDoc.querySelectorAll('input[type="email"], input[placeholder*="email" i], input[name*="email" i]');
-            emailInputs.forEach(input => {
-              const parent = input.closest('.form-group, .field, .input-group, div');
-              if (parent) parent.style.display = 'none';
-              input.style.display = 'none';
-            });
-          } catch (e) {
-            // Cross-origin, utiliser postMessage si nécessaire
-            console.log('Email masking: Cross-origin iframe detected');
-          }
-        }
-      }, 7000);
-               
-               // Mettre à jour le bouton
-               notifTestBtn.innerHTML = '✅ Notifications activées';
-               notifTestBtn.disabled = true;
-               notifTestBtn.classList.add('opacity-75');
-               
-               console.log('🎉 Test des notifications terminé avec succès');
-               
-             } else if (permission === 'denied') {
-               alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
-               console.warn('❌ Permission refusée par l\'utilisateur');
-             } else {
-               alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
-               console.warn('⚠️ Permission dans un état inattendu:', permission);
-             }
-             
-           } catch (err) {
-             console.error('💥 Erreur complète:', err);
-             console.error('💥 Stack trace:', err.stack);
-             
-             let errorMsg = 'Erreur lors du test des notifications:\n\n';
-             
-             if (err.name === 'NotAllowedError') {
-               errorMsg += '❌ Permission refusée par le navigateur';
-             } else if (err.name === 'NotSupportedError') {
-               errorMsg += '❌ Notifications non supportées sur cet appareil';
-             } else if (err.message.includes('https')) {
-               errorMsg += '🔒 HTTPS requis pour les notifications';
-             } else {
-               errorMsg += '⚠️ ' + err.message;
-             }
-             
-             errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
-             alert(errorMsg);
-           }
+                 }
+  
+    // Script additionnel pour masquer l'email après chargement
+    setTimeout(() => {
+      const cusdisIframe = document.querySelector('#cusdis_thread iframe');
+      if (cusdisIframe) {
+        try {
+          const iframeDoc = cusdisIframe.contentDocument || cusdisIframe.contentWindow.document;
+          const emailInputs = iframeDoc.querySelectorAll('input[type="email"], input[placeholder*="email" i], input[name*="email" i]');
+          emailInputs.forEach(input => {
+            const parent = input.closest('.form-group, .field, .input-group, div');
+            if (parent) parent.style.display = 'none';
+            input.style.display = 'none';
           });
-       }
+        } catch (e) {
+          // Cross-origin, utiliser postMessage si nécessaire
+          console.log('Email masking: Cross-origin iframe detected');
+        }
+      }
+    }, 7000);
+                
+                // Mettre à jour le bouton
+                notifTestBtn.innerHTML = '✅ Notifications activées';
+                notifTestBtn.disabled = true;
+                notifTestBtn.classList.add('opacity-75');
+                
+                console.log('🎉 Test des notifications terminé avec succès');
+                
+              } else if (permission === 'denied') {
+                alert('❌ Permission refusée.\n\nPour activer :\n• Chrome: Cliquez sur 🔒 dans la barre d\'adresse\n• Firefox: Cliquez sur 🛡️ à gauche de l\'URL\n• Autorisez les notifications pour ce site');
+                console.warn('❌ Permission refusée par l\'utilisateur');
+              } else {
+                alert('⚠️ Impossible d\'obtenir la permission pour les notifications.');
+                console.warn('⚠️ Permission dans un état inattendu:', permission);
+              }
+              
+            } catch (err) {
+              console.error('💥 Erreur complète:', err);
+              console.error('💥 Stack trace:', err.stack);
+              
+              let errorMsg = 'Erreur lors du test des notifications:\n\n';
+              
+              if (err.name === 'NotAllowedError') {
+                errorMsg += '❌ Permission refusée par le navigateur';
+              } else if (err.name === 'NotSupportedError') {
+                errorMsg += '❌ Notifications non supportées sur cet appareil';
+              } else if (err.message.includes('https')) {
+                errorMsg += '🔒 HTTPS requis pour les notifications';
+              } else {
+                errorMsg += '⚠️ ' + err.message;
+              }
+              
+              errorMsg += '\n\nConsultez la console (F12) pour plus de détails.';
+              alert(errorMsg);
+            }
+           });
+        }
     });
   </script>
 
 <script> document.getElementById('rsvpForm')?.addEventListener('submit', async (e) => { e.preventDefault(); const form = e.currentTarget; const msg = document.getElementById('rsvpMsg'); const btn = form.querySelector('button[type="submit"]'); const data = new FormData(form); if (!data.get('form-name')) data.set('form-name', form.getAttribute('name') || 'Billetterie'); try { btn.disabled = true; btn.textContent = 'Envoi…'; const res = await fetch('/', { method: 'POST', body: data }); if (!res.ok) throw new Error(); form.reset(); msg.textContent = 'Merci, votre réservation a bien été envoyée.'; msg.classList.remove('hidden'); } catch { msg.textContent = 'Erreur lors de l’envoi. Réessayez plus tard.'; msg.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Je réserve'; } }); </script>
-<!-- Giscus est déjà chargé dans le HTML -->
-  
-  <!-- Script pour commentaires Airtable -->
-   <script>
-     // Configuration Airtable - CONFIGURÉ AVEC PERMISSIONS WRITE - FORCE DEPLOY
-       const AIRTABLE_CONFIG = {
-         baseId: 'app0c5Ptz0Hb3KoJm',        // Votre Base ID
-         tableName: 'Comments',              // Nom de votre table
-         apiKey: 'patcPTbtaZ9A4nVVG.487ee051d42f6cb338024b0693cd104ffacd592888b570fca390a232234d6b3c'  // Token régénéré avec permissions write complètes
-       };
-     
-     const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tableName}`;
-     
-     let allComments = [];
-     
-     // Créer un commentaire dans Airtable
-      async function createComment(nom, message) {
+<script>
+      // Configuration Airtable - CONFIGURÉ AVEC PERMISSIONS WRITE - FORCE DEPLOY
+      const AIRTABLE_CONFIG = {
+        baseId: 'app0c5Ptz0Hb3KoJm',       // Votre Base ID
+        tableName: 'Comments',             // Nom de votre table
+        apiKey: 'patcPTbtaZ9A4nVVG.487ee051d42f6cb338024b0693cd104ffacd592888b570fca390a232234d6b3c'  // Token régénéré avec permissions write complètes
+      };
+      
+      const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tableName}`;
+      
+      let allComments = [];
+      
+      // Créer un commentaire dans Airtable
+       async function createComment(nom, message) {
         console.log('🚀 Tentative création commentaire Airtable');
         console.log('🔍 URL:', AIRTABLE_URL);
         console.log('🔍 Base ID:', AIRTABLE_CONFIG.baseId);
@@ -936,9 +902,9 @@ Je confirme
           return false;
         }
       }
-     
-     // Charger les commentaires depuis Airtable
-      async function loadComments() {
+      
+      // Charger les commentaires depuis Airtable
+       async function loadComments() {
         console.log('📥 Tentative chargement commentaires depuis Airtable');
         
         try {
@@ -986,17 +952,17 @@ Je confirme
         
         displayComments();
       }
-     
-     function displayComments() {
-       const commentsList = document.getElementById('commentsList');
-       if (!commentsList) return;
-       
-       if (allComments.length === 0) {
-         commentsList.innerHTML = '<p class="text-white/50 text-center py-4">Soyez le premier à laisser un message ! 🌟</p>';
-         return;
-       }
-       
-       commentsList.innerHTML = allComments.map(comment => {
+      
+      function displayComments() {
+        const commentsList = document.getElementById('commentsList');
+        if (!commentsList) return;
+        
+        if (allComments.length === 0) {
+          commentsList.innerHTML = '<p class="text-white/50 text-center py-4">Soyez le premier à laisser un message ! 🌟</p>';
+          return;
+        }
+        
+        commentsList.innerHTML = allComments.map(comment => {
           const nom = comment.Nom || comment.nom || 'Anonyme';
           const message = comment.Message || comment.message || 'Message vide';
           const date = comment.Date || comment.date || 'À l\'instant';
@@ -1016,264 +982,158 @@ Je confirme
             </div>
           `;
         }).join('');
-     }
-     
-     // Gestion du formulaire
-     document.addEventListener('DOMContentLoaded', () => {
-       loadComments();
-       
-       const form = document.getElementById('commentForm');
-       if (form) {
-         form.addEventListener('submit', async (e) => {
-           e.preventDefault();
-           
-           const button = form.querySelector('button');
-           const originalText = button.textContent;
-           const nom = document.getElementById('commentName').value;
-           const message = document.getElementById('commentMessage').value;
-           
-           if (!nom.trim() || !message.trim()) {
-             alert('Veuillez remplir tous les champs');
-             return;
-           }
-           
-           // Animation de soumission
-           button.textContent = '📤 Envoi en cours...';
-           button.disabled = true;
-           
-           // Créer le commentaire dans Airtable
-           const success = await createComment(nom, message);
-           
-           if (success) {
-             button.textContent = '✅ Message publié !';
-             button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-             form.reset();
-             
-             // Recharger les commentaires après 2 secondes
-             setTimeout(loadComments, 2000);
-           } else {
-             button.textContent = '❌ Erreur, réessayez';
-             button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
-           }
-           
-           // Restaurer le bouton après 3 secondes
-           setTimeout(() => {
-             button.textContent = originalText;
-             button.style.background = '';
-             button.disabled = false;
-           }, 3000);
-         });
-       }
-       
-       // Recharger les commentaires toutes les 30 secondes
-       setInterval(loadComments, 30000);
-       
-       // ===================================================================
-       // SYSTÈME DE NOTIFICATIONS PUSH
-       // ===================================================================
-       
-       // Demander la permission pour les notifications
-       window.requestNotificationPermission = async function() {
-         if ('Notification' in window && 'serviceWorker' in navigator) {
-           const permission = await Notification.requestPermission();
-           if (permission === 'granted') {
-             console.log('✅ Notifications autorisées');
-             hideNotificationPrompt();
-             showTestButton();
-             await subscribeToPush();
-           } else {
-             console.log('❌ Notifications refusées');
-           }
-         }
-       };
-       
-       // S'abonner aux notifications push
-       async function subscribeToPush() {
-         try {
-           const registration = await navigator.serviceWorker.ready;
-           console.log('📱 Service Worker prêt pour les notifications');
-         } catch (error) {
-           console.log('❌ Erreur Service Worker:', error);
-         }
-       }
-       
-       // Masquer le prompt de notification
-         window.hideNotificationPrompt = function() {
-           const prompt = document.getElementById('notification-prompt');
-           if (prompt) {
-             prompt.style.display = 'none';
-           }
-         };
-          
-          // Afficher le bouton de test si notifications activées
-         window.showTestButton = function() {
-           const container = document.getElementById('test-notification-container');
-           if (container && Notification.permission === 'granted') {
-             container.style.display = 'block';
-           }
-         };
-         
-         // Envoyer une notification de test
-          window.sendTestNotification = function() {
-           if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-             navigator.serviceWorker.ready.then(registration => {
-               registration.showNotification('🎬 Festival de Cannes - Test Widget', {
-                 body: 'Test depuis le widget ! Cliquez pour revenir au site.',
-                 icon: './icons/icon-192.png',
-                 badge: './icons/icon-192.png',
-                 image: './assets/hero.webp',
-                 vibrate: [200, 100, 200, 100, 200],
-                 tag: 'cannes-widget-test',
-                 requireInteraction: true,
-                 silent: false,
-                 timestamp: Date.now(),
-                 data: { url: '/#commentaires' },
-                 actions: [
-                   {
-                     action: 'view',
-                     title: '👀 Voir les commentaires',
-                     icon: './icons/icon-192.png'
-                   },
-                   {
-                     action: 'close',
-                     title: '❌ Fermer',
-                     icon: './icons/icon-192.png'
-                   }
-                 ]
-               });
-               console.log('✅ Notification widget envoyée avec requireInteraction=true');
-               
-               // Fallback : notification simple si la première échoue
-               setTimeout(() => {
-                 if (Notification.permission === 'granted') {
-                   new Notification('🎬 Fallback - Festival de Cannes', {
-                     body: 'Notification de secours ! Votre système fonctionne.',
-                     icon: './icons/icon-192.png'
-                   });
-                   console.log('✅ Notification fallback envoyée');
-                 }
-               }, 1000);
-             });
-           } else {
-               console.log('❌ Service Worker non supporté ou permissions non accordées');
-               alert('Veuillez d\'abord activer les notifications en cliquant sur "Activer".');
-             }
-         };
-         
-       // Envoyer une notification lors d'un nouveau commentaire
-       function sendCommentNotification(nom) {
-         if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-           navigator.serviceWorker.ready.then(registration => {
-             registration.showNotification('Festival de Cannes 🎬', {
-               body: nom + ' a ajouté un nouveau commentaire ! Venez voir les dernières impressions.',
-               icon: './icons/icon-192.png',
-               badge: './icons/icon-192.png',
-               vibrate: [200, 100, 200],
-               tag: 'cannes-comment',
-               requireInteraction: false,
-               data: { url: '/#commentaires' },
-               actions: [
-                 {
-                   action: 'view',
-                   title: 'Voir les commentaires',
-                   icon: './icons/icon-192.png'
-                 }
-               ]
-             });
-           });
-         }
-       }
-       
-       // Fonction pour forcer l'affichage du widget (pour tests)
-       window.showNotificationWidget = function() {
-         const prompt = document.getElementById('notification-prompt');
-         if (prompt) {
-           prompt.style.display = 'block';
-           // Afficher le bouton de test si notifications déjà accordées
-           if (Notification.permission === 'granted') {
-             showTestButton();
-           }
-         }
-       };
-       
-       // FORCER L'AFFICHAGE DU WIDGET POUR TESTS
-       // Afficher le widget après 2 secondes, peu importe le statut
-       setTimeout(() => {
-         const prompt = document.getElementById('notification-prompt');
-         if (prompt) {
-           console.log('🔔 Affichage forcé du widget de notification');
-           
-           // Adapter l'interface selon les permissions
-           if (Notification.permission === 'granted') {
-             // Utilisateur a déjà accepté
-             const title = prompt.querySelector('h4');
-             const description = prompt.querySelector('p');
-             if (title) title.textContent = 'Notifications activées ✅';
-             if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
-             
-             // Masquer les boutons Activer/Plus tard
-             const buttons = prompt.querySelector('.flex.gap-2');
-             if (buttons) buttons.style.display = 'none';
-             
-             // Afficher le bouton de test
-             showTestButton();
-           } else if (Notification.permission === 'denied') {
-             // Utilisateur a refusé
-             const title = prompt.querySelector('h4');
-             const description = prompt.querySelector('p');
-             if (title) title.textContent = 'Notifications désactivées';
-             if (description) description.textContent = 'Vous pouvez réactiver les notifications dans les paramètres de votre navigateur.';
-             
-             // Masquer les boutons Activer/Plus tard
-             const buttons = prompt.querySelector('.flex.gap-2');
-             if (buttons) buttons.style.display = 'none';
-           }
-           // Sinon garder l'interface par défaut pour 'default'
-           
-           prompt.style.display = 'block';
-         }
-       }, 2000);
-       
-       // Vérifier le support des notifications (pour logs)
-       if ('Notification' in window && 'serviceWorker' in navigator) {
-         console.log('📱 Support notifications:', Notification.permission);
-       } else {
-         console.log('❌ Notifications non supportées');
-       }
-         
-         // Écouter les messages du Service Worker
-         navigator.serviceWorker.addEventListener('message', (event) => {
-           if (event.data.type === 'NAVIGATE_TO_ANCHOR') {
-             const anchor = event.data.anchor;
-             const element = document.getElementById(anchor);
-             if (element) {
-               element.scrollIntoView({ behavior: 'smooth' });
-               // Ouvrir l'accordéon des commentaires si c'est la section commentaires
-               if (anchor === 'commentaires') {
-                 const details = element.querySelector('details');
-                 if (details && !details.open) {
-                   details.open = true;
-                 }
-               }
-             }
-           }
-         });
-       }
-     });
-   }
-     
-     // Intercepter la création de commentaires pour envoyer des notifications
-     const originalCreateComment = window.createComment;
-     window.createComment = async function(nom, message) {
-       const result = await originalCreateComment(nom, message);
-       if (result) {
-         // Envoyer une notification après un délai
-         setTimeout(() => {
-           sendCommentNotification(nom);
-         }, 2000);
-       }
-       return result;
-     };
+      }
+
+      // CORRECTION: Déplacer la fonction ici pour qu'elle soit dans la bonne portée
+      // Envoyer une notification lors d'un nouveau commentaire
+      function sendCommentNotification(nom) {
+        if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification('Festival de Cannes 🎬', {
+              body: nom + ' a ajouté un nouveau commentaire ! Venez voir les dernières impressions.',
+              icon: './icons/icon-192.png',
+              badge: './icons/icon-192.png',
+              vibrate: [200, 100, 200],
+              tag: 'cannes-comment',
+              requireInteraction: false,
+              data: { url: '/#commentaires' },
+              actions: [
+                {
+                  action: 'view',
+                  title: 'Voir les commentaires',
+                  icon: './icons/icon-192.png'
+                }
+              ]
+            });
+          });
+        }
+      }
+
+      // CORRECTION: Modifier la fonction originale avant que les écouteurs d'événements ne soient créés
+      // Intercepter la création de commentaires pour envoyer des notifications
+      const originalCreateComment = createComment;
+      createComment = async function(nom, message) {
+        const result = await originalCreateComment(nom, message);
+        if (result) {
+          // Envoyer une notification après un délai
+          setTimeout(() => {
+            sendCommentNotification(nom);
+          }, 2000);
+        }
+        return result;
+      };
+      
+      // Gestion du formulaire et des widgets de notification
+      document.addEventListener('DOMContentLoaded', () => {
+        loadComments();
+        
+        const form = document.getElementById('commentForm');
+        if (form) {
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const button = form.querySelector('button');
+            const originalText = button.textContent;
+            const nom = document.getElementById('commentName').value;
+            const message = document.getElementById('commentMessage').value;
+            
+            if (!nom.trim() || !message.trim()) {
+              alert('Veuillez remplir tous les champs');
+              return;
+            }
+            
+            // Animation de soumission
+            button.textContent = '📤 Envoi en cours...';
+            button.disabled = true;
+            
+            // Créer le commentaire dans Airtable (appelle maintenant la version modifiée)
+            const success = await createComment(nom, message);
+            
+            if (success) {
+              button.textContent = '✅ Message publié !';
+              button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+              form.reset();
+              
+              // Recharger les commentaires après 2 secondes
+              setTimeout(loadComments, 2000);
+            } else {
+              button.textContent = '❌ Erreur, réessayez';
+              button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            }
+            
+            // Restaurer le bouton après 3 secondes
+            setTimeout(() => {
+              button.textContent = originalText;
+              button.style.background = '';
+              button.disabled = false;
+            }, 3000);
+          });
+        }
+        
+        // Recharger les commentaires toutes les 30 secondes
+        setInterval(loadComments, 30000);
+        
+        // ===================================================================
+        // SYSTÈME DE NOTIFICATIONS PUSH (Logique du Widget)
+        // ===================================================================
+        
+        // S'abonner aux notifications push (pour s'assurer que le SW est prêt)
+        async function subscribeToPush() {
+          try {
+            const registration = await navigator.serviceWorker.ready;
+            console.log('📱 Service Worker prêt pour les notifications');
+          } catch (error) {
+            console.log('❌ Erreur Service Worker:', error);
+          }
+        }
+
+        // FORCER L'AFFICHAGE DU WIDGET POUR TESTS
+        setTimeout(() => {
+          const prompt = document.getElementById('notification-prompt');
+          if (prompt) {
+            console.log('🔔 Affichage forcé du widget de notification');
+            
+            // Adapter l'interface selon les permissions
+            if (Notification.permission === 'granted') {
+              const title = prompt.querySelector('h4');
+              const description = prompt.querySelector('p');
+              if (title) title.textContent = 'Notifications activées ✅';
+              if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
+              const buttons = prompt.querySelector('.flex.gap-2');
+              if (buttons) buttons.style.display = 'none';
+              const testContainer = document.getElementById('test-notification-container');
+              if (testContainer) testContainer.style.display = 'block';
+            } else if (Notification.permission === 'denied') {
+              const title = prompt.querySelector('h4');
+              const description = prompt.querySelector('p');
+              if (title) title.textContent = 'Notifications désactivées';
+              if (description) description.textContent = 'Vous pouvez réactiver les notifications dans les paramètres de votre navigateur.';
+              const buttons = prompt.querySelector('.flex.gap-2');
+              if (buttons) buttons.style.display = 'none';
+            }
+            
+            prompt.style.display = 'block';
+          }
+        }, 2000);
+        
+        // Écouter les messages du Service Worker
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data.type === 'NAVIGATE_TO_ANCHOR') {
+            const anchor = event.data.anchor;
+            const element = document.getElementById(anchor);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+              if (anchor === 'commentaires') {
+                const details = element.querySelector('details');
+                if (details && !details.open) {
+                  details.open = true;
+                }
+              }
+            }
+          }
+        });
+      // CORRECTION: Fin correcte du bloc DOMContentLoaded
+      });
    </script>
 <script>
   (async () => {
@@ -1313,7 +1173,6 @@ Je confirme
 <script> if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.update())); } </script>
 </body>
 
-<!-- SCRIPT DE DEBUG WIDGET NOTIFICATION -->
 <script>
 // Script immédiat pour forcer l'affichage du widget
 console.log('🚀 Script de debug widget démarré');
