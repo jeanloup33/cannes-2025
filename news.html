@@ -42,6 +42,7 @@
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./premium-styles.css" />
 
   <style>
     .gold-text {
@@ -82,13 +83,16 @@
         <span class="hidden sm:inline text-lg md:text-xl font-extrabold tracking-wide gold-text">NIGHT PARTY</span>
       </a>
       <div class="flex items-center gap-3">
-        <a href="index.html#hero" class="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-[16px] px-4 py-2 transition">
+        <a href="index.html#hero" class="premium-btn-secondary">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
           </svg>
           Accueil
         </a>
-        <a href="index.html#tickets" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-[16px] px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition">
+        <a href="index.html#tickets" class="premium-btn premium-btn-icon glow-intense">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
           Confirmer
         </a>
       </div>
@@ -110,7 +114,7 @@
 
   <footer class="border-t border-white/10 py-8 bg-noir">
     <div class="container mx-auto px-6 text-white/70 text-sm">
-      <a class="underline hover:no-underline" href="index.html">← Retour à l’accueil</a>
+      <a class="premium-link" href="index.html">← Retour à l’accueil</a>
     </div>
   </footer>
 
@@ -176,7 +180,7 @@
           el.innerHTML = items.map(n => `
             <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
               <h3 class="text-xl md:text-2xl font-extrabold">
-                <a class="underline decoration-gold/60 underline-offset-4 hover:opacity-90" href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a>
+                <a class="premium-link" href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a>
               </h3>
               <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
               ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-3 rounded-xl border border-white/10">` : ''}

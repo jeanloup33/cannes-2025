@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Quiz Cinéma — Soirée Festival de Cannes</title>
+  <meta name="description" content="Testez vos connaissances du cinéma mondial avec notre quiz interactif." />
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          colors: {
+            night: '#0b0b0d',
+            noir: '#111114',
+            gold: '#e8c77d',
+            goldSoft: '#f0dfb0',
+            ruby: '#b80f2f',
+            champagne: '#f5efe1',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            glow: '0 0 0 2px rgba(232,199,125,0.35), 0 20px 60px rgba(0,0,0,0.5)',
+          },
+          backgroundImage: {
+            glam: 'radial-gradient(1000px 600px at 80% -10%, rgba(232,199,125,0.14), transparent 60%), linear-gradient(180deg, #0b0b0d 0%, #111114 70%, #0b0b0d 100%)',
+          },
+        },
+      },
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    .gold-text {
+      background: linear-gradient(135deg, #f7ebc2, #e8c77d, #b99243);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo-glow {
+      filter: drop-shadow(0 6px 18px rgba(232, 199, 125, .28)) drop-shadow(0 0 10px rgba(232, 199, 125, .18));
+    }
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .07;
+      mix-blend-mode: soft-light;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" opacity="0.5" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect filter="url(%23n)" width="100%" height="100%"/></svg>');
+    }
+    .cinema-curtain {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(45deg, #8B0000, #DC143C);
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 50%, 0 50%);
+      animation: curtainOpen 2s ease-out forwards;
+      z-index: 1000;
+    }
+    @keyframes curtainOpen {
+      0% { clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 50%, 0 50%); }
+      100% { clip-path: polygon(0 0, 0 0, 0 0, 0 0, 0 0); }
+    }
+    .option { 
+      background: rgba(255,255,255,0.08); 
+      border: 1px solid rgba(255,255,255,0.1); 
+      border-radius: 12px; 
+      padding: 16px 20px; 
+      font-size: 16px; 
+      color: #fff; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      position: relative;
+      overflow: hidden;
+    }
+    .option:hover { 
+      background: rgba(255,255,255,0.15); 
+      transform: translateY(-2px); 
+      border-color: rgba(232,199,125,0.3);
+    }
+    .option.selected { 
+      background: rgba(232,199,125,0.2); 
+      border-color: #e8c77d; 
+      transform: translateY(-1px);
+    }
+    .option.correct { 
+      background: linear-gradient(135deg, rgba(34,197,94,0.3), rgba(34,197,94,0.2)); 
+      border-color: #22c55e; 
+      color: #fff;
+      box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+    }
+    .option.wrong { 
+      background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(239,68,68,0.2)); 
+      border-color: #ef4444; 
+      color: #fff;
+      box-shadow: 0 0 0 2px rgba(239,68,68,0.3);
+    }
+    .option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(232,199,125,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    .option:hover::before {
+      left: 100%;
+    }
+    .next-btn.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Quiz Cinéma — Soirée Festival de Cannes">
+  <meta property="og:description" content="Testez vos connaissances du cinéma mondial avec notre quiz interactif.">
+  <meta property="og:url" content="https://cannes-festival.netlify.app/quizz.html">
+  <link rel="canonical" href="https://cannes-festival.netlify.app/quizz.html">
+</head>
+<body class="bg-glam text-white font-sans noise">
+  <div class="cinema-curtain"></div>
+
+  <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white">
+    <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
+      <a href="index.html#hero" class="flex items-center gap-4 group">
+        <img src="./assets/logo.webp" alt="Logo de la soirée" class="h-12 md:h-14 w-auto object-contain logo-glow" width="96" height="96" />
+        <span class="hidden sm:inline text-lg md:text-xl font-extrabold tracking-wide gold-text">NIGHT PARTY</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="index.html#hero" class="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-[16px] px-4 py-2 transition">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+          </svg>
+          Accueil
+        </a>
+        <a href="index.html#tickets" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold to-goldSoft text-black font-semibold text-[16px] px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] transition">
+          Confirmer
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="py-10 md:py-14">
+    <div class="container mx-auto px-6">
+      <h1 class="font-display text-3xl md:text-4xl gold-text text-center">Quiz Cinéma Mondial</h1>
+      <p class="text-white/70 mt-2 text-center">Testez vos connaissances des stars du cinéma</p>
+    </div>
+  </section>
+
+  <main class="pb-20">
+    <div class="container mx-auto px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="series-selector flex flex-wrap justify-center items-start gap-4 md:gap-6 mb-8">
+          <button class="series-btn relative overflow-hidden bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-6 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(232,199,125,0.3)] hover:border-gold/50 hover:from-gold/20 hover:to-gold/10 group w-40 md:w-48" onclick="chooseSeries('fr')">
+            <span class="relative z-10 flex flex-col items-center justify-center gap-3">
+              <svg class="w-10 h-10 text-gold transform transition-transform duration-300 group-hover:scale-125" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M7 4v2h10V4H7zM5 8h14l-2 8H7L5 8zm3 10h8l-1 4H9l-1-4z"/>
+                <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 10H3V8h18v8z"/>
+              </svg>
+              <span class="text-lg font-bold">Français</span>
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-gold/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div class="absolute -inset-1 bg-gradient-to-r from-gold/40 to-gold/20 rounded-2xl blur-lg"></div>
+            </div>
+          </button>
+          <button class="series-btn relative overflow-hidden bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-6 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(232,199,125,0.3)] hover:border-gold/50 hover:from-gold/20 hover:to-gold/10 group w-40 md:w-48" onclick="chooseSeries('us')">
+            <span class="relative z-10 flex flex-col items-center justify-center gap-3">
+              <svg class="w-10 h-10 text-gold transform transition-transform duration-300 group-hover:scale-125" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+              <span class="text-lg font-bold">USA</span>
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-gold/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div class="absolute -inset-1 bg-gradient-to-r from-gold/40 to-gold/20 rounded-2xl blur-lg"></div>
+            </div>
+          </button>
+          <button class="series-btn relative overflow-hidden bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-6 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(232,199,125,0.3)] hover:border-gold/50 hover:from-gold/20 hover:to-gold/10 group w-40 md:w-48" onclick="chooseSeries('it')">
+            <span class="relative z-10 flex flex-col items-center justify-center gap-3">
+              <svg class="w-10 h-10 text-gold transform transition-transform duration-300 group-hover:scale-125" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v3H4V6zm0 5h16v5H4v-5zm0 7h16v-3H4v3z"/>
+                <path d="M8 9h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/>
+              </svg>
+              <span class="text-lg font-bold">Italie</span>
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-gold/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div class="absolute -inset-1 bg-gradient-to-r from-gold/40 to-gold/20 rounded-2xl blur-lg"></div>
+            </div>
+          </button>
+        </div>
+
+        <div id="start-screen" class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 shadow-glow">
+          <h2 class="font-display text-2xl md:text-3xl gold-text text-center mb-4">Quiz <span id="series-title">Français</span></h2>
+          <p class="text-white/80 text-center mb-8 text-lg" id="series-desc">Testez vos connaissances sur les acteurs français des 50 dernières années.</p>
+          <button class="restart-btn w-full bg-gradient-to-r from-gold to-goldSoft text-black font-bold py-4 px-8 rounded-xl hover:from-goldSoft hover:to-gold transition-all duration-300 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)]" onclick="startQuiz()">
+            Commencer le Quiz
+          </button>
+        </div>
+
+        <div id="quiz-container" class="hidden">
+          <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 shadow-glow">
+            <div class="question-number text-gold font-bold mb-4" id="question-number">Question 1/10</div>
+            <div class="question font-display text-xl md:text-2xl text-white mb-8" id="question">Chargement...</div>
+            <div class="options grid gap-4" id="options"></div>
+            <button class="next-btn w-full mt-8 bg-gradient-to-r from-gold to-goldSoft text-black font-bold py-4 px-8 rounded-xl hover:from-goldSoft hover:to-gold transition-all duration-300 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] opacity-0 translate-y-4" id="next-btn" onclick="nextQuestion()">
+              Suivant
+            </button>
+          </div>
+          <div class="text-center font-display text-2xl gold-text mt-6" id="score">Score: 0/10</div>
+        </div>
+
+        <div id="result-screen" class="hidden">
+          <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 shadow-glow text-center">
+            <h2 class="font-display text-2xl md:text-3xl gold-text mb-4">Résultats <span id="result-series"></span></h2>
+            <div class="final-score font-display text-4xl md:text-5xl gold-text mb-6" id="final-score">0/10</div>
+            <p class="text-white/80 text-lg mb-8" id="result-message"></p>
+            <button class="restart-btn bg-gradient-to-r from-gold to-goldSoft text-black font-bold py-4 px-8 rounded-xl hover:from-goldSoft hover:to-gold transition-all duration-300 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)]" onclick="restartQuiz()">
+              Recommencer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-white/10 py-8 bg-noir">
+    <div class="container mx-auto px-6 text-white/70 text-sm text-center">
+      <a class="underline hover:no-underline" href="index.html">← Retour à l'accueil</a>
+    </div>
+  </footer>
+
+  <script>
+    const quizData = {
+      fr: {
+        title: 'Français',
+        desc: 'Testez vos connaissances sur les acteurs français des 50 dernières années.',
+        questions: [
+          { q: "Quel acteur français a remporté l'Oscar du meilleur acteur en 2012 ?", o: ["Jean Dujardin","Gérard Depardieu","Jean Reno","Vincent Cassel"], c: 0 },
+          { q: "Dans quel film Marion Cotillard a-t-elle remporté l'Oscar de la meilleure actrice ?", o: ["La Môme","Inception","Deux jours, une nuit","Macbeth"], c: 0 },
+          { q: "Dans 'Intouchables', qui interprète le rôle de Driss ?", o: ["François Cluzet","Omar Sy","Gad Elmaleh","Dany Boon"], c: 1 },
+          { q: "Quelle actrice joue Amélie Poulain dans 'Le Fabuleux Destin d'Amélie Poulain' ?", o: ["Audrey Tautou","Marion Cotillard","Juliette Binoche","Léa Seydoux"], c: 0 },
+          { q: "Quel acteur incarne Lino dans la série 'Lupin' ?", o: ["Omar Sy","Jean Reno","Gérard Depardieu","Vincent Cassel"], c: 0 },
+          { q: "Dans 'La Haine', quel acteur joue Vinz ?", o: ["Vincent Cassel","Saïd Taghmaoui","Mathieu Kassovitz","Hubert Koundé"], c: 0 },
+          { q: "Quelle actrice française a joué dans 'La Vie d'Adèle' et 'Spectre' ?", o: ["Léa Seydoux","Adèle Exarchopoulos","Marion Cotillard","Audrey Tautou"], c: 0 },
+          { q: "Quel acteur français est connu pour 'Le Grand Bleu' et 'Léon' ?", o: ["Jean Reno","Gérard Depardieu","Jean Dujardin","Vincent Cassel"], c: 0 },
+          { q: "Dans 'Le Fabuleux Destin d'Amélie Poulain', qui joue Nino Quincampoix ?", o: ["Mathieu Kassovitz","Romain Duris","Jamel Debbouze","Guillaume Canet"], c: 0 },
+          { q: "Quelle actrice française a joué dans '8 femmes' et 'La Pianiste' ?", o: ["Isabelle Huppert","Catherine Deneuve","Juliette Binoche","Fanny Ardant"], c: 0 }
+        ]
+      },
+      us: {
+        title: 'USA',
+        desc: 'Les stars américaines qui ont marqué le cinéma mondial.',
+        questions: [
+          { q: "Quel acteur incarne Iron Man dans l’univers Marvel ?", o: ["Chris Evans","Robert Downey Jr.","Mark Ruffalo","Jeremy Renner"], c: 1 },
+          { q: "Quelle actrice a remporté l’Oscar pour ‘La La Land’ ?", o: ["Emma Stone","Jennifer Lawrence","Anne Hathaway","Scarlett Johansson"], c: 0 },
+          { q: "Dans ‘Forrest Gump’, quel acteur joue le rôle principal ?", o: ["Tom Hanks","Brad Pitt","Leonardo DiCaprio","Johnny Depp"], c: 0 },
+          { q: "Quel acteur américain incarne Jack dans 'Titanic' ?", o: ["Leonardo DiCaprio","Brad Pitt","Tom Cruise","Matt Damon"], c: 0 },
+          { q: "Quelle actrice a joué dans 'Black Swan' et 'V for Vendetta' ?", o: ["Natalie Portman","Scarlett Johansson","Emma Stone","Anne Hathaway"], c: 0 },
+          { q: "Dans 'The Matrix', quel acteur joue Neo ?", o: ["Keanu Reeves","Will Smith","Johnny Depp","Bruce Willis"], c: 0 },
+          { q: "Quel acteur américain incarne Batman dans 'The Dark Knight' ?", o: ["Christian Bale","Ben Affleck","Michael Keaton","George Clooney"], c: 0 },
+          { q: "Quelle actrice a remporté l'Oscar pour 'Silver Linings Playbook' ?", o: ["Jennifer Lawrence","Emma Stone","Anne Hathaway","Meryl Streep"], c: 0 },
+          { q: "Dans 'Pulp Fiction', quel acteur interprète Jules Winnfield ?", o: ["Samuel L. Jackson","John Travolta","Bruce Willis","Uma Thurman"], c: 0 },
+          { q: "Quel acteur américain incarne Rocky Balboa ?", o: ["Sylvester Stallone","Arnold Schwarzenegger","Al Pacino","Robert De Niro"], c: 0 }
+        ]
+      },
+      it: {
+        title: 'Italie',
+        desc: 'Les icônes du cinéma italien, du néoréalisme à aujourd’hui.',
+        questions: [
+          { q: "Quel acteur italien est célèbre pour ‘La Vita è Bella’ ?", o: ["Roberto Benigni","Marcello Mastroianni","Toni Servillo","Raoul Bova"], c: 0 },
+          { q: "Quelle actrice italienne a joué dans ‘Malèna’ ?", o: ["Monica Bellucci","Sophia Loren","Gina Lollobrigida","Claudia Cardinale"], c: 0 },
+          { q: "Dans ‘Le Parrain 3’, qui incarne Vincent Mancini ?", o: ["Andy García","Al Pacino","Joe Mantegna","Robert De Niro"], c: 0 },
+          { q: "Quel acteur italien a joué dans 'Cinema Paradiso' ?", o: ["Giuseppe Tornatore","Marcello Mastroianni","Philippe Noiret","Marco Leonardi"], c: 3 },
+          { q: "Quelle actrice italienne a joué dans 'La Dolce Vita' de Fellini ?", o: ["Anita Ekberg","Sophia Loren","Monica Vitti","Claudia Cardinale"], c: 0 },
+          { q: "Dans 'Gomorra', quel acteur incarne Ciro Di Marzio ?", o: ["Marco D'Amore","Toni Servillo","Luca Zingaretti","Kim Rossi Stuart"], c: 0 },
+          { q: "Quel acteur italien incarne le Commissaire Montalbano ?", o: ["Luca Zingaretti","Marcello Mastroianni","Stefano Accorsi","Raoul Bova"], c: 0 },
+          { q: "Quelle actrice italienne a joué dans 'Il Postino' ?", o: ["Maria Grazia Cucinotta","Monica Bellucci","Sophia Loren","Claudia Cardinale"], c: 0 },
+          { q: "Quel acteur italien a joué dans 'Roman Holiday' aux côtés d'Audrey Hepburn ?", o: ["Gregory Peck","Marcello Mastroianni","Vittorio Gassman","Alberto Sordi"], c: 0 },
+          { q: "Dans 'The Great Beauty', quel acteur incarne Jep Gambardella ?", o: ["Toni Servillo","Marcello Mastroianni","Luca Marinelli","Alessandro Borghi"], c: 0 }
+        ]
+      }
+    };
+
+    let currentSeries = 'fr';
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function chooseSeries(series) {
+      currentSeries = series;
+      document.querySelectorAll('.series-btn').forEach(b => {
+        b.classList.remove('ring-2', 'ring-gold', 'ring-offset-2', 'ring-offset-transparent', 'bg-gradient-to-br', 'from-gold/30', 'to-gold/20', 'text-black', 'shadow-[0_0_40px_rgba(232,199,125,0.5)]', 'border-gold', 'scale-105');
+        b.classList.add('bg-white/5', 'text-white', 'border-white/20');
+      });
+      const activeBtn = document.querySelector(`.series-btn:nth-child(${series==='fr'?1:series==='us'?2:3})`);
+      activeBtn.classList.remove('bg-white/5', 'text-white', 'border-white/20');
+      activeBtn.classList.add('ring-2', 'ring-gold', 'ring-offset-2', 'ring-offset-transparent', 'bg-gradient-to-br', 'from-gold/30', 'to-gold/20', 'text-black', 'shadow-[0_0_40px_rgba(232,199,125,0.5)]', 'border-gold', 'scale-105');
+      document.getElementById('series-title').textContent = quizData[series].title;
+      document.getElementById('series-desc').textContent = quizData[series].desc;
+    }
+
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = quizData[currentSeries].questions[currentQuestion];
+      document.getElementById('question-number').textContent = `Question ${currentQuestion+1}/10`;
+      document.getElementById('question').textContent = q.q;
+      const opts = document.getElementById('options');
+      opts.innerHTML = '';
+      q.o.forEach((txt,i)=>{
+        const div=document.createElement('div'); 
+        div.className='option text-lg font-medium hover:bg-white/20 hover:border-gold/30 transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]'; 
+        div.textContent=txt;
+        div.onclick=()=>selectOption(i); 
+        opts.appendChild(div);
+      });
+      document.getElementById('next-btn').classList.remove('show');
+      document.getElementById('score').textContent=`Score: ${score}/10`;
+      answered=false;
+    }
+
+    function selectOption(idx) {
+      if (answered) return;
+      answered=true;
+      const q=quizData[currentSeries].questions[currentQuestion];
+      const opts=document.querySelectorAll('.option');
+      opts[idx].classList.add('selected');
+      if(idx===q.c){
+        opts[idx].classList.add('correct');
+        opts[idx].classList.remove('hover:bg-white/20', 'hover:border-gold/30');
+        score++;
+      } else {
+        opts[idx].classList.add('wrong');
+        opts[idx].classList.remove('hover:bg-white/20', 'hover:border-gold/30');
+        opts[q.c].classList.add('correct');
+        opts[q.c].classList.remove('hover:bg-white/20', 'hover:border-gold/30');
+      }
+      document.getElementById('score').textContent=`Score: ${score}/10`;
+      setTimeout(() => {
+        document.getElementById('next-btn').classList.add('show');
+      }, 1000);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if(currentQuestion<10) loadQuestion();
+      else showResults();
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('result-screen').classList.remove('hidden');
+      document.getElementById('result-series').textContent = quizData[currentSeries].title;
+      document.getElementById('final-score').textContent=`${score}/10`;
+      let msg='';
+      if(score===10) msg='Parfait ! Vous êtes un(e) vrai(e) cinéphile !';
+      else if(score>=7) msg='Excellent !';
+      else if(score>=4) msg='Pas mal, continuez !';
+      else msg='Il est temps de rattraper votre retard !';
+      document.getElementById('result-message').textContent=msg;
+    }
+
+    function restartQuiz() {
+      document.getElementById('result-screen').classList.add('hidden');
+      document.getElementById('start-screen').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
