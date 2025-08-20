@@ -1188,11 +1188,11 @@ Je confirme
           console.log('📱 Mobile détecté:', isMobile);
           
           if (Notification.permission === 'granted') {
-            // Test spécifique mobile avec fallback
+            // Test spécifique mobile avec fallback amélioré
             try {
               if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
                 navigator.serviceWorker.ready.then(registration => {
-                  registration.showNotification('💬 Test Commentaire - Festival de Cannes', {
+                  registration.showNotification('💬 Nouveau commentaire - Festival de Cannes', {
                     body: 'Jean-Loup a testé un nouveau commentaire sur mobile !',
                     icon: './icons/icon-192.png',
                     badge: './icons/icon-192.png',
@@ -1208,24 +1208,19 @@ Je confirme
                       }
                     ]
                   });
-                  console.log('✅ Notification mobile de commentaire envoyée');
+                  console.log('✅ Notification mobile de commentaire envoyée via Service Worker');
+                }).catch(err => {
+                  console.log('❌ Erreur Service Worker:', err);
+                  // Fallback direct pour mobile
+                  mobileFallbackNotification();
                 });
               } else {
                 // Fallback pour mobile sans Service Worker
-                const notification = new Notification('💬 Test Commentaire Mobile', {
-                  body: 'Test réussi sur mobile !',
-                  icon: './icons/icon-192.png'
-                });
-                
-                notification.onclick = function() {
-                  window.location.href = '/#commentaires';
-                  notification.close();
-                };
-                console.log('✅ Notification mobile fallback envoyée');
+                mobileFallbackNotification();
               }
             } catch (error) {
               console.log('❌ Erreur mobile:', error.message);
-              alert('Test commentaire: ' + error.message);
+              mobileFallbackNotification();
             }
           } else {
             console.log('❌ Permissions non accordées');
@@ -1233,6 +1228,31 @@ Je confirme
             requestNotificationPermission();
           }
         };
+        
+        // Fonction fallback pour mobile sans Service Worker
+        function mobileFallbackNotification() {
+          try {
+            if (Notification.permission === 'granted') {
+              const notification = new Notification('💬 Nouveau commentaire - Festival de Cannes', {
+                body: 'Un nouveau commentaire vient d\'être ajouté !',
+                icon: './icons/icon-192.png',
+                vibrate: [200, 100, 200],
+                tag: 'cannes-comment-mobile'
+              });
+              
+              notification.onclick = function() {
+                window.location.href = '/#commentaires';
+                notification.close();
+              };
+              console.log('✅ Notification mobile fallback envoyée');
+            } else {
+              alert('Les notifications ne sont pas autorisées');
+            }
+          } catch (error) {
+            console.error('❌ Erreur fallback mobile:', error);
+            alert('Erreur notification: ' + error.message);
+          }
+        }
    </script>
 <script>
   (async () => {
