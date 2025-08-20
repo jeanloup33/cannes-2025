@@ -218,7 +218,7 @@ console.log('🎯 Fonctions widget définies globalement');
 </head>
 <body class="bg-glam text-white font-sans noise">
   <script src="./notifications.js" defer></script>
-  <header class="sticky top-0 z-50 border-b border-black/20 bg-[#84131f]/60 backdrop-blur-xl text-white"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
+  <header class="sticky top-0 z-50 premium-nav"> <nav class="container mx-auto px-5 py-3 flex items-center justify-between"> <a href="#hero" class="flex items-center gap-4 group"> <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" /> <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90"> NIGHT PARTY </span> </a>
 
 <button id="nav-toggle"
         class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
@@ -231,45 +231,33 @@ console.log('🎯 Fonctions widget définies globalement');
 
 <ul class="hidden md:flex items-center gap-6">
   <li>
-    <a href="#about"
-       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+    <a href="#about" class="premium-nav-item">
       <span>À propos</span>
-      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
     </a>
   </li>
   <li>
-    <a href="#program"
-       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+    <a href="#program" class="premium-nav-item">
       <span>Programme</span>
-      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
     </a>
   </li>
   <li>
-    <a href="#dress"
-       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+    <a href="#dress" class="premium-nav-item">
       <span>Dress code</span>
-      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
     </a>
   </li>
   <li>
-    <a href="#gallery"
-       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+    <a href="#gallery" class="premium-nav-item">
       <span>Galerie</span>
-      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
     </a>
   </li>
   <li>
-    <a href="#contact"
-       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
-      <span>Infos</span>
-      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
+    <a href="#faq" class="premium-nav-item">
+      <span>FAQ</span>
     </a>
   </li>
   <li>
-    <a href="quizz.html"
-       class="relative inline-flex items-center py-2 px-1 text-[18px] lg:text-[19px] font-semibold tracking-[0.02em] text-white/90 hover:text-white transition group">
+    <a href="quizz.html" class="premium-nav-item">
       <span>Quiz</span>
-      <span class="pointer-events-none absolute left-1/2 -bottom-0.5 h-[2px] w-0 -translate-x-1/2 rounded bg-gradient-to-r from-transparent via-[#E8C77D] to-transparent transition-all duration-300 group-hover:w-[90%]"></span>
     </a>
   </li>
   <li>
@@ -284,14 +272,14 @@ console.log('🎯 Fonctions widget définies globalement');
 
 </nav>
 
-<div id="mobile-menu" class="md:hidden hidden border-t border-black/20 bg-[#66000f]/90 backdrop-blur-xl">
+<div id="mobile-menu" class="md:hidden hidden premium-mobile-menu">
   <div class="container mx-auto px-5 py-3 grid gap-1.5">
-    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#about">À propos</a>
-    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#program">Programme</a>
-    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#dress">Dress code</a>
-    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#gallery">Galerie</a>
-    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="#contact">Infos</a>
-    <a class="block px-3 py-3 rounded-lg text-[17px] font-semibold tracking-[0.01em] text-white/90 hover:text-white hover:bg-white/10 transition" href="quizz.html">Quiz</a>
+    <a class="premium-mobile-item" href="#about">À propos</a>
+    <a class="premium-mobile-item" href="#program">Programme</a>
+    <a class="premium-mobile-item" href="#dress">Dress code</a>
+    <a class="premium-mobile-item" href="#gallery">Galerie</a>
+    <a class="premium-mobile-item" href="#faq">FAQ</a>
+    <a class="premium-mobile-item" href="quizz.html">Quiz</a>
     <a class="premium-btn premium-btn-icon glow-intense !w-full !justify-center" href="#tickets">
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -645,7 +633,7 @@ console.log('🎯 Fonctions widget définies globalement');
 </select>
 </label>
 
-<button type="submit" class="rounded-xl bg-amber-400 px-5 py-3 font-semibold text-black hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-red-500/40">
+<button type="submit" class="premium-btn">
 Je confirme
 </button>
 <p id="rsvpMsg" class="text-sm text-amber-300/80 hidden"></p> </form>
