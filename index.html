@@ -1237,19 +1237,53 @@ Je confirme
 // Script immédiat pour forcer l'affichage du widget
 console.log('🚀 Script de debug widget démarré');
 
-// Fonction pour afficher le widget immédiatement
+// Fonction pour afficher le widget immédiatement avec adaptation selon les permissions
 function forceShowWidget() {
   console.log('🔍 Recherche de l\'élément notification-prompt...');
   const prompt = document.getElementById('notification-prompt');
   
   if (prompt) {
     console.log('✅ Élément trouvé ! Affichage forcé...');
+    
+    // Adapter l'interface selon les permissions
+    if (Notification.permission === 'granted') {
+      // Utilisateur a déjà accepté
+      const title = prompt.querySelector('h4');
+      const description = prompt.querySelector('p');
+      if (title) title.textContent = 'Notifications activées ✅';
+      if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
+      
+      // Masquer les boutons Activer/Plus tard
+      const buttons = prompt.querySelector('.flex.gap-2');
+      if (buttons) buttons.style.display = 'none';
+      
+      // Afficher le bouton de test
+      const testContainer = document.getElementById('test-notification-container');
+      if (testContainer) testContainer.style.display = 'block';
+    } else if (Notification.permission === 'denied') {
+      // Utilisateur a refusé
+      const title = prompt.querySelector('h4');
+      const description = prompt.querySelector('p');
+      if (title) title.textContent = 'Notifications désactivées';
+      if (description) description.textContent = 'Vous pouvez réactiver les notifications dans les paramètres de votre navigateur.';
+      
+      // Masquer les boutons Activer/Plus tard
+      const buttons = prompt.querySelector('.flex.gap-2');
+      if (buttons) buttons.style.display = 'none';
+    } else {
+      // Permission 'default' - pas encore demandée
+      const title = prompt.querySelector('h4');
+      const description = prompt.querySelector('p');
+      if (title) title.textContent = 'Activer les notifications';
+      if (description) description.textContent = 'Recevez une notification quand de nouveaux commentaires sont ajoutés !';
+    }
+    
     prompt.style.display = 'block';
     prompt.style.position = 'fixed';
     prompt.style.bottom = '20px';
     prompt.style.right = '20px';
     prompt.style.zIndex = '9999';
-    console.log('🎉 Widget affiché avec succès !');
+    console.log('🎉 Widget affiché avec succès et adapté aux permissions !');
   } else {
     console.log('❌ Élément notification-prompt non trouvé');
     console.log('🔍 Éléments disponibles:', document.querySelectorAll('[id*="notification"]'));
