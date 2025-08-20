@@ -1096,28 +1096,14 @@ Je confirme
           }
         };
         
-        // FORCER L'AFFICHAGE DU WIDGET POUR TESTS
-        // Afficher le widget après 2 secondes, peu importe le statut
+        // Affichage du widget selon les permissions (sans forçage)
         setTimeout(() => {
           const prompt = document.getElementById('notification-prompt');
-          if (prompt) {
-            console.log('🔔 Affichage forcé du widget de notification');
+          if (prompt && Notification.permission !== 'granted') {
+            console.log('🔔 Affichage conditionnel du widget de notification');
             
             // Adapter l'interface selon les permissions
-            if (Notification.permission === 'granted') {
-              // Utilisateur a déjà accepté
-              const title = prompt.querySelector('h4');
-              const description = prompt.querySelector('p');
-              if (title) title.textContent = 'Notifications activées ✅';
-              if (description) description.textContent = 'Testez le système de notifications ou gérez vos préférences.';
-              
-              // Masquer les boutons Activer/Plus tard
-              const buttons = prompt.querySelector('.flex.gap-2');
-              if (buttons) buttons.style.display = 'none';
-              
-              // Afficher le bouton de test
-              showTestButton();
-            } else if (Notification.permission === 'denied') {
+            if (Notification.permission === 'denied') {
               // Utilisateur a refusé
               const title = prompt.querySelector('h4');
               const description = prompt.querySelector('p');
@@ -1137,6 +1123,9 @@ Je confirme
             }
             
             prompt.style.display = 'block';
+          } else if (prompt && Notification.permission === 'granted') {
+            // Si permissions accordées, afficher le bouton de test
+            showTestButton();
           }
         }, 2000);
         
@@ -1182,16 +1171,59 @@ Je confirme
       };
       
       // Fonction de test pour vérifier les notifications
-      window.testCommentNotification = function() {
-        console.log('🧪 Test de notification de commentaire...');
-        if (Notification.permission === 'granted') {
-          sendCommentNotification('Test User');
-          console.log('✅ Notification de test envoyée');
-        } else {
-          console.log('❌ Permissions non accordées');
-          requestNotificationPermission();
-        }
-      };
+        window.testCommentNotification = function() {
+          console.log('🧪 Test de notification de commentaire...');
+          
+          // Vérifier si on est sur mobile
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          console.log('📱 Mobile détecté:', isMobile);
+          
+          if (Notification.permission === 'granted') {
+            // Test spécifique mobile avec fallback
+            try {
+              if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.ready.then(registration => {
+                  registration.showNotification('💬 Test Commentaire - Festival de Cannes', {
+                    body: 'Jean-Loup a testé un nouveau commentaire sur mobile !',
+                    icon: './icons/icon-192.png',
+                    badge: './icons/icon-192.png',
+                    vibrate: [200, 100, 200],
+                    tag: 'cannes-comment-test',
+                    requireInteraction: false,
+                    data: { url: '/#commentaires' },
+                    actions: [
+                      {
+                        action: 'view',
+                        title: 'Voir le commentaire',
+                        icon: './icons/icon-192.png'
+                      }
+                    ]
+                  });
+                  console.log('✅ Notification mobile de commentaire envoyée');
+                });
+              } else {
+                // Fallback pour mobile sans Service Worker
+                const notification = new Notification('💬 Test Commentaire Mobile', {
+                  body: 'Test réussi sur mobile !',
+                  icon: './icons/icon-192.png'
+                });
+                
+                notification.onclick = function() {
+                  window.location.href = '/#commentaires';
+                  notification.close();
+                };
+                console.log('✅ Notification mobile fallback envoyée');
+              }
+            } catch (error) {
+              console.log('❌ Erreur mobile:', error.message);
+              alert('Test commentaire: ' + error.message);
+            }
+          } else {
+            console.log('❌ Permissions non accordées');
+            alert('Veuillez activer les notifications en cliquant sur "Activer" avant de tester.');
+            requestNotificationPermission();
+          }
+        };
    </script>
 <script>
   (async () => {
@@ -1290,16 +1322,7 @@ function forceShowWidget() {
   }
 }
 
-// Essayer immédiatement
-forceShowWidget();
-
-// Essayer après 1 seconde
-setTimeout(forceShowWidget, 1000);
-
-// Essayer après 3 secondes
-setTimeout(forceShowWidget, 3000);
-
-// Rendre la fonction globale pour tests manuels
+// Fonction disponible pour tests manuels si nécessaire
 window.forceShowWidget = forceShowWidget;
 
 // Fonction pour forcer l'affichage du bouton de test
@@ -1358,6 +1381,53 @@ if (typeof window.sendTestNotification === 'undefined') {
       });
     } else {
       console.log('❌ Service Worker non supporté ou permissions non accordées');
+    }
+  };
+}
+
+// S'assurer que testCommentNotification est bien définie pour mobile
+if (typeof window.testCommentNotification === 'undefined') {
+  console.log('⚠️ Redéfinition de testCommentNotification pour mobile');
+  window.testCommentNotification = function() {
+    console.log('🧪 Test de notification de commentaire (mobile debug)...');
+    
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    console.log('📱 Mobile détecté:', isMobile);
+    
+    if (Notification.permission === 'granted') {
+      try {
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification('💬 Test Commentaire Mobile', {
+              body: 'Test réussi sur mobile !',
+              icon: './icons/icon-192.png',
+              badge: './icons/icon-192.png',
+              vibrate: [200, 100, 200],
+              tag: 'cannes-comment-test-mobile',
+              data: { url: '/#commentaires' }
+            });
+            console.log('✅ Notification mobile commentaire envoyée');
+          });
+        } else {
+          // Fallback pour mobile sans Service Worker
+          const notification = new Notification('💬 Test Commentaire Mobile', {
+            body: 'Test réussi sur mobile !',
+            icon: './icons/icon-192.png'
+          });
+          
+          notification.onclick = function() {
+            window.location.href = '/#commentaires';
+            notification.close();
+          };
+          console.log('✅ Notification mobile fallback envoyée');
+        }
+      } catch (error) {
+        console.log('❌ Erreur mobile:', error.message);
+        alert('Test commentaire: ' + error.message);
+      }
+    } else {
+      console.log('❌ Permissions non accordées');
+      alert('Veuillez activer les notifications en cliquant sur "Activer" avant de tester.');
     }
   };
 }
