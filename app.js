@@ -1,35 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile nav
-  const toggle = document.querySelector('#nav-toggle'); // Changé de .nav-toggle à #nav-toggle
-  const menu = document.querySelector('#mobile-menu'); // Changé de .navmenu à #mobile-menu
-  
-  console.log('Bouton burger trouvé:', toggle);
-  console.log('Menu mobile trouvé:', menu);
+  // Mobile nav - solution simple et fiable
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
   
   if (toggle && menu) {
-    const setOpen = (open) => {
-      toggle.setAttribute('aria-expanded', String(open));
-      menu.classList.toggle('hidden', !open); // Utilise menu au lieu de menus
-      document.body.classList.toggle('overflow-hidden', open);
-    };
-    setOpen(false);
-    
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = toggle.getAttribute('aria-expanded') !== 'true';
-      console.log('Toggle menu:', isOpen);
-      setOpen(isOpen);
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      
+      // Toggle l'état
+      this.setAttribute('aria-expanded', !isExpanded);
+      menu.classList.toggle('hidden', isExpanded);
+      document.body.classList.toggle('overflow-hidden', !isExpanded);
     });
     
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('header')) setOpen(false);
+    // Fermer le menu quand on clique sur un lien
+    menu.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
     });
     
-    menu.addEventListener('click', e => { // Utilise menu au lieu de menus.forEach
-      if (e.target.closest('a')) setOpen(false);
+    // Fermer le menu quand on clique en dehors
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('header') && !menu.classList.contains('hidden')) {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
     });
-  } else {
-    console.error('Menu burger ou menu mobile non trouvé');
   }
 
   // Smooth anchor scrolling with offset

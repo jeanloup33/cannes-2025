@@ -143,14 +143,13 @@
       </a>
 
       <button id="nav-toggle"
-              class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
-              aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu de navigation"
-              onclick="toggleMobileMenu()">
-        <span class="sr-only">Menu</span>
-        <div class="w-6 h-[2px] bg-white my-1"></div>
-        <div class="w-6 h-[2px] bg-white my-1"></div>
-        <div class="w-6 h-[2px] bg-white my-1"></div>
-      </button>
+        class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
+        aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu de navigation">
+  <span class="sr-only">Menu</span>
+  <div class="w-6 h-[2px] bg-white my-1"></div>
+  <div class="w-6 h-[2px] bg-white my-1"></div>
+  <div class="w-6 h-[2px] bg-white my-1"></div>
+</button>
 
       <ul class="hidden md:flex items-center gap-6">
         <li><a href="index.html#about" class="premium-nav-item"><span>À propos</span></a></li>
@@ -281,40 +280,7 @@
     </div>
   </footer>
 
-  <script>
-  // Fonction de débogage immédiate pour le menu burger
-  function toggleMobileMenu() {
-    console.log('toggleMobileMenu appelé');
-    const toggle = document.getElementById('nav-toggle');
-    const menu = document.getElementById('mobile-menu');
-    
-    console.log('Toggle:', toggle);
-    console.log('Menu:', menu);
-    
-    if (toggle && menu) {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      const newOpen = !isOpen;
-      
-      toggle.setAttribute('aria-expanded', String(newOpen));
-      menu.classList.toggle('hidden', !newOpen);
-      document.body.classList.toggle('overflow-hidden', newOpen);
-      
-      console.log('Menu toggled:', newOpen);
-    } else {
-      console.error('Éléments non trouvés');
-    }
-  }
-  
-  // Vérification immédiate
-  setTimeout(() => {
-    console.log('=== VÉRIFICATION MENU BURGER ===');
-    const toggle = document.getElementById('nav-toggle');
-    const menu = document.getElementById('mobile-menu');
-    console.log('Bouton burger:', toggle);
-    console.log('Menu mobile:', menu);
-    console.log('Body overflow:', document.body.style.overflow);
-  }, 1000);
-  </script>
+
 
   <script>
     const quizData = {
