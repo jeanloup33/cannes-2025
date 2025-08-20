@@ -121,4 +121,52 @@ window.forceShowWidget = function() {
   }
 };
 
+// Fonction pour envoyer une notification quand un nouveau commentaire est ajouté
+window.sendCommentNotification = function(authorName) {
+  console.log('🔔 Notification de nouveau commentaire pour:', authorName);
+  
+  if (Notification.permission !== 'granted') {
+    console.log('❌ Permissions non accordées pour les notifications');
+    return;
+  }
+  
+  try {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('💬 Nouveau commentaire - Festival de Cannes', {
+          body: `${authorName} a partagé un nouveau message sur la soirée !`,
+          icon: './icons/icon-192.png',
+          badge: './icons/icon-192.png',
+          vibrate: [200, 100, 200],
+          tag: 'cannes-comment',
+          data: { url: '/#commentaires' },
+          actions: [
+            {
+              action: 'view',
+              title: 'Voir le commentaire',
+              icon: './icons/icon-192.png'
+            }
+          ]
+        });
+        console.log('✅ Notification de commentaire envoyée');
+      }).catch(function(error) {
+        console.log('❌ Erreur Service Worker:', error.message);
+      });
+    } else {
+      // Fallback si Service Worker non disponible
+      const notification = new Notification('💬 Nouveau commentaire', {
+        body: `${authorName} a partagé un nouveau message !`,
+        icon: './icons/icon-192.png'
+      });
+      
+      notification.onclick = function() {
+        window.location.href = '/#commentaires';
+        notification.close();
+      };
+    }
+  } catch (error) {
+    console.log('❌ Erreur lors de l\'envoi de la notification:', error.message);
+  }
+};
+
 console.log('🎯 Fonctions notifications chargées depuis fichier externe');
