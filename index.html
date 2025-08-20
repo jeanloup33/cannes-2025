@@ -944,6 +944,13 @@ Je confirme
               button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
               form.reset();
               
+              // Envoyer une notification de commentaire
+              setTimeout(() => {
+                if (window.sendCommentNotification) {
+                  window.sendCommentNotification(nom);
+                }
+              }, 1000);
+              
               // Recharger les commentaires après 2 secondes
               setTimeout(loadComments, 2000);
             } else {
@@ -1166,18 +1173,7 @@ Je confirme
       // Les accolades en trop ont été supprimées pour fermer correctement l'écouteur d'événements.
       });
       
-      // Intercepter la création de commentaires pour envoyer des notifications
-      const originalCreateComment = window.createComment;
-      window.createComment = async function(nom, message) {
- const result = await originalCreateComment(nom, message);
-        if (result) {
-          // Envoyer une notification après un délai
-          setTimeout(() => {
-            sendCommentNotification(nom);
-          }, 2000);
-        }
-        return result;
-      };
+
 
       // Fonction principale pour envoyer les notifications de commentaires
       window.sendCommentNotification = function(nom) {
