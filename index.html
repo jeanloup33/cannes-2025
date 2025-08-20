@@ -537,10 +537,13 @@ console.log('🎯 Fonctions widget définies globalement');
              </button>
            </div>
            <div id="test-notification-container" style="display: none;" class="mt-2">
-             <button onclick="sendTestNotification()" class="w-full bg-white/10 text-white/80 font-semibold text-xs px-3 py-1 rounded-lg hover:bg-white/20 transition">
-               🧪 Test notification
-             </button>
-           </div>
+            <button onclick="sendTestNotification()" class="w-full bg-white/10 text-white/80 font-semibold text-xs px-3 py-1 rounded-lg hover:bg-white/20 transition">
+              🧪 Test notification
+            </button>
+            <button onclick="testCommentNotification()" class="w-full bg-white/10 text-white/80 font-semibold text-xs px-3 py-1 rounded-lg hover:bg-white/20 transition mt-1">
+              📝 Test notif commentaire
+            </button>
+          </div>
         </div>
         <button onclick="hideNotificationPrompt()" class="flex-shrink-0 text-white/60 hover:text-white/80 transition">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -1124,8 +1127,14 @@ Je confirme
               // Masquer les boutons Activer/Plus tard
               const buttons = prompt.querySelector('.flex.gap-2');
               if (buttons) buttons.style.display = 'none';
+            } else {
+              // Permission 'default' - pas encore demandée
+              // Garder l'interface par défaut avec message adapté
+              const title = prompt.querySelector('h4');
+              const description = prompt.querySelector('p');
+              if (title) title.textContent = 'Activer les notifications';
+              if (description) description.textContent = 'Recevez une notification quand de nouveaux commentaires sont ajoutés !';
             }
-            // Sinon garder l'interface par défaut pour 'default'
             
             prompt.style.display = 'block';
           }
@@ -1170,6 +1179,18 @@ Je confirme
           }, 2000);
         }
         return result;
+      };
+      
+      // Fonction de test pour vérifier les notifications
+      window.testCommentNotification = function() {
+        console.log('🧪 Test de notification de commentaire...');
+        if (Notification.permission === 'granted') {
+          sendCommentNotification('Test User');
+          console.log('✅ Notification de test envoyée');
+        } else {
+          console.log('❌ Permissions non accordées');
+          requestNotificationPermission();
+        }
       };
    </script>
 <script>
