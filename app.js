@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile nav
   const toggle = document.querySelector('#nav-toggle'); // Changé de .nav-toggle à #nav-toggle
   const menu = document.querySelector('#mobile-menu'); // Changé de .navmenu à #mobile-menu
+  
+  console.log('Bouton burger trouvé:', toggle);
+  console.log('Menu mobile trouvé:', menu);
+  
   if (toggle && menu) {
     const setOpen = (open) => {
       toggle.setAttribute('aria-expanded', String(open));
@@ -9,16 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.toggle('overflow-hidden', open);
     };
     setOpen(false);
-    toggle.addEventListener('click', () => {
+    
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isOpen = toggle.getAttribute('aria-expanded') !== 'true';
+      console.log('Toggle menu:', isOpen);
       setOpen(isOpen);
     });
+    
     document.addEventListener('click', (e) => {
       if (!e.target.closest('header')) setOpen(false);
     });
+    
     menu.addEventListener('click', e => { // Utilise menu au lieu de menus.forEach
       if (e.target.closest('a')) setOpen(false);
     });
+  } else {
+    console.error('Menu burger ou menu mobile non trouvé');
   }
 
   // Smooth anchor scrolling with offset
