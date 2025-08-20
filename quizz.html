@@ -251,7 +251,12 @@
 
         <div id="quiz-container" class="hidden">
           <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 shadow-glow">
-            <div class="question-number text-gold font-bold mb-4" id="question-number">Question 1/10</div>
+            <div class="flex justify-between items-start mb-4">
+              <div class="question-number text-gold font-bold">Question <span id="question-counter">1</span>/10</div>
+              <button class="change-quiz-btn bg-red-500/20 hover:bg-red-500/30 text-red-300 hover:text-red-200 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border border-red-500/30 hover:border-red-500/50" onclick="confirmChangeQuiz()">
+                Changer de quiz
+              </button>
+            </div>
             <div class="question font-display text-xl md:text-2xl text-white mb-8" id="question">Chargement...</div>
             <div class="options grid gap-4" id="options"></div>
             <button class="next-btn w-full mt-8 bg-gradient-to-r from-gold to-goldSoft text-black font-bold py-4 px-8 rounded-xl hover:from-goldSoft hover:to-gold transition-all duration-300 shadow-[0_4px_0_rgba(0,0,0,0.28)] hover:translate-y-[1px] hover:shadow-[0_3px_0_rgba(0,0,0,0.32)] opacity-0 translate-y-4" id="next-btn" onclick="nextQuestion()">
@@ -366,7 +371,7 @@
 
     function loadQuestion() {
       const q = quizData[currentSeries].questions[currentQuestion];
-      document.getElementById('question-number').textContent = `Question ${currentQuestion+1}/10`;
+      document.getElementById('question-counter').textContent = currentQuestion + 1;
       document.getElementById('question').textContent = q.q;
       const opts = document.getElementById('options');
       opts.innerHTML = '';
@@ -380,6 +385,16 @@
       document.getElementById('next-btn').classList.remove('show');
       document.getElementById('score').textContent=`Score: ${score}/10`;
       answered=false;
+    }
+
+    function confirmChangeQuiz() {
+      if (confirm('Êtes-vous sûr de vouloir changer de quiz ? Votre progression actuelle sera perdue.')) {
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('start-screen').classList.remove('hidden');
+        currentQuestion = 0;
+        score = 0;
+        answered = false;
+      }
     }
 
     function selectOption(idx) {
