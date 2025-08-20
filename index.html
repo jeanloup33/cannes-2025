@@ -680,7 +680,55 @@ Je confirme
 
   <script src="./app.js?v=20250808" defer></script>
   
+  <!-- PANEL DE DEBUG POUR NOTIFICATIONS -->
+  <div id="debug-panel" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.9); color: white; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 12px; max-width: 300px; z-index: 10000; display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <strong>🔍 Debug Notifications</strong>
+      <button onclick="document.getElementById('debug-panel').style.display='none'" style="background: none; border: none; color: white; cursor: pointer;">✕</button>
+    </div>
+    <div id="debug-status">
+      <div>HTTPS: <span id="debug-https">❌</span></div>
+      <div>Service Worker: <span id="debug-sw">❌</span></div>
+      <div>Permissions: <span id="debug-perms">❌</span></div>
+      <div>Mobile: <span id="debug-mobile">❌</span></div>
+    </div>
+    <button onclick="showDebugInfo()" style="margin-top: 10px; padding: 5px 10px; background: #f59e0b; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 11px;">Rafraîchir</button>
+  </div>
+
   <script>
+    // Fonction de debug pour notifications
+    async function showDebugInfo() {
+      const panel = document.getElementById('debug-panel');
+      panel.style.display = 'block';
+      
+      // Vérifier HTTPS
+      const isHttps = location.protocol === 'https:';
+      document.getElementById('debug-https').textContent = isHttps ? '✅' : '❌';
+      document.getElementById('debug-https').style.color = isHttps ? '#10b981' : '#ef4444';
+      
+      // Vérifier Service Worker
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        const swStatus = registration && registration.active ? '✅' : '❌';
+        document.getElementById('debug-sw').textContent = swStatus;
+        document.getElementById('debug-sw').style.color = swStatus === '✅' ? '#10b981' : '#ef4444';
+      } catch (e) {
+        document.getElementById('debug-sw').textContent = '❌';
+      }
+      
+      // Vérifier permissions
+      const permsStatus = Notification.permission === 'granted' ? '✅' : 
+                         Notification.permission === 'denied' ? '❌' : '⚠️';
+      document.getElementById('debug-perms').textContent = permsStatus;
+      document.getElementById('debug-perms').style.color = permsStatus === '✅' ? '#10b981' : 
+                                                         permsStatus === '❌' ? '#ef4444' : '#f59e0b';
+      
+      // Vérifier mobile
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      document.getElementById('debug-mobile').textContent = isMobile ? '✅' : '❌';
+      document.getElementById('debug-mobile').style.color = isMobile ? '#10b981' : '#f59e0b';
+    }
+
     // ENREGISTREMENT DU SERVICE WORKER (ESSENTIEL POUR LES NOTIFICATIONS)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async () => {
@@ -703,6 +751,24 @@ Je confirme
     } else {
       console.log('❌ Service Worker non supporté');
     }
+
+    // Afficher le debug panel automatiquement en mode développement
+    document.addEventListener('DOMContentLoaded', () => {
+      // Touche F8 pour afficher le debug
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'F8') {
+          e.preventDefault();
+          showDebugInfo();
+        }
+      });
+      
+      // Afficher automatiquement si HTTPS manquant
+      if (location.protocol !== 'https:') {
+        setTimeout(() => {
+          showDebugInfo();
+        }, 3000);
+      }
+    });
   </script>
   
   <script>
