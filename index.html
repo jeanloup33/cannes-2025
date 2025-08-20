@@ -590,17 +590,9 @@ console.log('🎯 Fonctions widget définies globalement');
                      </form>
                     
                    <div id="commentsList" class="mt-8 space-y-4">
-                      <div class="bg-white/5 rounded-xl p-4 border border-white/10">
-                        <div class="flex items-center gap-3 mb-2">
-                          <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gold to-goldSoft flex items-center justify-center text-black font-bold text-sm">
-                            J
-                          </div>
-                          <div>
-                            <p class="font-semibold text-white/90">Jean-Loup</p>
-                            <p class="text-xs text-white/60">12 janvier, 15:30</p>
-                          </div>
-                        </div>
-                        <p class="text-white/80 leading-relaxed">Bienvenue ! Vos messages apparaîtront ici automatiquement et seront visibles par tous les invités. Aucune identification requise ! ✨</p>
+                      <div id="comments-loading" class="text-white/50 text-center py-4">
+                        <p>🔄 Chargement des commentaires...</p>
+                        <p class="text-xs mt-2">Si les commentaires ne s'affichent pas, ouvrez la console (F12) pour voir les détails.</p>
                       </div>
                     </div>
                  </div>
@@ -908,8 +900,10 @@ Je confirme
           
           const response = await fetch(url, {
             headers: {
-              'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`
-            }
+              'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`,
+              'Content-Type': 'application/json'
+            },
+            mode: 'cors'
           });
           
           console.log('📥 Réponse lecture status:', response.status);
@@ -952,8 +946,27 @@ Je confirme
         const commentsList = document.getElementById('commentsList');
         if (!commentsList) return;
         
+        // Vérifier si on est en localhost (HTTP)
+        const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        
         if (allComments.length === 0) {
-          commentsList.innerHTML = '<p class="text-white/50 text-center py-4">Soyez le premier à laisser un message ! 🌟</p>';
+          let message = '<p class="text-white/50 text-center py-4">Soyez le premier à laisser un message ! 🌟</p>';
+          
+          if (isLocalhost) {
+            message = `
+              <div class="bg-amber-900/20 border border-amber-500/30 rounded-xl p-4 text-center">
+                <p class="text-amber-200 font-semibold">⚠️ Mode développement local</p>
+                <p class="text-amber-300/80 text-sm mt-2">
+                  Les commentaires sont chargés depuis Airtable. Pour voir les commentaires réels, 
+                  <a href="#" onclick="location.reload()" class="text-amber-400 underline">rafraîchissez la page</a> 
+                  ou testez sur <a href="https://votre-site-netlify.app" class="text-amber-400 underline" target="_blank">la version en ligne</a>.
+                </p>
+                <p class="text-amber-300/60 text-xs mt-2">Erreur CORS possible sur localhost</p>
+              </div>
+            `;
+          }
+          
+          commentsList.innerHTML = message;
           return;
         }
         
@@ -981,6 +994,7 @@ Je confirme
       
       // Gestion du formulaire
       document.addEventListener('DOMContentLoaded', () => {
+        console.log('🚀 DOM chargé, chargement des commentaires...');
         loadComments();
         
         const form = document.getElementById('commentForm');
