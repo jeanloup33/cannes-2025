@@ -1,12 +1,62 @@
 [
   {
-    "slug": "2025-08-05-ca-se-precise-soyez-pret",
-    "title": "ça se précise, soyez prêt",
-    "date": "2025-08-05T22:16:00+02:00",
-    "image": "/uploads/gemini_generated_image_v1btf2v1tbf2v1tb.webp",
-    "description": "Nous avons prévu de danser jusqu'au bout de la nuit. On compte sur vous !",
+    "slug": "2025-08-13-le-bavardage-vivement-encouragé",
+    "title": "Le bavardage vivement encouragé.",
+    "date": "2025-08-13T17:21:00+02:00",
+    "image": "/uploads/commentaires.webp",
+    "description": "",
+    "category": "Pratique",
+    "body": "Les **commentaires sont maintenant possible**, en dessous de la Galerie et des FAQ. **Papotez à votre guise**. Pas de modération ni censure.\r\n",
+    "body_html": "<p>Les <strong>commentaires sont maintenant possible</strong>, en dessous de la Galerie et des FAQ. <strong>Papotez à votre guise</strong>. Pas de modération ni censure.</p>\n"
+  },
+  {
+    "slug": "2025-08-11-lui-aussi-sera-là",
+    "title": "Lui aussi sera là.",
+    "date": "2025-08-12T01:06:00+02:00",
+    "image": "/uploads/jeanloup33_a_charismatic_man_wearing_a_white_shirt_and_sungla_9ded6502-4356-4d8b-9f88-bb7a648c8e50_0.webp",
+    "description": "",
     "category": "Annonce",
-    "body": "Nous avons prévu de danser jusqu'au bout de la nuit, cavalière/cavalier, on compte sur vous.\n",
-    "body_html": "<p>Nous avons prévu de danser jusqu&#39;au bout de la nuit, cavalière/cavalier, on compte sur vous.</p>\n"
+    "body": "Il a promis de passer quelques moments avec nous, pourquoi ne pas le croire ?\r\n",
+    "body_html": "<p>Il a promis de passer quelques moments avec nous, pourquoi ne pas le croire ?</p>\n"
+  },
+  {
+    "slug": "2025-08-11-les-plus-belles-starlettes-seront-présentes",
+    "title": "Les plus belles starlettes seront présentes",
+    "date": "2025-08-12T01:04:00+02:00",
+    "image": "/uploads/glif-flux-jeanloup-flj5onw94lagw6jdcvyie7lt-modifie.webp",
+    "description": "",
+    "category": "Annonce",
+    "body": "Heureusement, sinon cela nous aurait manqué. A vos appareils photo.\r\n",
+    "body_html": "<p>Heureusement, sinon cela nous aurait manqué. A vos appareils photo.</p>\n"
+  },
+  {
+    "slug": "2025-08-11-jean-loup-en-mission",
+    "title": "JEAN LOUP EN MISSION",
+    "date": "2025-08-12T00:18:00+02:00",
+    "image": "/uploads/jeanloup33_a_ghostly_portrait_of_audrey_hepburn_with_detailed_c5a2da62-1001-4e38-8e7b-049e18cb2c4a_1.webp",
+    "description": "",
+    "category": "Annonce",
+    "body": "Jean-Loup a été chargé par les organisateurs de trouver des photos de stars de Cannes des années 60 pour impression et affichage pendant la soirée.\r\n",
+    "body_html": "<p>Jean-Loup a été chargé par les organisateurs de trouver des photos de stars de Cannes des années 60 pour impression et affichage pendant la soirée.</p>\n"
+  },
+  {
+    "slug": "2025-08-06-proposez-votre-coktail",
+    "title": "Proposez votre Coktail",
+    "date": "2025-08-06T17:03:00+02:00",
+    "image": "/uploads/bvx5q1bvx5q1bvx5.jpg",
+    "description": "",
+    "category": "",
+    "body": "Pensez a proposer vos cocktails pour une super animation\n",
+    "body_html": "<p>Pensez a proposer vos cocktails pour une super animation</p>\n"
+  },
+  {
+    "slug": "2025-08-06-il-fera-beau",
+    "title": "Il fera beau",
+    "date": "2025-08-06T15:58:00+02:00",
+    "image": "/uploads/gallery61.webp",
+    "description": "Metéo optimiste",
+    "category": "Annonce",
+    "body": "Le bulletin météo nous le garantie, il fera beau, la température sera très douce, nous pourrons danser en terrasse.\n",
+    "body_html": "<p>Le bulletin météo nous le garantie, il fera beau, la température sera très douce, nous pourrons danser en terrasse.</p>\n"
   }
 ]
