@@ -47,29 +47,30 @@ python -m http.server 8000 --bind 127.0.0.1
 
 ```
 cannes-party/
-├── index.html              # Page principale
-├── news.html               # Page actualités
+├── index.html              # Page principale avec actualités
+├── news.html               # Page actualités détaillée
 ├── manifest.webmanifest    # PWA manifest
 ├── sw.js                   # Service Worker
-├── notifications.js        # Système de notifications
 ├── assets/                 # Images et médias
 ├── content/news/           # Articles Markdown
 ├── icons/                  # Icônes PWA
 ├── uploads/                # Images uploadées
 ├── scripts/                # Scripts de build
-└── admin/                  # Configuration Netlify CMS
+├── admin/                  # Configuration Netlify CMS
+└── comments.json           # Système de commentaires
 ```
 
 ### Fonctionnalités
 
 - ✅ Design responsive et moderne
 - ✅ PWA (Progressive Web App)
-- ✅ Système de notifications push
 - ✅ Actualités dynamiques
 - ✅ Formulaire de réservation
 - ✅ Partage social
 - ✅ Mode hors ligne
 - ✅ Optimisation SEO
+- ✅ Système de commentaires
+- ✅ Galerie photo interactive
 
 ### Configuration
 
@@ -80,10 +81,7 @@ Les fichiers de configuration sont déjà prêts :
 - `manifest.webmanifest` - Configuration PWA
 
 #### Notifications
-Le système de notifications est fonctionnel et nécessite :
-- HTTPS en production
-- Autorisation utilisateur
-- Service Worker activé
+Le système de notifications a été supprimé pour simplifier l'expérience utilisateur. Le site reste entièrement fonctionnel sans notifications push.
 
 ### Scripts de build
 
