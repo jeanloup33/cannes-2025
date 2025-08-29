@@ -690,6 +690,7 @@
     // Gestion du formulaire
     document.addEventListener('DOMContentLoaded', () => {
       loadComments();
+      loadLatestNews();
       
       const form = document.getElementById('commentForm');
       if (form) {
@@ -718,7 +719,7 @@
             setTimeout(loadComments, 2000);
           } else {
             button.textContent = '❌ Erreur, réessayez';
-            button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            button.style.background = 'linear-gradient(135deg: #ef4444, #dc2626)';
           }
           
           setTimeout(() => {
@@ -731,6 +732,47 @@
       
       setInterval(loadComments, 30000);
     });
+
+    // Charger les dernières actualités
+    async function loadLatestNews() {
+      const container = document.getElementById('latestNewsContainer');
+      if (!container) return;
+      
+      try {
+        const response = await fetch('./assets/news.json?v=' + Date.now());
+        if (!response.ok) throw new Error('Erreur réseau');
+        
+        const news = await response.json();
+        
+        if (news.length === 0) {
+          container.innerHTML = '<p class="text-white/70">Aucune actualité pour le moment.</p>';
+          return;
+        }
+        
+        // Prendre les 3 dernières actualités
+        const latestNews = news.slice(0, 3);
+        
+        container.innerHTML = latestNews.map(item => `
+          <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+            <div class="flex items-start gap-4">
+              ${item.image ? `<img src="${item.image}" alt="" class="w-16 h-16 rounded-lg object-cover shrink-0" loading="lazy">` : ''}
+              <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-white/90 text-sm leading-tight mb-1">${item.title}</h3>
+                <p class="text-white/70 text-xs leading-relaxed mb-2 line-clamp-2">${item.description || item.body.substring(0, 100)}...</p>
+                <div class="flex items-center gap-2 text-xs text-white/60">
+                  <span>${new Date(item.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</span>
+                  ${item.category ? `<span class="px-2 py-0.5 rounded-full bg-gold/20 text-gold text-xs">${item.category}</span>` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        
+      } catch (error) {
+        console.error('Erreur chargement actualités:', error);
+        container.innerHTML = '<p class="text-white/70">Impossible de charger les actualités.</p>';
+      }
+    }
   </script>
 </body>
 </html>
