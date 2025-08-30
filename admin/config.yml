@@ -1,13 +1,21 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: jeanloup33/cannes-2025
   branch: main
 
 media_folder: "uploads"
 public_folder: "/uploads"
 
-site_url: "https://cannes-festival.netlify.app/"
-logo_url: "/favicon.ico"
+site_url: "https://jeanloup33.github.io/cannes-2025/"
+logo_url: "/assets/logo.webp"
 locale: "fr"
+
+publish_mode: editorial_workflow
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
 
 collections:
   - name: "news"
