@@ -769,13 +769,20 @@
         // Prendre les 3 dernières actualités
         const latestNews = news.slice(0, 3);
         
-        container.innerHTML = latestNews.map(item => `
+        container.innerHTML = latestNews.map(item => {
+          // Nettoyer le markdown pour les snippets
+          const cleanText = (item.description || item.body || 'Cliquez pour lire la suite...')
+            .replace(/\*\*(.*?)\*\*/g, '$1') // Enlever les **
+            .replace(/\*(.*?)\*/g, '$1')   // Enlever les *
+            .substring(0, 100);
+          
+          return `
           <a href="news.html?slug=${encodeURIComponent(item.slug)}" class="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group">
             <div class="flex items-start gap-4">
               ${item.image ? `<img src="${item.image}" alt="" class="w-16 h-16 rounded-lg object-cover shrink-0" loading="lazy">` : ''}
               <div class="flex-1 min-w-0">
                 <h3 class="font-semibold text-white/90 text-sm leading-tight mb-1 group-hover:text-gold transition-colors">${item.title}</h3>
-                <p class="text-white/70 text-xs leading-relaxed mb-2 line-clamp-2">${item.description || (item.body ? item.body.substring(0, 100) : 'Cliquez pour lire la suite...')}...</p>
+                <p class="text-white/70 text-xs leading-relaxed mb-2 line-clamp-2">${cleanText}...</p>
                 <div class="flex items-center gap-2 text-xs text-white/60">
                   <span>${new Date(item.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</span>
                   ${item.category ? `<span class="px-2 py-0.5 rounded-full bg-gold/20 text-gold text-xs">${item.category}</span>` : ''}
@@ -783,7 +790,7 @@
               </div>
             </div>
           </a>
-        `).join('');
+        `}).join('');
         
       } catch (error) {
         console.error('Erreur chargement actualités:', error);
