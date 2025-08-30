@@ -2,6 +2,7 @@ backend:
   name: github
   repo: jeanloup33/cannes-2025
   branch: main
+  squash_merges: true
 
 media_folder: "uploads"
 public_folder: "/uploads"
@@ -10,7 +11,7 @@ site_url: "https://jeanloup33.github.io/cannes-2025/"
 logo_url: "/assets/logo.webp"
 locale: "fr"
 
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow # Désactivé pour éviter les conflits GitHub
 
 slug:
   encoding: "ascii"
