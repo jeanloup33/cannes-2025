@@ -211,13 +211,17 @@
         // --- Vue LISTE ---
         if (!slug) {
           el.innerHTML = items.map(n => `
-            <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10">
+            <article class="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
               <h3 class="text-xl md:text-2xl font-extrabold">
-                <a class="premium-link" href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a>
+                <a class="premium-link hover:text-gold transition-colors" href="news.html?slug=${encodeURIComponent(n.slug)}">${n.title}</a>
               </h3>
               <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
               ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-3 rounded-xl border border-white/10">` : ''}
               ${n.description ? `<p class="mt-3 text-white/80">${n.description}</p>` : ''}
+              ${!n.description && n.body ? `<p class="mt-3 text-white/80">${n.body.substring(0, 150)}...</p>` : ''}
+              <div class="mt-4">
+                <a class="text-gold hover:text-goldSoft transition-colors text-sm font-medium" href="news.html?slug=${encodeURIComponent(n.slug)}">Lire la suite →</a>
+              </div>
             </article>
           `).join('') || '<p class="text-white/70">Aucune actualité.</p>';
           return;
@@ -236,8 +240,9 @@
             <h1 class="font-display text-2xl md:text-4xl gold-text">${n.title}</h1>
             <div class="text-white/70 text-sm mt-1">${n.date ? formatDate(n.date) : ''}${n.category ? ' • ' + n.category : ''}</div>
             ${n.image ? `<img src="${n.image}" alt="${escAttr(n.description || n.title || 'Illustration')}" class="mt-5 rounded-xl border border-white/10">` : ''}
-            <div class="prose prose-invert max-w-none mt-5">${n.body_html || ''}</div>
-            <p class="mt-6"><a href="news.html" class="underline decoration-gold/60 underline-offset-4">← Toutes les actus</a></p>
+            ${n.description ? `<p class="text-white/80 text-lg mt-4">${n.description}</p>` : ''}
+            <div class="prose prose-invert max-w-none mt-5">${n.body_html || '<p class="text-white/80">' + (n.body || 'Aucun contenu disponible.') + '</p>'}</div>
+            <p class="mt-8"><a href="news.html" class="text-gold hover:text-goldSoft transition-colors font-medium">← Toutes les actus</a></p>
           </article>
         `;
       } catch (err) {
