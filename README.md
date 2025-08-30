@@ -62,7 +62,7 @@ cannes-party/
 
 ### Fonctionnalités
 
-- ✅ Design responsive et moderne
+- ✅ Design responsive et moderne avec style premium
 - ✅ PWA (Progressive Web App)
 - ✅ Actualités dynamiques
 - ✅ Formulaire de réservation
@@ -70,7 +70,8 @@ cannes-party/
 - ✅ Mode hors ligne
 - ✅ Optimisation SEO
 - ✅ Système de commentaires
-- ✅ Galerie photo interactive
+- ✅ Galerie photo interactive avec navigation précédent/suivant
+- ✅ Galerie de stars avec effets visuels premium
 
 ### Configuration
 
@@ -81,7 +82,7 @@ Les fichiers de configuration sont déjà prêts :
 - `manifest.webmanifest` - Configuration PWA
 
 #### Notifications
-Le système de notifications a été supprimé pour simplifier l'expérience utilisateur. Le site reste entièrement fonctionnel sans notifications push.
+Le système de notifications Firebase a été complètement supprimé pour simplifier l'expérience utilisateur et améliorer les performances. Le site reste entièrement fonctionnel sans notifications push.
 
 ### Scripts de build
 
@@ -98,6 +99,7 @@ npm run check-syntax
 - Firefox 85+
 - Safari 14+
 - Mobile browsers
+- Support complet des fonctionnalités premium sur tous les navigateurs modernes
 
 ### Maintenance
 

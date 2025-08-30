@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Galerie de Stars — Soirée Festival de Cannes</title>
+  <meta name="description" content="Découvrez la galerie photo exclusive des stars du Festival de Cannes 2025" />
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          colors: {
+            night: '#0b0b0d',
+            noir: '#111114',
+            gold: '#e8c77d',
+            goldSoft: '#f0dfb0',
+            ruby: '#b80f2f',
+            champagne: '#f5efe1',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            glow: '0 0 0 2px rgba(232,199,125,0.35), 0 20px 60px rgba(0,0,0,0.5)',
+          },
+          backgroundImage: {
+            glam: 'radial-gradient(1000px 600px at 80% -10%, rgba(232,199,125,0.14), transparent 60%), linear-gradient(180deg, #0b0b0d 0%, #111114 70%, #0b0b0d 100%)',
+          },
+        },
+      },
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./premium-styles.css" />
+
+  <style>
+    .gold-text {
+      background: linear-gradient(135deg, #f7ebc2, #e8c77d, #b99243);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo-glow {
+      filter: drop-shadow(0 6px 18px rgba(232, 199, 125, .28)) drop-shadow(0 0 10px rgba(232, 199, 125, .18));
+    }
+    .noise::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .07;
+      mix-blend-mode: soft-light;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" opacity="0.5" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect filter="url(%23n)" width="100%" height="100%"/></svg>');
+    }
+  </style>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Galerie de Stars — Soirée Festival de Cannes">
+  <meta property="og:description" content="Découvrez la galerie photo exclusive des stars du Festival de Cannes 2025">
+  <meta property="og:url" content="https://cannes-festival.netlify.app/gallery.html">
+  <link rel="canonical" href="https://cannes-festival.netlify.app/gallery.html">
+</head>
+<body class="bg-glam text-white font-sans noise">
+  <header class="sticky top-0 z-50 premium-nav">
+    <nav class="container mx-auto px-5 py-3 flex items-center justify-between">
+      <a href="index.html#hero" class="flex items-center gap-4 group">
+        <img src="./assets/logo.webp?v=20250808" alt="Logo de la soirée" class="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_20px_rgba(232,199,125,0.25)] logo-glow" width="128" height="128" decoding="async" fetchpriority="high" />
+        <span class="hidden sm:inline text-xl md:text-[22px] font-extrabold tracking-wide gold-text transition group-hover:opacity-90">NIGHT PARTY</span>
+      </a>
+
+      <button id="nav-toggle"
+        class="md:hidden p-2 rounded-lg border border-white/10 hover:bg-white/5 touch-target"
+        aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu de navigation">
+        <span class="sr-only">Menu</span>
+        <div class="w-6 h-[2px] bg-white my-1"></div>
+        <div class="w-6 h-[2px] bg-white my-1"></div>
+        <div class="w-6 h-[2px] bg-white my-1"></div>
+      </button>
+
+      <ul class="hidden md:flex items-center gap-6">
+        <li><a href="news.html" class="premium-nav-item"><span>Actus</span></a></li>
+        <li><a href="index.html#about" class="premium-nav-item"><span>À propos</span></a></li>
+        <li><a href="index.html#program" class="premium-nav-item"><span>Programme</span></a></li>
+        <li><a href="index.html#dress" class="premium-nav-item"><span>Dress code</span></a></li>
+        <li><a href="gallery.html" class="premium-nav-item active"><span>Galerie Stars</span></a></li>
+        <li><a href="index.html#faq" class="premium-nav-item"><span>FAQ</span></a></li>
+        <li><a href="quizz.html" class="premium-nav-item"><span>Quiz</span></a></li>
+        <li>
+          <a href="index.html#tickets" class="premium-btn premium-btn-secondary glow-intense !px-5 !py-2.5">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Confirmer
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="mobile-menu" class="md:hidden hidden premium-mobile-menu">
+      <div class="container mx-auto px-5 py-3 grid gap-1.5">
+        <a class="premium-mobile-item" href="news.html">Actus</a>
+        <a class="premium-mobile-item" href="index.html#about">À propos</a>
+        <a class="premium-mobile-item" href="index.html#program">Programme</a>
+        <a class="premium-mobile-item" href="index.html#dress">Dress code</a>
+        <a class="premium-mobile-item active" href="gallery.html">Galerie Stars</a>
+        <a class="premium-mobile-item" href="index.html#faq">FAQ</a>
+        <a class="premium-mobile-item" href="quizz.html">Quiz</a>
+        <a class="premium-btn premium-btn-secondary glow-intense !w-full !justify-center" href="index.html#tickets">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Confirmer
+        </a>
+      </div>
+    </div>
+  </header>
+
+    <!-- Hero Section -->
+    <section class="py-10 md:py-14">
+        <div class="container mx-auto px-6">
+            <h1 class="font-display text-3xl md:text-4xl gold-text text-center">Galerie de Stars</h1>
+            <p class="text-white/70 mt-2 text-center">Découvrez les visages inoubliables du Cinéma</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="container mx-auto px-6 py-16">
+        <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Images will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative max-w-4xl max-h-[90vh] mx-4">
+            <button id="modal-close" class="absolute -top-12 right-0 text-white/70 hover:text-white text-4xl transition-colors z-10">&times;</button>
+            <button id="modal-prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button id="modal-next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+            <img id="modal-image" src="" alt="" class="max-w-full max-h-[90vh] object-contain rounded-lg">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-night/50 border-t border-white/10 mt-20">
+        <div class="container mx-auto px-6 py-8">
+            <div class="text-center text-white/60">
+                <p>&copy; 2025 Soirée Festival de Cannes. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            imagePath: 'actors-gallery/',
+            imagesPerPage: 20,
+            loadingDelay: 100
+        };
+
+        // Sample data - in production, this would come from a JSON file or API
+        const galleryImages = [
+            { filename: '1756565256.webp', caption: 'Star du cinéma français' },
+            { filename: '1756565422.webp', caption: 'Actrice internationale' },
+            { filename: '1756565513.webp', caption: 'Réalisateur primé' },
+            { filename: '1756565576.webp', caption: 'Montée des marches' },
+            { filename: '1756565680.webp', caption: 'Portrait officiel' },
+            { filename: '1756565904.webp', caption: 'Conférence de presse' },
+            { filename: '1756565974.webp', caption: 'Soirée de gala' },
+            { filename: '1756566039.webp', caption: 'Photocall officiel' },
+            { filename: '1756566102.webp', caption: 'Interview exclusive' },
+            { filename: '1756566157.webp', caption: 'Avant-première' },
+            { filename: '1756566219.webp', caption: 'Tapis rouge' },
+            { filename: '1756566289.webp', caption: 'Remise des prix' },
+            { filename: '1756566348.webp', caption: 'After party' },
+            { filename: '1756566452.webp', caption: 'Séance photo' },
+            { filename: '1756566506.webp', caption: 'Masterclass' },
+            { filename: '1756566569.webp', caption: 'Rencontre avec les fans' },
+            { filename: '1756566628.webp', caption: 'Dîner officiel' },
+            { filename: '1756566821.webp', caption: 'Jury du festival' },
+            { filename: '1756567121.webp', caption: 'Cérémonie d\'ouverture' },
+            { filename: '1756567179.webp', caption: 'Cocktail VIP' },
+            { filename: '1756567312.webp', caption: 'Projection spéciale' },
+            { filename: '1756567460.webp', caption: 'Clôture du festival' }
+        ];
+
+        // Gallery Manager
+        class GalleryManager {
+            constructor() {
+                this.container = document.getElementById('gallery-container');
+                this.modal = document.getElementById('modal');
+                this.modalImage = document.getElementById('modal-image');
+                this.modalClose = document.getElementById('modal-close');
+                this.modalPrev = document.getElementById('modal-prev');
+                this.modalNext = document.getElementById('modal-next');
+                this.currentIndex = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.renderGallery();
+                this.bindEvents();
+                this.preloadImages();
+            }
+
+            renderGallery() {
+                const html = galleryImages.map((img, index) => `
+                    <div class="group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 hover:scale-105" onclick="gallery.openModal(${index})">
+                        <img src="${CONFIG.imagePath}${img.filename}" 
+                             alt="Image ${index + 1}"
+                             loading="lazy"
+                             class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div class="text-white">
+                                <p class="text-xs text-white/70">Cliquer pour agrandir</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                this.container.innerHTML = html;
+            }
+
+            bindEvents() {
+                // Modal events
+                this.modalClose.addEventListener('click', () => this.closeModal());
+                this.modal.addEventListener('click', (e) => {
+                    if (e.target === this.modal) this.closeModal();
+                });
+
+                // Navigation buttons
+                this.modalPrev.addEventListener('click', () => this.prevImage());
+                this.modalNext.addEventListener('click', () => this.nextImage());
+
+                // Keyboard events
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeModal();
+                    if (e.key === 'ArrowLeft') this.prevImage();
+                    if (e.key === 'ArrowRight') this.nextImage();
+                });
+
+                // Mobile navigation
+                const navToggle = document.getElementById('nav-toggle');
+                const mobileMenu = document.getElementById('mobile-menu');
+                
+                if (navToggle && mobileMenu) {
+                    navToggle.addEventListener('click', () => {
+                        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                        navToggle.setAttribute('aria-expanded', !isExpanded);
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+            }
+
+            openModal(index) {
+                this.currentIndex = index;
+                this.updateModalImage();
+                this.modal.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeModal() {
+                this.modal.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }
+
+            prevImage() {
+                this.currentIndex = (this.currentIndex - 1 + galleryImages.length) % galleryImages.length;
+                this.updateModalImage();
+            }
+
+            nextImage() {
+                this.currentIndex = (this.currentIndex + 1) % galleryImages.length;
+                this.updateModalImage();
+            }
+
+            updateModalImage() {
+                const image = galleryImages[this.currentIndex];
+                this.modalImage.src = `${CONFIG.imagePath}${image.filename}`;
+                this.modalImage.alt = `Image ${this.currentIndex + 1}`;
+            }
+
+            preloadImages() {
+                galleryImages.forEach(img => {
+                    const image = new Image();
+                    image.src = `${CONFIG.imagePath}${img.filename}`;
+                });
+            }
+        }
+
+        // Initialize gallery when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.gallery = new GalleryManager();
+        });
+
+        // Service Worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
