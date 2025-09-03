@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: jeanloup33/cannes-2025
   branch: main
   squash_merges: true
