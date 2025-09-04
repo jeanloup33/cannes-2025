@@ -126,6 +126,12 @@
 
   <main class="pb-20">
     <div class="container mx-auto px-6">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="font-display text-3xl md:text-4xl gold-text">Actualités</h1>
+        <button onclick="render()" class="premium-button text-sm px-4 py-2">
+          🔄 Rafraîchir
+        </button>
+      </div>
       <div id="newsView" class="grid gap-4">Chargement…</div>
     </div>
   </main>
@@ -142,7 +148,6 @@
 
   <script src="app.js"></script>
   <script>
-    const NEWS_JSON_URL = `./assets/news.json?v=${Date.now()}`;
     const dateFmt = new Intl.DateTimeFormat('fr-FR', {
       dateStyle: 'short'
     });
@@ -183,6 +188,10 @@
 
     const escAttr = (s) => String(s ?? '').replace(/"/g, '&quot;');
 
+    function getNewsUrl() {
+      return `./assets/news.json?v=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    }
+
     async function render() {
       const el = document.getElementById('newsView');
       const params = new URLSearchParams(location.search);
@@ -192,7 +201,9 @@
         const res = await fetch(NEWS_JSON_URL, {
           cache: 'no-store',
           headers: {
-            'Cache-Control': 'no-cache'
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
           }
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
