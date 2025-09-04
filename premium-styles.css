@@ -159,6 +159,53 @@
 }
 
 /* =============================================
+   PREMIUM CONTENT LINKS STYLES
+   ============================================= */
+
+/* Liens dans le contenu des actualités */
+.content-links a,
+.prose a,
+.markdown-content a,
+.news-content a {
+  color: #E8C77D;
+  text-decoration: underline;
+  text-decoration-color: #E8C77D;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all 0.3s ease;
+}
+
+.content-links a:hover,
+.prose a:hover,
+.markdown-content a:hover,
+.news-content a:hover,
+.prose-invert a:hover {
+  color: #FFD700;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #FFD700;
+  text-shadow: 0 0 8px rgba(232, 199, 125, 0.4);
+}
+
+/* Styles spécifiques pour les liens dans le contenu Tailwind prose */
+.prose a,
+.prose-invert a {
+  color: #E8C77D !important;
+  text-decoration: underline !important;
+  text-decoration-color: #E8C77D !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px !important;
+  transition: all 0.3s ease !important;
+}
+
+.prose a:hover,
+.prose-invert a:hover {
+  color: #FFD700 !important;
+  text-decoration-thickness: 2px !important;
+  text-decoration-color: #FFD700 !important;
+  text-shadow: 0 0 8px rgba(232, 199, 125, 0.4) !important;
+}
+
+/* =============================================
    PREMIUM NAVIGATION MENU STYLES
    ============================================= */
 

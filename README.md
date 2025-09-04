@@ -64,7 +64,7 @@ cannes-party/
 
 - ✅ Design responsive et moderne avec style premium
 - ✅ PWA (Progressive Web App)
-- ✅ Actualités dynamiques
+- ✅ Actualités dynamiques via Netlify CMS
 - ✅ Formulaire de réservation
 - ✅ Partage social
 - ✅ Mode hors ligne
@@ -72,6 +72,7 @@ cannes-party/
 - ✅ Système de commentaires
 - ✅ Galerie photo interactive avec navigation précédent/suivant
 - ✅ Galerie de stars avec effets visuels premium
+- ✅ Menu optimisé avec lien "Les Stars" et FAQ à droite
 
 ### Configuration
 
@@ -81,8 +82,8 @@ Les fichiers de configuration sont déjà prêts :
 - `_headers` - Headers de sécurité
 - `manifest.webmanifest` - Configuration PWA
 
-#### Notifications
-Le système de notifications Firebase a été complètement supprimé pour simplifier l'expérience utilisateur et améliorer les performances. Le site reste entièrement fonctionnel sans notifications push.
+#### Netlify CMS
+Le site utilise Netlify CMS pour la gestion du contenu avec connexion via Netlify Identity (git-gateway). La configuration est prête dans `admin/config.yml`.
 
 ### Scripts de build
 
@@ -93,6 +94,12 @@ npm run build:news
 # Vérifier la syntaxe
 npm run check-syntax
 ```
+
+### Améliorations récentes (2025)
+- 🔧 Nettoyage complet du système Firebase Messaging (FCM) pour optimiser les performances
+- 🔧 Migration vers Netlify Identity pour l'authentification CMS
+- 🔧 Amélioration de la navigation avec menu optimisé
+- 🔧 Refonte des liens de navigation pour une meilleure UX
 
 ### Support navigateurs
 - Chrome/Edge 88+
@@ -111,11 +118,16 @@ npm run check-syntax
 #### Mettre à jour le contenu
 Les modifications sur la branche `main` sont automatiquement déployées.
 
-### Contact
-Pour toute question ou problème, ouvrez une issue sur GitHub ou contactez l'équipe organisatrice.
+### Contact & Support
+Pour toute question ou problème :
+- 🐛 [Ouvrir une issue sur GitHub](https://github.com/jeanloup33/cannes-2025/issues)
+- 📧 Contacter l'équipe organisatrice
+- 💬 Discussions sur le repository GitHub
 
 ---
 
-**Live :** [https://[VOTRE_USERNAME].github.io/cannes-party/](https://[VOTRE_USERNAME].github.io/cannes-party/)
+**🌐 Site en production :** [https://cannes-2025.netlify.app](https://cannes-2025.netlify.app)
 
-**Événement :** 13 septembre 2025 • Bruges • Dress code glamour ✨
+**📅 Événement :** 13 septembre 2025 • Bruges • Dress code glamour ✨
+
+**🔗 Repository :** [https://github.com/jeanloup33/cannes-2025](https://github.com/jeanloup33/cannes-2025)
