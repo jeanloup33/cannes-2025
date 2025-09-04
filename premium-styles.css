@@ -188,21 +188,55 @@
 
 /* Styles spécifiques pour les liens dans le contenu Tailwind prose */
 .prose a,
-.prose-invert a {
+.prose-invert a,
+.prose a:visited,
+.prose-invert a:visited,
+.prose a:link,
+.prose-invert a:link {
   color: #E8C77D !important;
   text-decoration: underline !important;
   text-decoration-color: #E8C77D !important;
   text-decoration-thickness: 1px !important;
   text-underline-offset: 2px !important;
   transition: all 0.3s ease !important;
+  font-weight: 500 !important;
 }
 
 .prose a:hover,
-.prose-invert a:hover {
+.prose-invert a:hover,
+.prose a:focus,
+.prose-invert a:focus {
   color: #FFD700 !important;
   text-decoration-thickness: 2px !important;
   text-decoration-color: #FFD700 !important;
   text-shadow: 0 0 8px rgba(232, 199, 125, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Override ultime pour tous les liens dans le contenu */
+#newsView .prose a,
+#newsView .prose-invert a,
+#newsView [class*="prose"] a,
+#newsView .markdown-content a,
+#newsView .news-content a {
+  color: #E8C77D !important;
+  text-decoration: underline !important;
+  text-decoration-color: #E8C77D !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+}
+
+#newsView .prose a:hover,
+#newsView .prose-invert a:hover,
+#newsView [class*="prose"] a:hover,
+#newsView .markdown-content a:hover,
+#newsView .news-content a:hover {
+  color: #FFD700 !important;
+  text-decoration-thickness: 2px !important;
+  text-decoration-color: #FFD700 !important;
+  text-shadow: 0 0 12px rgba(232, 199, 125, 0.6) !important;
 }
 
 /* =============================================

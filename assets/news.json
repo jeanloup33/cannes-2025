@@ -6,8 +6,8 @@
     "image": "/uploads/commentaires.webp",
     "description": "",
     "category": "Pratique",
-    "body": "Les **commentaires sont maintenant possible**, en dessous de la Galerie et des FAQ. **Papotez à votre guise**. Pas de modération ni censure. [Plus d'infos ici](https://example.com)",
-    "body_html": "<p>Les <strong>commentaires sont maintenant possible</strong>, en dessous de la Galerie et des FAQ. <strong>Papotez à votre guise</strong>. Pas de modération ni censure. <a href=\"https://example.com\">Plus d'infos ici</a></p>\n"
+    "body": "Les **commentaires sont maintenant possible**, en dessous de la Galerie et des FAQ. **Papotez à votre guise**. Pas de modération ni censure. [Découvrir notre galerie](/gallery.html)",
+    "body_html": "<p>Les <strong>commentaires sont maintenant possible</strong>, en dessous de la Galerie et des FAQ. <strong>Papotez à votre guise</strong>. Pas de modération ni censure. <a href=\"/gallery.html\">Découvrir notre galerie</a></p>\n"
   },
   {
     "slug": "2025-08-11-lui-aussi-sera-là",
